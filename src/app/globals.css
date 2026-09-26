@@ -2210,55 +2210,69 @@
   /* ======================================================================
    * MISSION — CubeSat Portugal.
    *
-   * A photograph with a band lying on it. Nothing here is interactive and
-   * nothing moves: the programme is context, and context that animates reads
-   * as a claim.
+   * A photograph with type on one side of it. Nothing is laid across the
+   * picture: an earlier version put a navy band over the middle, which made
+   * the type easy and the photograph pointless, because the band covered the
+   * stage the photograph was of.
    * ==================================================================== */
 
   .cp {
+    position: relative;
     display: grid;
-    place-items: center;
-    /*
-     * Tall enough that the photograph is a photograph. At the first size the
-     * band covered three quarters of the section and the stage survived only
-     * as two strips at the edges — which is a texture, not a room.
-     */
-    min-height: min(46rem, 90vh);
-    padding: 6rem 0;
+    align-items: center;
+    min-height: min(44rem, 88vh);
+    padding: 5rem 0;
+  }
+
+  .cp-photo {
+    z-index: 0;
+    /* The lit stage sits left of centre, where nothing is written over it. */
+    object-position: 38% 42%;
   }
 
   /*
-   * The photograph is the section's background, so it sits under everything
-   * the section paints rather than beside it.
+   * The blur stops early. Carried across the whole frame it would soften the
+   * truss and the banners, which are the only things in the picture worth
+   * looking at.
    */
-  .cp-photo {
-    z-index: 0;
-    /*
-     * Pushed up so the lit stage sits above the band rather than behind it.
-     * Centred, the one thing worth seeing was exactly what the band covered.
-     */
-    object-position: 50% 34%;
+  .cp-blur {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    backdrop-filter: blur(22px) saturate(102%);
+    -webkit-backdrop-filter: blur(22px) saturate(102%);
+    mask-image: linear-gradient(
+      to left,
+      #000 0%,
+      #000 30%,
+      rgb(0 0 0 / 0.5) 45%,
+      transparent 60%
+    );
   }
 
-  .cp-band {
-    position: relative;
+  /* The darkness reaches further, because the type has to sit on it. */
+  .cp-shade {
+    position: absolute;
+    inset: 0;
     z-index: 1;
-    width: 100%;
-    /*
-     * Translucent, not solid. The point of the picture is that this is a real
-     * programme in a real room; covering it leaves only the texture of one.
-     */
-    background-color: rgb(var(--lisat-navy) / 0.84);
-    backdrop-filter: blur(3px) saturate(115%);
-    border-block: 1px solid rgb(var(--lisat-blue-soft) / 0.18);
-    padding: 3rem 0;
+    background: linear-gradient(
+      to left,
+      rgb(4 8 14 / 0.94) 0%,
+      rgb(4 8 14 / 0.91) 30%,
+      rgb(4 8 14 / 0.7) 47%,
+      rgb(4 8 14 / 0.26) 64%,
+      transparent 80%
+    );
   }
 
   .cp-inner {
-    max-width: 56rem;
-    margin-inline: auto;
-    padding-inline: var(--gutter);
-    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cp-text {
+    max-width: 30rem;
+    margin-left: auto;
   }
 
   /* The programme's name, badged rather than set as a heading — it is not
@@ -2266,7 +2280,7 @@
   .cp-pill {
     display: inline-block;
     padding: 0.5rem 1.25rem;
-    border: 1px solid rgb(var(--lisat-blue-soft) / 0.45);
+    border: 1px solid rgb(var(--lisat-blue-soft) / 0.5);
     border-radius: 999px;
     font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.75rem;
@@ -2277,21 +2291,20 @@
   }
 
   .cp-copy {
-    margin-top: 2rem;
-    font-size: clamp(1rem, 1.35vw, 1.1875rem);
+    margin-top: 1.75rem;
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
     line-height: 1.7;
-    color: rgb(var(--lisat-white) / 0.88);
+    color: rgb(var(--lisat-white) / 0.9);
     text-wrap: pretty;
   }
 
   .cp-facts {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem 4rem;
-    margin-top: 2.5rem;
-    padding-top: 1.75rem;
-    border-top: 1px solid rgb(var(--lisat-blue-soft) / 0.2);
+    gap: 1.5rem 3rem;
+    margin-top: 2.25rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(var(--lisat-blue-soft) / 0.25);
   }
 
   .cp-fact {
@@ -2301,23 +2314,44 @@
     color: rgb(var(--lisat-white));
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 1023px) {
     .cp {
       min-height: 0;
-      padding: 3.5rem 0;
+      padding: 4rem 0;
     }
 
-    .cp-band {
-      padding: 2.5rem 0;
+    .cp-photo {
+      object-position: 50% 40%;
     }
 
-    .cp-copy {
-      margin-top: 1.5rem;
+    /*
+     * Too narrow to keep a clear side and a written side, so the whole frame
+     * darkens from the foot instead — the type still has something to sit on
+     * and the stage is still the top of the picture.
+     */
+    .cp-blur {
+      mask-image: linear-gradient(to top, #000 0%, #000 44%, transparent 72%);
+    }
+
+    .cp-shade {
+      background: linear-gradient(
+        to top,
+        rgb(4 8 14 / 0.92) 0%,
+        rgb(4 8 14 / 0.86) 40%,
+        rgb(4 8 14 / 0.5) 62%,
+        transparent 88%
+      );
+    }
+
+    .cp-text {
+      max-width: none;
+      margin-left: 0;
+      margin-top: 14rem;
     }
 
     .cp-facts {
-      gap: 1.5rem 3rem;
-      margin-top: 2rem;
+      gap: 1.25rem 2.5rem;
+      margin-top: 1.75rem;
     }
   }
 }

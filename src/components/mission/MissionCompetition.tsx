@@ -1,17 +1,17 @@
 import Image from 'next/image'
-import { Section } from '@/components/ui/Section'
+import { Container, Section } from '@/components/ui/Section'
 import { mission } from '@/data/mission'
 
 /**
  * CubeSat Portugal — the national programme LISAT-01 is competing in.
  *
- * One photograph and one band. The previous version split the same few facts
- * across two columns, a table and a second picture, which made a paragraph of
- * context look like a chapter of the mission.
+ * The photograph is the section, and nothing is laid across it. An earlier
+ * version put a navy band over the middle; it made the type easy and the
+ * picture pointless, because the band covered the stage the picture was of.
  *
- * The band is translucent rather than solid so the stage stays legible behind
- * it: the point of the photograph is that this is a real programme with a real
- * room, and covering it with navy would leave only the texture of one.
+ * Instead the type sits to the right and only that side is darkened and
+ * blurred — enough to read against, and fading out well before it reaches the
+ * stage. The left two thirds of the room are untouched.
  */
 export function MissionCompetition() {
   const { competition } = mission
@@ -28,11 +28,15 @@ export function MissionCompetition() {
       />
 
       {/*
-        Held away from the top and bottom edges so the band reads as something
-        lying on the photograph rather than a letterbox cut out of it.
+        Two layers, because they fade differently: the blur has to stop early
+        or the whole frame goes soft, and the darkness has to reach further to
+        carry the last line of type.
       */}
-      <div className="cp-band">
-        <div className="cp-inner">
+      <div className="cp-blur" aria-hidden="true" />
+      <div className="cp-shade" aria-hidden="true" />
+
+      <Container wide className="cp-inner">
+        <div className="cp-text">
           <p className="cp-pill">{competition.name}</p>
 
           <p className="cp-copy">{competition.description}</p>
@@ -48,7 +52,7 @@ export function MissionCompetition() {
             </div>
           </dl>
         </div>
-      </div>
+      </Container>
     </Section>
   )
 }

@@ -108,8 +108,12 @@ export function MissionJourney() {
          * the distance slows the whole sequence down without changing what it
          * does. The signal trigger below must use the same figure or the line
          * drifts out of step with the track.
+         *
+         * Measured rather than guessed: at 1.6 one notch of a wheel moved the
+         * track 62px against a 620px milestone slot, so ten notches crossed a
+         * milestone. At 2.1 it takes thirteen.
          */
-        const PACE = 1.6
+        const PACE = 2.1
         const distance = () => travel() * PACE
 
         // The horizontal move. Linear, because every milestone trigger below
@@ -120,7 +124,7 @@ export function MissionJourney() {
           scrollTrigger: {
             trigger: viewportEl,
             pin: true,
-            scrub: 0.6,
+            scrub: 0.5,
             start: 'center center',
             end: () => '+=' + distance(),
             invalidateOnRefresh: true,
@@ -138,7 +142,7 @@ export function MissionJourney() {
             ease: 'none',
             scrollTrigger: {
               trigger: viewportEl,
-              scrub: 0.6,
+              scrub: 0.5,
               start: 'center center',
               end: () => '+=' + distance(),
               invalidateOnRefresh: true,
