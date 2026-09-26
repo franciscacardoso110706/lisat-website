@@ -1217,7 +1217,7 @@
      * drawing specifically: --gutter is the page's own horizontal padding,
      * and redefining it here fed 82%% padding to every Container inside.
      */
-    --label-edge: 81%;
+    --label-edge: 80%;
   }
 
   .sc[data-reveal='idle'] {
@@ -1304,7 +1304,13 @@
   /* ---- The spacecraft ---- */
   .sc-craft {
     position: absolute;
-    inset: 6.25% 8.5% 6.25% 4%;
+    /*
+     * Smaller than it was, and offset left rather than centred. The frame's
+     * own edges sit at 26.5% and 79% of the render, so centring the file put
+     * the spacecraft right of centre; this puts the spacecraft there instead
+     * and hands the difference to the labels, which now stand clear of it.
+     */
+    inset: 14% 16% 14% 12%;
     /*
      * This is what takes the render out of its white box without touching
      * the file. Keying the white out would have eaten the white connectors
@@ -1402,7 +1408,7 @@
   .sc-callout {
     position: absolute;
     top: var(--y);
-    width: 19%;
+    width: 20%;
     transform: translate(0, -50%);
     transition:
       opacity 0.55s ease,
@@ -1527,11 +1533,14 @@
    * hidden, so a stray observer cannot blank the heading on a phone.
    * ==================================================================== */
   /*
-   * Too narrow, or too short. The annotated drawing needs both: at under
-   * 720px of viewport height the sheet shrinks until six labels cannot stand
-   * beside it without overlapping each other, whatever size the type is.
+   * Too narrow, or too short to be possible at all.
+   *
+   * 720px was far too generous a threshold — it took the drawing away from
+   * ordinary laptops, which is exactly where it is meant to be read. The
+   * labels have room now, so the only screens that fall back are the ones
+   * where the sheet has nowhere left to shrink to.
    */
-  @media (max-width: 1023px), (max-height: 720px) {
+  @media (max-width: 1023px), (max-height: 620px) {
     .sc-lines,
     .sc-callout,
     .sc-head[data-for='systems'],
@@ -1578,13 +1587,13 @@
    * half of the chapter would simply be missing. It is hidden on desktop
    * only once the component has confirmed it is running.
    */
-  @media (min-width: 1024px) and (min-height: 721px) {
+  @media (min-width: 1024px) and (min-height: 621px) {
     .sc[data-reveal] .sc-stack {
       display: none;
     }
   }
 
-  @media (min-width: 1024px) and (min-height: 721px) {
+  @media (min-width: 1024px) and (min-height: 621px) {
     /*
      * Tall enough that both states get a share of the stick.
      *
@@ -1608,6 +1617,36 @@
        */
       width: min(100%, calc((100svh - 27.5rem) * 16 / 9));
       margin-inline: auto;
+    }
+
+    /*
+     * On a short screen the heading and the note block give up their room so
+     * the drawing keeps its own. Without this the sheet shrank until the six
+     * labels could not stand beside it — which is what made an earlier
+     * version give up and fall back to a list on an ordinary laptop.
+     */
+    @media (max-height: 820px) {
+      .sc-stick {
+        width: min(100%, calc((100svh - 23rem) * 16 / 9));
+      }
+
+      .sc-title {
+        font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+      }
+
+      .sc-head .sc-lead {
+        display: none;
+      }
+
+      .sc-heads {
+        margin-bottom: 0.75rem;
+      }
+
+      .sc-foot {
+        min-height: 6rem;
+        margin-top: 0.75rem;
+        padding-top: 1rem;
+      }
     }
 
     /*

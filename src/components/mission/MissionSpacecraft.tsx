@@ -55,8 +55,16 @@ import { clsx } from '@/lib/utils'
  * coordinate below stays true at any size.
  */
 
-/** The render's box inside the plate. Slightly left of centre. */
-const IMG = { left: 4, top: 6.25, size: 87.5 }
+/**
+ * The render's box inside the plate.
+ *
+ * 72% rather than nearly the whole sheet, and offset so that the *spacecraft*
+ * lands in the middle rather than the file it sits in — its frame runs from
+ * 26.5% to 79% of the render, so a centred file puts the object right of
+ * centre. The 28% given up is what the labels stand in, and what holds them
+ * clear of the hardware they are naming.
+ */
+const IMG = { left: 12, top: 14, size: 72 }
 
 /** Measured off the render: the frame's straight left and right edges. */
 const EDGE = { left: 26.5, right: 79.0 }
@@ -71,7 +79,7 @@ const vx = (pct: number) => (pct / 100) * VB.w
 const vy = (pct: number) => (pct / 100) * VB.h
 
 /** Where a label column ends and its leader begins. */
-const GUTTER = { left: 19, right: 81 }
+const GUTTER = { left: 20, right: 80 }
 
 /**
  * A leader: a short horizontal run out of the label, then one angle into the
@@ -79,9 +87,9 @@ const GUTTER = { left: 19, right: 81 }
  */
 function leader(side: 'left' | 'right', labelY: number, anchorY: number) {
   if (side === 'left') {
-    return `M ${vx(GUTTER.left + 0.6)} ${vy(labelY)} L ${vx(23)} ${vy(labelY)} L ${vx(X_L)} ${vy(anchorY)}`
+    return `M ${vx(GUTTER.left + 0.6)} ${vy(labelY)} L ${vx(24)} ${vy(labelY)} L ${vx(X_L)} ${vy(anchorY)}`
   }
-  return `M ${vx(GUTTER.right - 0.6)} ${vy(labelY)} L ${vx(77)} ${vy(labelY)} L ${vx(X_R)} ${vy(anchorY)}`
+  return `M ${vx(GUTTER.right - 0.6)} ${vy(labelY)} L ${vx(76)} ${vy(labelY)} L ${vx(X_R)} ${vy(anchorY)}`
 }
 
 /** Pull a spec by its label so `mission.ts` stays the single source. */
@@ -92,9 +100,9 @@ const spec = (label: string) => specs.find((s) => s.label === label)?.value ?? '
  * `labelY` is where the text sits; `anchorY` is where the line meets the frame.
  */
 const CALLOUTS = [
-  { label: 'Form factor', side: 'left' as const, labelY: 30, anchorY: 35 },
-  { label: 'Dimensions', side: 'left' as const, labelY: 66, anchorY: 61 },
-  { label: 'Payload', side: 'right' as const, labelY: 32, anchorY: 38 },
+  { label: 'Form factor', side: 'left' as const, labelY: 33, anchorY: 38 },
+  { label: 'Dimensions', side: 'left' as const, labelY: 69, anchorY: 64 },
+  { label: 'Payload', side: 'right' as const, labelY: 35, anchorY: 41 },
 ]
 
 /** The facts that describe the programme, not the spacecraft. No leaders. */
@@ -108,12 +116,12 @@ const NOTES = ['Mission', 'Ground segment', 'Programme']
  * that is where the antennas stop crossing the margins.
  */
 const RING: { side: 'left' | 'right'; labelY: number; anchorY: number }[] = [
-  { side: 'left', labelY: 31, anchorY: 34 },
-  { side: 'left', labelY: 53, anchorY: 53 },
-  { side: 'left', labelY: 75, anchorY: 72 },
-  { side: 'right', labelY: 31, anchorY: 34 },
-  { side: 'right', labelY: 53, anchorY: 53 },
-  { side: 'right', labelY: 75, anchorY: 72 },
+  { side: 'left', labelY: 32, anchorY: 36 },
+  { side: 'left', labelY: 54, anchorY: 54 },
+  { side: 'left', labelY: 76, anchorY: 72 },
+  { side: 'right', labelY: 32, anchorY: 36 },
+  { side: 'right', labelY: 54, anchorY: 54 },
+  { side: 'right', labelY: 76, anchorY: 72 },
 ]
 
 /** Left column then right column, so the ring reads top-down on each side. */
