@@ -1363,6 +1363,441 @@
       transform: none;
     }
   }
+
+  /* ======================================================================
+   * MISSION — INSIDE LISAT-01.
+   *
+   * An engineering drawing that changes what it is annotating without ever
+   * letting go of the object. Four factors decide whether anything on the
+   * plate is visible, and they are multiplied rather than fought over with
+   * specificity:
+   *
+   *   --in              has the section arrived
+   *   --mode-specs      is it annotating specifications
+   *   --mode-systems    is it annotating subsystems
+   *   --focus           is this the subsystem being looked at
+   *
+   * Custom properties do not interpolate, but the `opacity` they resolve to
+   * does, so each element still transitions — on its own delay, which is what
+   * makes the drawing assemble rather than simply appear.
+   * ==================================================================== */
+
+  .sc {
+    --in: 1;
+    --mode-specs: 1;
+    --mode-systems: 0;
+    /*
+     * Where a label column stops and its leader begins. Named for this
+     * drawing specifically: --gutter is the page's own horizontal padding,
+     * and redefining it here fed 82%% padding to every Container inside.
+     */
+    --label-edge: 81%;
+  }
+
+  .sc[data-reveal='idle'] {
+    --in: 0;
+  }
+
+  .sc[data-mode='systems'] {
+    --mode-specs: 0;
+    --mode-systems: 1;
+  }
+
+  .sc-rig {
+    position: relative;
+  }
+
+  .sc-cue {
+    display: none;
+  }
+
+  /* ---- Headings, stacked in one cell so they cross-fade in place ---- */
+  .sc-heads {
+    display: grid;
+  }
+
+  .sc-title {
+    font-size: clamp(2rem, 3.5vw, 3.25rem);
+    font-weight: 600;
+    line-height: 0.96;
+    letter-spacing: -0.032em;
+  }
+
+  .sc-head {
+    grid-area: 1 / 1;
+    transition:
+      opacity 0.5s ease,
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sc-head[data-for='specs'] {
+    opacity: calc(var(--in) * var(--mode-specs));
+  }
+
+  .sc-head[data-for='systems'] {
+    opacity: calc(var(--in) * var(--mode-systems));
+    pointer-events: none;
+  }
+
+  .sc[data-reveal='idle'] .sc-head {
+    transform: translateY(14px);
+  }
+
+  /* ---- The plate: the sheet the drawing is on ---- */
+  .sc-plate {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-inline: auto;
+    /*
+     * The render has to have something to multiply against, and the sticky
+     * wrapper opens a stacking context that the section's own background
+     * cannot reach into. So the sheet carries its own surface.
+     */
+    background-color: rgb(var(--surface));
+  }
+
+  .sc-grid {
+    opacity: 0.5;
+    background-size: 64px 64px;
+    /*
+     * Faded at the edges. A grid that stops at a hard line is a rectangle,
+     * and a rectangle around the render is the card this composition exists
+     * to avoid.
+     */
+    mask-image: radial-gradient(ellipse 72% 68% at 50% 50%, #000 35%, transparent 100%);
+  }
+
+  /* ---- The spacecraft ---- */
+  .sc-craft {
+    position: absolute;
+    inset: 6.25% 8.5% 6.25% 4%;
+    /*
+     * This is what takes the render out of its white box without touching
+     * the file. Keying the white out would have eaten the white connectors
+     * along the top of the stack, which are hardware, not background.
+     */
+    mix-blend-mode: multiply;
+    transition:
+      opacity 0.9s ease,
+      transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 0.18s;
+  }
+
+  .sc[data-reveal='idle'] .sc-craft {
+    opacity: 0;
+    transform: translateY(28px) scale(0.94);
+  }
+
+  /* ---- Leaders ---- */
+  .sc-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: rgb(var(--brand));
+    /* The labels take the clicks; the drawing is annotation. */
+    pointer-events: none;
+  }
+
+  .sc-line path {
+    stroke-dasharray: 1;
+    transition: stroke-dashoffset 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sc-line circle {
+    transition: opacity 0.3s ease;
+  }
+
+  .sc-line[data-for='specs'] {
+    opacity: calc(var(--in) * var(--mode-specs) * 0.6);
+    transition: opacity 0.45s ease;
+  }
+
+  .sc-line[data-for='specs'] path {
+    stroke-dashoffset: 0;
+    transition-delay: calc(0.6s + var(--i) * 0.16s);
+  }
+
+  .sc-line[data-for='specs'] circle {
+    opacity: 1;
+    transition-delay: calc(1.2s + var(--i) * 0.16s);
+  }
+
+  .sc[data-reveal='idle'] .sc-line[data-for='specs'] path {
+    stroke-dashoffset: 1;
+  }
+
+  .sc[data-reveal='idle'] .sc-line[data-for='specs'] circle {
+    opacity: 0;
+  }
+
+  .sc-line[data-for='systems'] {
+    --focus: 0.4;
+    opacity: calc(var(--in) * var(--mode-systems) * var(--focus));
+    transition: opacity 0.45s ease;
+  }
+
+  .sc-line[data-for='systems'][data-on='true'] {
+    --focus: 1;
+  }
+
+  /*
+   * The subsystem leaders draw when the mode changes, not when the section
+   * arrives — otherwise they would already be finished on the sheet behind
+   * an invisible layer, and could only ever fade in.
+   */
+  .sc-line[data-for='systems'] path {
+    stroke-dashoffset: 1;
+  }
+
+  .sc[data-mode='systems'] .sc-line[data-for='systems'] path {
+    stroke-dashoffset: 0;
+    transition-delay: calc(0.12s + var(--i) * 0.11s);
+  }
+
+  .sc-line[data-for='systems'] circle {
+    opacity: 0;
+  }
+
+  .sc[data-mode='systems'] .sc-line[data-for='systems'] circle {
+    opacity: 1;
+    transition-delay: calc(0.7s + var(--i) * 0.11s);
+  }
+
+  /* ---- Callouts ---- */
+  .sc-callout {
+    position: absolute;
+    top: var(--y);
+    width: 19%;
+    transform: translate(0, -50%);
+    transition:
+      opacity 0.55s ease,
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sc-at-left {
+    right: var(--label-edge);
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .sc-at-right {
+    left: var(--label-edge);
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .sc-callout[data-for='specs'] {
+    opacity: calc(var(--in) * var(--mode-specs));
+    transition-delay: calc(0.78s + var(--i) * 0.16s);
+  }
+
+  .sc[data-reveal='idle'] .sc-at-left[data-for='specs'] {
+    transform: translate(-14px, -50%);
+  }
+
+  .sc[data-reveal='idle'] .sc-at-right[data-for='specs'] {
+    transform: translate(14px, -50%);
+  }
+
+  .sc-value {
+    font-size: clamp(0.95rem, 1.35vw, 1.375rem);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    text-transform: uppercase;
+    color: rgb(var(--fg));
+  }
+
+  /* ---- Subsystems: FOCUS ---- */
+  .sc-sub {
+    display: flex;
+    flex-direction: column;
+    /* At rest every name is readable; FOCUS quietens, it does not hide. */
+    --focus: 0.58;
+    opacity: calc(var(--in) * var(--mode-systems) * var(--focus));
+    transition-delay: calc(0.3s + var(--i) * 0.11s);
+  }
+
+  .sc[data-mode='specs'] .sc-sub {
+    pointer-events: none;
+  }
+
+  .sc-sub[data-on='true'] {
+    --focus: 1;
+  }
+
+  .sc-abbr {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: rgb(var(--fg-faint));
+    transition: color 0.3s ease;
+  }
+
+  .sc-sub[data-on='true'] .sc-abbr {
+    color: rgb(var(--accent));
+  }
+
+  .sc-subname {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    color: rgb(var(--fg));
+    transition: color 0.3s ease;
+  }
+
+  .sc-sub[data-on='true'] .sc-subname {
+    color: rgb(var(--accent));
+  }
+
+  /* ---- The block under the drawing ---- */
+  .sc-foot {
+    display: grid;
+  }
+
+  .sc-notes,
+  .sc-detail {
+    grid-area: 1 / 1;
+    transition: opacity 0.5s ease;
+  }
+
+  .sc-notes {
+    opacity: calc(var(--in) * var(--mode-specs));
+    /*
+     * Last to arrive when the drawing assembles, but first to leave when the
+     * mode changes. One `transition-delay` serves both directions, so the
+     * departure needs its own or the notes sit under the subsystem detail
+     * for a second and a quarter.
+     */
+    transition-delay: 1.15s;
+  }
+
+  .sc[data-mode='systems'] .sc-notes {
+    transition-delay: 0s;
+  }
+
+  .sc-detail {
+    opacity: calc(var(--in) * var(--mode-systems));
+  }
+
+  .sc[data-mode='specs'] .sc-detail {
+    pointer-events: none;
+  }
+
+  /* ======================================================================
+   * Below lg the drawing cannot be annotated in place, so it is not
+   * pretended: the render is shown once and the facts are read down the
+   * page. The mode machinery is switched off here rather than merely
+   * hidden, so a stray observer cannot blank the heading on a phone.
+   * ==================================================================== */
+  @media (max-width: 1023px) {
+    .sc-lines,
+    .sc-callout,
+    .sc-head[data-for='systems'],
+    .sc-foot {
+      display: none;
+    }
+
+    .sc-head[data-for='specs'] {
+      opacity: var(--in);
+    }
+
+    /*
+     * Edge to edge. The render is 16:9 with the spacecraft in the middle
+     * third, so at phone width every pixel of gutter comes straight off the
+     * only part anyone is looking at.
+     */
+    .sc-plate {
+      width: calc(100% + var(--gutter) * 2);
+      margin-inline: calc(var(--gutter) * -1);
+    }
+
+    .sc-craft {
+      inset: 0;
+    }
+  }
+
+  /*
+   * The stacked reading is the fallback as well as the phone layout. Without
+   * JavaScript the mode never changes, so on a wide screen the subsystems
+   * would otherwise have nowhere to appear at all — the whole architecture
+   * half of the chapter would simply be missing. It is hidden on desktop
+   * only once the component has confirmed it is running.
+   */
+  @media (min-width: 1024px) {
+    .sc[data-reveal] .sc-stack {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    /*
+     * Tall enough that both states get a share of the stick.
+     *
+     * The sheet lets go once the rig has scrolled past it, so the rig has to
+     * cover the specifications, the change, and then the subsystems with
+     * room to hover them. At 195vh the architecture state existed for about
+     * three hundred pixels and then slid away mid-read.
+     */
+    .sc-rig {
+      height: 250vh;
+    }
+
+    .sc-stick {
+      position: sticky;
+      top: calc(var(--nav-height) + 1.25rem);
+      /*
+       * Sized from the viewport, not the container: the sheet, its heading
+       * and its note block have to stand on one screen together, and height
+       * is what is scarce. Putting the measure here rather than on the plate
+       * is what keeps the heading aligned with the drawing it introduces.
+       */
+      width: min(100%, calc((100svh - 27.5rem) * 16 / 9));
+      margin-inline: auto;
+    }
+
+    /*
+     * Tall, not a hairline. With the root collapsed to the centre line, a 1px
+     * sentinel intersects for one pixel of travel — it fires on the way in
+     * and again on the way out, and any jump skips it entirely. A block that
+     * runs to the end of the rig is *occupied* for the whole second half.
+     */
+    .sc-cue {
+      display: block;
+      position: absolute;
+      top: 50%;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      /*
+       * It covers the sheet and paints after it, so without this it swallows
+       * every hover and click on the subsystem labels — across exactly the
+       * half of the scroll where they are meant to be used.
+       */
+      pointer-events: none;
+    }
+
+    .sc-heads {
+      margin-bottom: 1rem;
+    }
+
+    .sc-foot {
+      min-height: 7.5rem;
+      margin-top: 1rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .sc-notes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+      max-width: 62rem;
+    }
+  }
 }
 
 @layer utilities {
