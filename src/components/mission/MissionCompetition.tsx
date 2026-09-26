@@ -8,7 +8,7 @@ export function MissionCompetition() {
   const { competition } = mission
 
   return (
-    <Section tone="ice" join="soft" spacing="loose">
+    <Section tone="void" join="curve" spacing="none" className="py-20 md:py-28">
       <Container wide>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">

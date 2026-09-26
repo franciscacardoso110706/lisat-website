@@ -11,7 +11,7 @@ import { getDepartment } from '@/data/departments'
  */
 export function MissionArchitecture() {
   return (
-    <Section tone="cloud" join="soft" spacing="loose" id="specifications">
+    <Section tone="cloud" join="soft" spacing="none" id="specifications" className="py-16 md:py-24">
       <div
         className="grid-overlay pointer-events-none absolute inset-0"
         aria-hidden="true"

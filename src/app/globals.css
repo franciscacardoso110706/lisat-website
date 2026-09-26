@@ -423,6 +423,335 @@
   }
 
   /**
+   * MISSION — the opening.
+   *
+   * Three lines rise into place and the light comes up behind them. The
+   * scroll handler writes `--l0`, `--l1`, `--l2` and `--open`; every rule
+   * below is derived from those four numbers, so a frame costs four custom
+   * property writes and no layout work at all.
+   *
+   * Unpinned, the lines are simply in place and the surface is out of the
+   * way — the statement reads without any of this running.
+   */
+  .opening {
+    --l0: 1;
+    --l1: 1;
+    --l2: 1;
+    --open: 0;
+  }
+
+  .opening-viewport {
+    min-height: 60svh;
+  }
+
+  .opening[data-mode='pinned'] .opening-viewport {
+    height: 100svh;
+  }
+
+  /* Each line rises out of its own mask. The blur clears as it settles, which
+     is what stops three sliding words reading as a slide transition. */
+  .opening[data-mode='pinned'] .opening-line {
+    will-change: transform, opacity;
+  }
+
+  .opening[data-mode='pinned'] .opening-line[data-line='0'] {
+    transform: translate3d(0, calc((1 - var(--l0)) * 110%), 0);
+    opacity: var(--l0);
+  }
+
+  .opening[data-mode='pinned'] .opening-line[data-line='1'] {
+    transform: translate3d(0, calc((1 - var(--l1)) * 110%), 0);
+    opacity: var(--l1);
+  }
+
+  .opening[data-mode='pinned'] .opening-line[data-line='2'] {
+    transform: translate3d(0, calc((1 - var(--l2)) * 110%), 0);
+    opacity: var(--l2);
+  }
+
+  .opening[data-mode='pinned'] .opening-note {
+    opacity: calc(var(--l2) * (1 - var(--open) * 2.6));
+    transform: translate3d(0, calc((1 - var(--l2)) * 1.5rem), 0);
+  }
+
+  /* The statement steps back as the light arrives, so the two moments overlap
+     instead of queueing. */
+  .opening[data-mode='pinned'] h2 {
+    opacity: calc(1 - var(--open) * 2.2);
+    transform: translate3d(0, calc(var(--open) * -4rem), 0);
+  }
+
+  /*
+   * The light. A tall curved surface translated up from below: the curve is
+   * on the element, so nothing is masked or clipped per frame.
+   */
+  .opening-surface {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    bottom: 0;
+    height: 150%;
+    /* `tone-paper` on this element supplies both the palette its contents
+       resolve against and this background. */
+    border-radius: 50% 50% 0 0 / 14% 14% 0 0;
+    transform: translate3d(0, 100%, 0);
+    will-change: transform;
+    /* The curve is on the element, so the content inside has to sit clear of
+       it — otherwise the headline is cropped by the arc it rides in on. */
+    padding-top: 16%;
+  }
+
+  .opening[data-mode='pinned'] .opening-surface {
+    transform: translate3d(0, calc((1 - var(--open)) * 100%), 0);
+  }
+
+  /* The answer settles as the surface finishes arriving, a little behind it
+     so the two are not one flat move. */
+  .opening[data-mode='pinned'] .opening-answer {
+    opacity: calc((var(--open) - 0.62) * 3.4);
+    transform: translate3d(0, calc((1 - var(--open)) * 2.5rem), 0);
+  }
+
+  /* Unpinned there is no rising light — the section simply ends and the one
+     below it begins, which is what a page without JavaScript should do. */
+  .opening:not([data-mode='pinned']) .opening-surface {
+    display: none;
+  }
+
+  /**
+   * MISSION — the opening sequence.
+   *
+   * Three layers stacked on one pinned screen: the problem, the answer, and
+   * the mechanics. Which one is visible is a function of eight numbers the
+   * scroll handler writes — `--p0`, `--p1`, `--p2`, `--intro`, `--name`,
+   * `--orbit`, `--stage`, `--shut`. Nothing here reads layout.
+   *
+   * Unpinned — no JavaScript, a small screen, reduced motion — the layers
+   * fall back to ordinary stacked blocks and the whole story is still there
+   * to read.
+   */
+  .mi {
+    /* The stage layer reuses the `.hiw-*` rules, which read `--rail` for the
+       grid's outer columns. Those rules are shared, but the variable was
+       declared on `.hiw` — without it here the three columns collapse and the
+       rails stack above and below the panel instead of flanking it. */
+    --rail: 3.25rem;
+    --p0: 1;
+    --p1: 1;
+    --p2: 1;
+    --change: 1;
+    --intro: 1;
+    --symbol: 1;
+    --sat: 1;
+    --word: 1;
+    --name: 1;
+    --stage: 1;
+    --shut: 0;
+  }
+
+  .mi[data-mode='pinned'] .mi-viewport {
+    height: 100svh;
+  }
+
+  .mi[data-mode='pinned'] .mi-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: calc(var(--nav-height) + 1rem) 0 2rem;
+    will-change: opacity, transform;
+  }
+
+  /* Only one phrase is ever on screen; they share the same place. */
+  .mi[data-mode='pinned'] .mi-phrase {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  .mi[data-mode='pinned'] .mi-phrase[data-phrase='0'] {
+    opacity: var(--p0);
+    transform: translate3d(0, calc((1 - var(--p0)) * 2.5rem), 0);
+  }
+
+  .mi[data-mode='pinned'] .mi-phrase[data-phrase='1'] {
+    opacity: var(--p1);
+    transform: translate3d(0, calc((1 - var(--p1)) * 2.5rem), 0);
+  }
+
+  .mi[data-mode='pinned'] .mi-phrase[data-phrase='2'] {
+    opacity: var(--p2);
+    transform: translate3d(0, calc((1 - var(--p2)) * 2.5rem), 0);
+  }
+
+  /* ---- It's time to change ---- */
+  .mi[data-mode='pinned'] .mi-change {
+    opacity: var(--change);
+  }
+
+  /* Arrives slightly wide and settles, so the sentence lands rather than
+     appears. Nothing else is on screen while it does. */
+  .mi[data-mode='pinned'] .mi-change-text {
+    transform: scale(calc(1.04 - var(--change) * 0.04));
+    transform-origin: left center;
+  }
+
+  /* ---- Introducing LISAT-01 ---- */
+  .mi[data-mode='pinned'] .mi-reveal {
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    /*
+     * The whole layer clears as the stage arrives. Fading only the parts
+     * inside it left the finished logo sitting behind the vessel panel — the
+     * mark holds full strength once drawn, so nothing else was ever going to
+     * take it away.
+     */
+    opacity: calc(1 - var(--stage));
+  }
+
+  .mi[data-mode='pinned'] .mi-introducing {
+    opacity: var(--intro);
+    transform: translate3d(0, calc((1 - var(--intro)) * 1rem), 0);
+  }
+
+  .mi[data-mode='pinned'] .mi-name {
+    opacity: var(--name);
+    transform: translate3d(0, calc((1 - var(--name)) * 0.75rem), 0);
+  }
+
+  /*
+   * The mark forming.
+   *
+   * `pathLength="1"` on both rings means the dash values are simply progress.
+   * The orbit draws from its top, the satellite lands on it, and then the
+   * wordmark arrives letter by letter across the circle.
+   */
+  /* One colour, as the mark is. The brand blue reads as the logo; the rings
+     and the letters must not be different colours from each other. */
+  .mi-symbol {
+    color: rgb(var(--brand));
+  }
+
+  .mi-symbol [data-symbol='orbit'],
+  .mi-symbol [data-symbol='satellite'] {
+    stroke-dasharray: 1;
+  }
+
+  .mi[data-mode='pinned'] .mi-symbol [data-symbol='orbit'] {
+    stroke-dashoffset: calc(1 - var(--symbol));
+  }
+
+  .mi[data-mode='pinned'] .mi-symbol [data-symbol='satellite'] {
+    stroke-dashoffset: calc(1 - var(--sat));
+  }
+
+  /*
+   * The letters. Each takes a fifth of `--word`, so they arrive in order
+   * rather than together — L and I first, outside the circle, then S, A and T
+   * inside it.
+   */
+  .mi[data-mode='pinned'] .mi-symbol [data-letter] {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+    transition: none;
+  }
+
+  .mi[data-mode='pinned'] .mi-symbol [data-letter='0'] {
+    opacity: clamp(0, calc(var(--word) * 5 - 0), 1);
+    transform: translate3d(0, calc((1 - clamp(0, calc(var(--word) * 5), 1)) * 6px), 0);
+  }
+
+  .mi[data-mode='pinned'] .mi-symbol [data-letter='1'] {
+    opacity: clamp(0, calc(var(--word) * 5 - 1), 1);
+    transform: translate3d(0, calc((1 - clamp(0, calc(var(--word) * 5 - 1), 1)) * 6px), 0);
+  }
+
+  .mi[data-mode='pinned'] .mi-symbol [data-letter='2'] {
+    opacity: clamp(0, calc(var(--word) * 5 - 2), 1);
+    transform: translate3d(0, calc((1 - clamp(0, calc(var(--word) * 5 - 2), 1)) * 6px), 0);
+  }
+
+  .mi[data-mode='pinned'] .mi-symbol [data-letter='3'] {
+    opacity: clamp(0, calc(var(--word) * 5 - 3), 1);
+    transform: translate3d(0, calc((1 - clamp(0, calc(var(--word) * 5 - 3), 1)) * 6px), 0);
+  }
+
+  .mi[data-mode='pinned'] .mi-symbol [data-letter='4'] {
+    opacity: clamp(0, calc(var(--word) * 5 - 4), 1);
+    transform: translate3d(0, calc((1 - clamp(0, calc(var(--word) * 5 - 4), 1)) * 6px), 0);
+  }
+
+  /* ---- The three stages ---- */
+  .mi[data-mode='pinned'] .mi-stage-layer {
+    opacity: var(--stage);
+    transform: scale(calc(0.96 + var(--stage) * 0.04));
+    pointer-events: none;
+  }
+
+  /* ---- Stacked: no JavaScript, small screens, reduced motion ---- */
+  .mi:not([data-mode='pinned']) .mi-layer + .mi-layer {
+    margin-top: 3rem;
+  }
+
+  .mi:not([data-mode='pinned']) .mi-phrase + .mi-phrase {
+    margin-top: 1.5rem;
+  }
+
+  .mi:not([data-mode='pinned']) .mi-reveal,
+  .mi:not([data-mode='pinned']) .mi-change {
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Stacked, the mark is simply drawn. */
+  .mi:not([data-mode='pinned']) .mi-symbol [data-symbol] {
+    stroke-dasharray: none;
+  }
+
+  .mi:not([data-mode='pinned']) .mi-viewport {
+    padding: 4rem 0;
+  }
+
+  /*
+   * The stage layer borrows the `.hiw-*` rules, whose panels are absolutely
+   * stacked and shown one at a time by `data-on`. Unpinned there is nothing
+   * driving that, so all three have to come back into flow — otherwise a
+   * phone, a reduced-motion reader and a page without JavaScript see one
+   * third of the story.
+   */
+  .mi:not([data-mode='pinned']) .hiw-frame {
+    display: block;
+  }
+
+  .mi:not([data-mode='pinned']) .hiw-rail {
+    display: none;
+  }
+
+  .mi:not([data-mode='pinned']) .hiw-stage {
+    clip-path: none;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .mi:not([data-mode='pinned']) .hiw-panel {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    visibility: visible;
+    min-height: 22rem;
+  }
+
+  .mi:not([data-mode='pinned']) .hiw-panel + .hiw-panel {
+    margin-top: 1.5rem;
+  }
+
+  .mi:not([data-mode='pinned']) .hiw-media {
+    transform: none;
+  }
+
+  /**
    * How it works — the shutter.
    *
    * One stage and three transformations, rather than three panels sliding

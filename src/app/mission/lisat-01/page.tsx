@@ -1,15 +1,12 @@
 import type { Metadata } from 'next'
 import { Container, Section, SectionHeading } from '@/components/ui/Section'
-import { Gallery } from '@/components/ui/Gallery'
 import { CtaBand } from '@/components/ui/CtaBand'
 import { PartnerLogo } from '@/components/partners/PartnerLogo'
-import { MissionHero } from '@/components/mission/MissionHero'
-import { MissionContext } from '@/components/mission/MissionContext'
-import { MissionArchitecture } from '@/components/mission/MissionArchitecture'
-import { MissionHowItWorks } from '@/components/mission/MissionHowItWorks'
+import { MissionSpacecraft } from '@/components/mission/MissionSpacecraft'
+import { MissionIntro } from '@/components/mission/MissionIntro'
 import { MissionJourney } from '@/components/mission/MissionJourney'
 import { MissionCompetition } from '@/components/mission/MissionCompetition'
-import { mission, missionGallery } from '@/data/mission'
+import { mission } from '@/data/mission'
 import { partners } from '@/data/partners'
 import { contact } from '@/data/site'
 
@@ -54,33 +51,27 @@ export default function MissionPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <MissionHero />
-      <MissionContext />
-      <MissionArchitecture />
-      {/* How the mission works, then how it is being built. */}
-      <MissionHowItWorks />
-      <MissionJourney />
-      <MissionCompetition />
+      {/*
+        The opening IS the page. There is no hero in front of it: clicking
+        "Mission" puts the reader inside the story — the problem, then
+        LISAT-01, then how it works — as one pinned sequence.
 
-      {/* Development gallery */}
-      <Section tone="paper" spacing="loose" id="gallery">
-        <Container wide>
-          <SectionHeading
-            eyebrow="Development"
-            index="06"
-            title="Building it"
-            lead="Reviews, labs, test benches and the people doing the work."
-          />
-          <Gallery images={missionGallery} className="mt-14" />
-        </Container>
-      </Section>
+        The old hero and the static mission explanation that used to sit here
+        said the same things again afterwards, so they are gone.
+      */}
+      <MissionIntro />
+
+      {/* How it works, then how it is being built. */}
+      <MissionJourney />
+      <MissionSpacecraft />
+      <MissionCompetition />
 
       {/* Partners on the mission */}
       <Section tone="cloud" spacing="default">
         <Container wide>
           <SectionHeading
             eyebrow="Support"
-            index="07"
+            index="04"
             title="Partners on this mission"
             lead="Organisations contributing expertise, facilities and hardware to LISAT-01."
           />
