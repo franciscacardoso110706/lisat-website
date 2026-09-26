@@ -94,7 +94,13 @@ function FeaturePanel({ update }: { update: Update }) {
         />
 
         <div className="relative lg:col-span-7">
-          <div className="relative aspect-[16/10] overflow-hidden rounded-panel lg:h-full lg:rounded-none">
+          {/*
+              `lg:aspect-auto` is load-bearing. With both `aspect-[16/10]` and
+              `h-full` in play the width was computed from the card's height —
+              765px inside a 699px column — and the overflow ran under the
+              text, which paints after it.
+            */}
+            <div className="relative aspect-[16/10] overflow-hidden rounded-panel lg:h-full lg:aspect-auto lg:rounded-none">
             <Image
               src={update.cover.src}
               alt={update.cover.alt}

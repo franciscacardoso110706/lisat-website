@@ -1276,6 +1276,13 @@
     aspect-ratio: 16 / 9;
     margin-inline: auto;
     /*
+     * Makes the sheet a query container, so the labels around it can be sized
+     * in `cqh` — a share of the drawing rather than a fixed number of pixels.
+     * The positions are percentages of the plate; the type was not, so on a
+     * short screen the labels grew past the gaps between them and collided.
+     */
+    container-type: size;
+    /*
      * The render has to have something to multiply against, and the sticky
      * wrapper opens a stacking context that the section's own background
      * cannot reach into. So the sheet carries its own surface.
@@ -1428,7 +1435,7 @@
   }
 
   .sc-value {
-    font-size: clamp(0.95rem, 1.35vw, 1.375rem);
+    font-size: clamp(0.9rem, 5cqh, 1.375rem);
     font-weight: 600;
     line-height: 1.08;
     letter-spacing: -0.022em;
@@ -1456,7 +1463,7 @@
 
   .sc-abbr {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.75rem;
+    font-size: clamp(0.625rem, 2.2cqh, 0.75rem);
     letter-spacing: 0.08em;
     color: rgb(var(--fg-faint));
     transition: color 0.3s ease;
@@ -1467,9 +1474,9 @@
   }
 
   .sc-subname {
-    font-size: 0.875rem;
+    font-size: clamp(0.6875rem, 2.8cqh, 0.875rem);
     font-weight: 500;
-    line-height: 1.25;
+    line-height: 1.22;
     letter-spacing: -0.005em;
     color: rgb(var(--fg));
     transition: color 0.3s ease;
@@ -1519,7 +1526,12 @@
    * page. The mode machinery is switched off here rather than merely
    * hidden, so a stray observer cannot blank the heading on a phone.
    * ==================================================================== */
-  @media (max-width: 1023px) {
+  /*
+   * Too narrow, or too short. The annotated drawing needs both: at under
+   * 720px of viewport height the sheet shrinks until six labels cannot stand
+   * beside it without overlapping each other, whatever size the type is.
+   */
+  @media (max-width: 1023px), (max-height: 720px) {
     .sc-lines,
     .sc-callout,
     .sc-head[data-for='systems'],
@@ -1529,6 +1541,19 @@
 
     .sc-head[data-for='specs'] {
       opacity: var(--in);
+    }
+
+    .sc-rig {
+      height: auto;
+    }
+
+    .sc-stick {
+      position: static;
+      width: 100%;
+    }
+
+    .sc[data-reveal] .sc-stack {
+      display: block;
     }
 
     /*
@@ -1553,13 +1578,13 @@
    * half of the chapter would simply be missing. It is hidden on desktop
    * only once the component has confirmed it is running.
    */
-  @media (min-width: 1024px) {
+  @media (min-width: 1024px) and (min-height: 721px) {
     .sc[data-reveal] .sc-stack {
       display: none;
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1024px) and (min-height: 721px) {
     /*
      * Tall enough that both states get a share of the stick.
      *
@@ -2141,13 +2166,13 @@
   /* ---- The way in ---- */
   .join-card {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    gap: 3rem;
-    width: min(100%, 23rem);
-    min-height: 16rem;
-    padding: 2rem;
-    border-radius: 2rem;
+    gap: 2rem;
+    width: 100%;
+    min-height: 0;
+    padding: 3rem 3.5rem;
+    border-radius: 2.5rem;
     background-color: rgb(var(--brand));
     color: rgb(var(--lisat-white));
     transition:
@@ -2201,9 +2226,11 @@
     }
 
     .join-card {
-      width: 100%;
-      min-height: 14rem;
+      flex-direction: column;
+      align-items: flex-start;
       gap: 2rem;
+      padding: 2rem;
+      border-radius: 2rem;
     }
   }
 

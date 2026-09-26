@@ -170,6 +170,17 @@ export function MissionOverview() {
       { height: heightAfter, duration: DURATION, ease: 'power3.inOut' },
     )
 
+    /*
+     * Held at nothing for the whole flight, and only then let in.
+     *
+     * `absolute: true` lifts the images out of flow, so while they travel
+     * each caption sits where its image is about to land. Fading the text in
+     * partway through the movement — which is what a delay did — painted it
+     * across the photograph for about a third of a second.
+     */
+    if (next) gsap.set(bodies, { opacity: 0, y: 16 })
+    else gsap.to(bodies, { opacity: 0, duration: 0.28, ease: 'power2.in' })
+
     Flip.from(before, {
       duration: DURATION,
       ease: 'power3.inOut',
@@ -184,23 +195,21 @@ export function MissionOverview() {
          */
         gsap.set(stageEl, { clearProps: 'height' })
         busy.current = false
+
+        if (next) {
+          gsap.to(bodies, {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            ease: 'power3.out',
+            stagger: 0.06,
+            clearProps: 'opacity,transform',
+          })
+        } else {
+          gsap.set(bodies, { clearProps: 'opacity,transform' })
+        }
       },
     })
-
-    // The text of each chapter arrives after its image has somewhere to be.
-    gsap.fromTo(
-      bodies,
-      { opacity: next ? 0 : 1, y: next ? 18 : 0 },
-      {
-        opacity: next ? 1 : 0,
-        y: next ? 0 : 12,
-        duration: next ? 0.5 : 0.3,
-        ease: next ? 'power3.out' : 'power2.in',
-        stagger: 0.06,
-        delay: next ? DURATION * 0.55 : 0,
-        clearProps: 'opacity,transform',
-      },
-    )
   }, [open])
 
   /** Escape closes it, as anything that opens over the page should. */

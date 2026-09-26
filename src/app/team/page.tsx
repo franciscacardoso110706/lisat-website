@@ -180,7 +180,7 @@ export default async function TeamPage() {
       {/* ── The way in ──────────────────────────────────────────────── */}
       <Section tone="paper" join="soft" spacing="none" className="py-16 md:py-24">
         <Container wide>
-          <div className="flex justify-center lg:justify-end">
+          <div>
             <Link href="/join-us" className="join-card group">
               <p className="join-title">
                 We&rsquo;re
