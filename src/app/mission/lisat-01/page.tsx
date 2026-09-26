@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { CtaBand } from '@/components/ui/CtaBand'
 import { MissionSpacecraft } from '@/components/mission/MissionSpacecraft'
 import { MissionIntro } from '@/components/mission/MissionIntro'
+import { MissionOverview } from '@/components/mission/MissionOverview'
 import { MissionJourney } from '@/components/mission/MissionJourney'
 import { MissionCompetition } from '@/components/mission/MissionCompetition'
 import { mission } from '@/data/mission'
@@ -44,9 +45,15 @@ export default function MissionPage() {
       */}
       <MissionIntro />
 
-      {/* How it works, then how it is being built. */}
-      <MissionJourney />
+      {/*
+        What the mission is — offered, not imposed. The reader chooses to open
+        it; scrolling straight past is a legitimate reading of the page.
+      */}
+      <MissionOverview />
+
+      {/* The spacecraft, then the road to flying it. */}
       <MissionSpacecraft />
+      <MissionJourney />
       <MissionCompetition />
 
       <CtaBand

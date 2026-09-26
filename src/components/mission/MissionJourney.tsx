@@ -228,7 +228,7 @@ export function MissionJourney() {
     <Section tone="void" spacing="none" id="journey" clip={false} className="py-0">
       <Container wide className="pb-14 pt-24 md:pb-20 md:pt-32">
         <div className="max-w-2xl">
-          <SectionIndex index="01" label="Journey" />
+          <SectionIndex index="03" label="Journey" />
           <h2 className="mt-9 text-display-md">From an idea to orbit.</h2>
         </div>
       </Container>

@@ -188,7 +188,7 @@ export function MissionSpacecraft() {
               {/* ── Heading ─────────────────────────────────────── */}
               <div className="sc-heads">
                 <div className="sc-head" data-for="specs">
-                  <p className="eyebrow tabular text-accent">02 / The spacecraft</p>
+                  <p className="eyebrow tabular text-accent">01 / The spacecraft</p>
                   <h2 className="sc-title mt-5">
                     Inside
                     <br />
@@ -200,7 +200,7 @@ export function MissionSpacecraft() {
                 </div>
 
                 <div className="sc-head" data-for="systems" aria-hidden={mode !== 'systems'}>
-                  <p className="eyebrow tabular text-accent">03 / Architecture</p>
+                  <p className="eyebrow tabular text-accent">02 / Architecture</p>
                   <h2 className="sc-title mt-5">
                     Built by
                     <br />
@@ -397,7 +397,7 @@ export function MissionSpacecraft() {
             </dl>
 
             <div className="mt-16">
-              <p className="eyebrow tabular text-accent">03 / Architecture</p>
+              <p className="eyebrow tabular text-accent">02 / Architecture</p>
               <h2 className="sc-title mt-5">
                 Built by
                 <br />

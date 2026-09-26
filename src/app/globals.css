@@ -521,21 +521,16 @@
   /**
    * MISSION — the opening sequence.
    *
-   * Three layers stacked on one pinned screen: the problem, the answer, and
-   * the mechanics. Which one is visible is a function of eight numbers the
+   * Three layers stacked on one pinned screen: the problem, the turning
+   * point, and the answer. Which one is visible is a function of eight numbers the
    * scroll handler writes — `--p0`, `--p1`, `--p2`, `--intro`, `--name`,
-   * `--orbit`, `--stage`, `--shut`. Nothing here reads layout.
+   * `--orbit`, `--out`. Nothing here reads layout.
    *
    * Unpinned — no JavaScript, a small screen, reduced motion — the layers
    * fall back to ordinary stacked blocks and the whole story is still there
    * to read.
    */
   .mi {
-    /* The stage layer reuses the `.hiw-*` rules, which read `--rail` for the
-       grid's outer columns. Those rules are shared, but the variable was
-       declared on `.hiw` — without it here the three columns collapse and the
-       rails stack above and below the panel instead of flanking it. */
-    --rail: 3.25rem;
     --p0: 1;
     --p1: 1;
     --p2: 1;
@@ -545,8 +540,7 @@
     --sat: 1;
     --word: 1;
     --name: 1;
-    --stage: 1;
-    --shut: 0;
+    --out: 0;
   }
 
   .mi[data-mode='pinned'] .mi-viewport {
@@ -613,7 +607,7 @@
      * mark holds full strength once drawn, so nothing else was ever going to
      * take it away.
      */
-    opacity: calc(1 - var(--stage));
+    opacity: calc(1 - var(--out));
   }
 
   .mi[data-mode='pinned'] .mi-introducing {
@@ -700,13 +694,6 @@
     transform: translate3d(0, calc((1 - clamp(0, calc(var(--word) * 5 - 4), 1)) * 6px), 0);
   }
 
-  /* ---- The three stages ---- */
-  .mi[data-mode='pinned'] .mi-stage-layer {
-    opacity: var(--stage);
-    transform: scale(calc(0.96 + var(--stage) * 0.04));
-    pointer-events: none;
-  }
-
   /* ---- Stacked: no JavaScript, small screens, reduced motion ---- */
   .mi:not([data-mode='pinned']) .mi-layer + .mi-layer {
     margin-top: 3rem;
@@ -729,43 +716,6 @@
 
   .mi:not([data-mode='pinned']) .mi-viewport {
     padding: 4rem 0;
-  }
-
-  /*
-   * The stage layer borrows the `.hiw-*` rules, whose panels are absolutely
-   * stacked and shown one at a time by `data-on`. Unpinned there is nothing
-   * driving that, so all three have to come back into flow — otherwise a
-   * phone, a reduced-motion reader and a page without JavaScript see one
-   * third of the story.
-   */
-  .mi:not([data-mode='pinned']) .hiw-frame {
-    display: block;
-  }
-
-  .mi:not([data-mode='pinned']) .hiw-rail {
-    display: none;
-  }
-
-  .mi:not([data-mode='pinned']) .hiw-stage {
-    clip-path: none;
-    overflow: visible;
-    background: transparent;
-  }
-
-  .mi:not([data-mode='pinned']) .hiw-panel {
-    position: relative;
-    inset: auto;
-    opacity: 1;
-    visibility: visible;
-    min-height: 22rem;
-  }
-
-  .mi:not([data-mode='pinned']) .hiw-panel + .hiw-panel {
-    margin-top: 1.5rem;
-  }
-
-  .mi:not([data-mode='pinned']) .hiw-media {
-    transform: none;
   }
 
   /**
@@ -1796,6 +1746,179 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 2rem;
       max-width: 62rem;
+    }
+  }
+
+  /* ======================================================================
+   * MISSION — the overview, opened by asking.
+   *
+   * Two layouts for one set of elements. CSS describes both; GSAP Flip
+   * measures the first and animates the difference, so the three thumbnails
+   * in the closed state and the three chapters in the open one are the same
+   * three nodes rather than two sets that swap.
+   *
+   * Nothing here is driven by scroll. The only state is `data-open`, and
+   * `data-ready` says whether there is any JavaScript to change it with —
+   * without it the opened layout is what renders, minus the controls, because
+   * a closed state nobody can open is three hidden chapters.
+   * ==================================================================== */
+
+  .mv-stage {
+    padding: 6rem 0 5rem;
+    transition: padding 0.9s ease;
+    /*
+     * The surface warms by one rung as the section opens. Small enough to
+     * register as depth rather than as a different page.
+     */
+    background-color: rgb(var(--lisat-white));
+    transition: background-color 0.9s ease;
+  }
+
+  .mv[data-open='true'] .mv-stage {
+    background-color: rgb(var(--lisat-cloud));
+    /* Opened, the chapters want the room the statement was using. */
+    padding: 3.5rem 0 3.5rem;
+  }
+
+  /* ---- The statement ---- */
+  .mv-head {
+    max-width: 48rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .mv-title {
+    font-size: clamp(2.125rem, 5vw, 4rem);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    /*
+     * Scaled, never resized. A font-size change would reflow the head in one
+     * frame in the middle of a nine-hundred-millisecond movement.
+     */
+    transform-origin: 50% 0;
+    will-change: transform;
+  }
+
+  .mv-lead {
+    max-width: 34rem;
+    margin-inline: auto;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: rgb(var(--fg-muted));
+  }
+
+  .mv-action {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* The controls exist only where something can act on them. */
+  .mv:not([data-ready]) .mv-action,
+  .mv:not([data-ready]) .mv-close,
+  .mv[data-open='true'] .mv-action,
+  .mv[data-open='false'] .mv-close {
+    display: none;
+  }
+
+  .mv[data-open='true'] .mv-lead {
+    display: none;
+  }
+
+  .mv-close {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+  }
+
+  /* ---- The three chapters ---- */
+  .mv-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mv-media {
+    position: relative;
+    overflow: hidden;
+    background-color: rgb(var(--lisat-navy));
+  }
+
+  /* ---- Closed: a compressed strip that says there is more ---- */
+  .mv[data-open='false'] .mv-grid {
+    max-width: 30rem;
+    margin: 4rem auto 0;
+    gap: 0.75rem;
+  }
+
+  .mv[data-open='false'] .mv-media {
+    aspect-ratio: 16 / 10;
+    border-radius: 0.75rem;
+  }
+
+  .mv[data-open='false'] .mv-body {
+    display: none;
+  }
+
+  /* ---- Open, and the no-JavaScript reading ---- */
+  .mv[data-open='true'] .mv-grid,
+  .mv:not([data-ready]) .mv-grid {
+    max-width: none;
+    margin: 2.5rem 0 0;
+    gap: 2rem;
+  }
+
+  .mv[data-open='true'] .mv-media,
+  .mv:not([data-ready]) .mv-media {
+    aspect-ratio: 16 / 9;
+    border-radius: 1.5rem;
+  }
+
+  .mv-story-title {
+    font-size: clamp(1.375rem, 2.1vw, 1.875rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+  }
+
+  .mv-story-copy {
+    max-width: 24rem;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: rgb(var(--fg-muted));
+  }
+
+  .mv-body {
+    padding-top: 1.5rem;
+  }
+
+  @media (max-width: 1023px) {
+    .mv-stage {
+      padding: 4.5rem 0 4rem;
+    }
+
+    /*
+     * Stacked once opened, still a strip of three while closed — the strip is
+     * a hint, and a hint does not need a column each.
+     */
+    .mv[data-open='true'] .mv-grid,
+    .mv:not([data-ready]) .mv-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 3rem;
+      margin-top: 3.5rem;
+    }
+
+    .mv[data-open='false'] .mv-grid {
+      max-width: 22rem;
+      margin-top: 3rem;
+    }
+
+    .mv-close {
+      justify-content: center;
+      margin-top: 2.5rem;
+    }
+
+    .mv-body {
+      padding-top: 1.25rem;
     }
   }
 }

@@ -89,6 +89,42 @@ export function ButtonAnchor({
   )
 }
 
+interface ButtonProps extends Omit<ComponentProps<'button'>, 'className'> {
+  variant?: Variant
+  size?: Size
+  arrow?: boolean
+  children: ReactNode
+  className?: string
+}
+
+/**
+ * The same pill, as a real button.
+ *
+ * For controls that act on the page rather than navigating away from it. It
+ * shares `base`, `variants` and `sizes` with the links above on purpose:
+ * something that opens a section in place should not be a different object
+ * from something that opens a page.
+ */
+export function Button({
+  variant = 'primary',
+  size = 'md',
+  arrow = false,
+  className,
+  children,
+  type = 'button',
+  ...props
+}: ButtonProps) {
+  return (
+    <button
+      type={type}
+      className={clsx(base, variants[variant], sizes[size], className)}
+      {...props}
+    >
+      {inner(children, arrow)}
+    </button>
+  )
+}
+
 /** Understated text link with a sliding arrow — used to close sections. */
 export function TextLink({
   href,

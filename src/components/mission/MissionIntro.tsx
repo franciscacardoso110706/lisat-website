@@ -1,11 +1,9 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import Image from 'next/image'
 import { Container } from '@/components/ui/Section'
-import { challenge, mission, signalPath } from '@/data/mission'
+import { challenge, mission } from '@/data/mission'
 import { LisatSymbol } from '@/components/mission/LisatSymbol'
-import { clsx } from '@/lib/utils'
 
 /**
  * The mission, as one pinned sequence.
@@ -14,11 +12,15 @@ import { clsx } from '@/lib/utils'
  * story immediately, with no hero in front of it. It runs
  *
  *   the problem, in three statements
+ *     → it's time to change
  *     → introducing
- *     → LISAT-01, with its orbit drawn
- *     → vessel → orbit → ground
+ *     → the LISAT mark, drawn
+ *     → LISAT-01
  *
- * as a single choreography. One ScrollTrigger, one pinned viewport, one
+ * as a single choreography, and then hands over. The mechanics of the mission
+ * used to run on here as three more pinned stages; they are a click now, in
+ * the overview below, because a reader who has just watched six screens of
+ * scroll should be asked whether they want the next six. One ScrollTrigger, one pinned viewport, one
  * function mapping scroll progress onto every moving part. There are no
  * per-section triggers and no wheel listeners — the whole thing is a pure
  * function of normalised scroll.
@@ -27,11 +29,11 @@ import { clsx } from '@/lib/utils'
  * PACING
  * ---------------------------------------------------------------------------
  *
- * The sequence deliberately costs about eleven screens of scroll. That is not
+ * The sequence deliberately costs about seven screens of scroll. That is not
  * padding: at this length one notch of a mouse wheel moves the story about one
- * per cent, so crossing between two stages takes five or six deliberate
- * gestures rather than a flick. An earlier version mapped roughly a notch to a
- * whole stage and was impossible to read.
+ * per cent, so crossing between two moments takes several deliberate gestures
+ * rather than a flick. An earlier version mapped roughly a notch to a whole
+ * beat and was impossible to read.
  *
  * Every segment below is either a move or a hold. Holds are not dead scroll —
  * the screen carries a finished composition and simply stays still long enough
@@ -70,13 +72,9 @@ const SEQUENCE: { key: string; len: number }[] = [
   { key: 'word', len: 0.6 },
   { key: 'name', len: 0.45 },
   { key: 'namehold', len: 0.5 },
-  { key: 'tostage', len: 0.55 },
-  { key: 'vessel', len: 0.9 },
-  { key: 'shut1', len: 0.6 },
-  { key: 'orbit', len: 0.9 },
-  { key: 'shut2', len: 0.6 },
-  { key: 'ground', len: 0.9 },
-  { key: 'exit', len: 0.5 },
+  // The mark leaves as the pin releases, handing over to the mission
+  // overview below rather than cutting to it.
+  { key: 'exit', len: 0.6 },
 ]
 
 const TOTAL_VH = SEQUENCE.reduce((n, s) => n + s.len, 0)
@@ -120,18 +118,14 @@ function firstBeat(p: number, outKey: string) {
   return 1 - span(p, outKey)
 }
 
-const TONES = ['tone-ice', 'tone-void', 'tone-cloud'] as const
-
 export function MissionIntro() {
   const root = useRef<HTMLDivElement>(null)
   const viewport = useRef<HTMLDivElement>(null)
-  const stage = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const rootEl = root.current
     const viewportEl = viewport.current
-    const stageEl = stage.current
-    if (!rootEl || !viewportEl || !stageEl) return
+    if (!rootEl || !viewportEl) return
 
     // A pinned eleven-screen sequence is the wrong thing to put a phone
     // through, and reduced motion asks for none of it. Both get the same
@@ -151,30 +145,8 @@ export function MissionIntro() {
       if (cancelled) return
       gsap.registerPlugin(ScrollTrigger)
 
-      const panels = Array.from(
-        stageEl.querySelectorAll<HTMLElement>('[data-panel]'),
-      )
-      const labels = Array.from(
-        stageEl.querySelectorAll<HTMLElement>('[data-label]'),
-      )
-
-      let shown = -1
-      const show = (i: number) => {
-        if (i === shown) return
-        shown = i
-        panels.forEach((el) => {
-          el.dataset.on = String(Number(el.dataset.panel) === i)
-        })
-        labels.forEach((el) => {
-          el.dataset.on = String(Number(el.dataset.label) === i)
-        })
-        stageEl.classList.remove(...TONES)
-        stageEl.classList.add(TONES[i])
-      }
-
       const ctx = gsap.context(() => {
         rootEl.dataset.mode = 'pinned'
-        show(0)
 
         const vars = [
           'p0',
@@ -186,8 +158,7 @@ export function MissionIntro() {
           'sat',
           'word',
           'name',
-          'stage',
-          'shut',
+          'out',
         ] as const
         const set = Object.fromEntries(
           vars.map((v) => [v, gsap.quickSetter(rootEl, `--${v}`)]),
@@ -213,20 +184,9 @@ export function MissionIntro() {
           set.symbol(String(ease(span(p, 'symbol'))))
           set.sat(String(ease(span(p, 'sat'))))
           set.word(String(span(p, 'word')))
-          set.name(
-            String(ease(span(p, 'name')) * (1 - span(p, 'tostage'))),
-          )
+          set.name(String(ease(span(p, 'name'))))
 
-          set.stage(String(ease(span(p, 'tostage')) * (1 - span(p, 'exit'))))
-
-          // The shutter. Closed at the midpoint of each transition, open
-          // everywhere else, and the content swaps while it is shut.
-          const s1 = span(p, 'shut1')
-          const s2 = span(p, 'shut2')
-          const closing = s1 > 0 && s1 < 1 ? s1 : s2 > 0 && s2 < 1 ? s2 : 0
-          set.shut(String(closing ? Math.sin(closing * Math.PI) : 0))
-
-          show(s2 >= 0.5 ? 2 : s1 >= 0.5 ? 1 : 0)
+          set.out(String(span(p, 'exit')))
         }
 
         const driver = { p: 0 }
@@ -313,106 +273,7 @@ export function MissionIntro() {
           </div>
         </div>
 
-        {/* ── How it works ──────────────────────────────────────── */}
-        <div className="mi-layer mi-stage-layer">
-          <Container wide className="h-full">
-            <div
-              ref={stage}
-              className={clsx('hiw-frame h-full', TONES[0])}
-              data-stage-frame
-            >
-              <Rail side="left" />
-
-              <div className="hiw-stage">
-                {signalPath.map((s, i) => (
-                  <article
-                    key={s.id}
-                    data-panel={i}
-                    data-on={i === 0 ? 'true' : 'false'}
-                    className={clsx(
-                      'hiw-panel isolate overflow-hidden rounded-[2rem] md:rounded-[3rem]',
-                      TONES[i],
-                    )}
-                  >
-                    <div className="hiw-media">
-                      <Image
-                        src={s.image}
-                        alt={s.imageAlt}
-                        fill
-                        loading={i === 0 ? undefined : 'lazy'}
-                        sizes="(min-width: 1024px) 80vw, 100vw"
-                        className="object-cover"
-                        style={{ objectPosition: s.imagePosition }}
-                      />
-                    </div>
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--surface))_0%,rgb(var(--surface)/0.92)_26%,rgb(var(--surface)/0.45)_46%,transparent_66%)]"
-                    />
-                    <div className="relative flex h-full max-w-xl flex-col justify-end gap-4 p-7 md:p-12">
-                      <p className="eyebrow text-accent">
-                        {String(i + 1).padStart(2, '0')} / {s.label}
-                      </p>
-                      <h3 className="text-display-sm">
-                        {s.title[0]}
-                        <br />
-                        {s.title[1]}
-                      </h3>
-                      <p className="max-w-md text-[0.9375rem] leading-relaxed text-fg-muted md:text-base">
-                        {s.body}
-                      </p>
-                    </div>
-                  </article>
-                ))}
-              </div>
-
-              <Rail side="right" />
-            </div>
-          </Container>
-        </div>
       </div>
     </div>
-  )
-}
-
-function Rail({ side }: { side: 'left' | 'right' }) {
-  return (
-    <aside
-      aria-hidden="true"
-      className={clsx(
-        'hiw-rail',
-        side === 'left' ? 'hiw-rail--left' : 'hiw-rail--right',
-      )}
-    >
-      <span className="eyebrow tabular text-accent">
-        {signalPath.map((s, i) => (
-          <span
-            key={s.id}
-            data-label={i}
-            data-on={i === 0 ? 'true' : 'false'}
-            className="hiw-rail-index"
-          >
-            {String(i + 1).padStart(2, '0')}
-          </span>
-        ))}
-      </span>
-
-      <span className="text-fg-muted">
-        {signalPath.map((s, i) => (
-          <span
-            key={s.id}
-            data-label={i}
-            data-on={i === 0 ? 'true' : 'false'}
-            className="hiw-rail-label font-mono"
-          >
-            {s.label}
-          </span>
-        ))}
-      </span>
-
-      <span className="eyebrow tabular text-fg-faint">
-        {String(signalPath.length).padStart(2, '0')}
-      </span>
-    </aside>
   )
 }
