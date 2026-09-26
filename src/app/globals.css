@@ -2404,6 +2404,347 @@
       margin-top: 1.75rem;
     }
   }
+
+  /* ======================================================================
+   * UPDATES — one article.
+   *
+   * A light, printed-page reading: a way back, the headline, the standfirst,
+   * a ruled byline, the photographs, then the piece. The dark header this
+   * replaced made every article open like a separate site.
+   * ==================================================================== */
+
+  .ar-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem 0.5rem 0.875rem;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background-color: rgb(var(--surface-raised));
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgb(var(--fg-muted));
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .ar-back:hover {
+    color: rgb(var(--fg));
+    border-color: rgb(var(--brand) / 0.35);
+  }
+
+  .ar-back:hover svg {
+    transform: translateX(-2px);
+  }
+
+  .ar-back svg {
+    transition: transform 0.3s ease;
+  }
+
+  .ar-title {
+    font-size: clamp(2rem, 4.6vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+    color: rgb(var(--fg));
+  }
+
+  .ar-lead {
+    max-width: 44rem;
+    font-size: clamp(1.0625rem, 1.5vw, 1.3125rem);
+    line-height: 1.6;
+    color: rgb(var(--fg-muted));
+    text-wrap: pretty;
+  }
+
+  /* ---- The byline ---- */
+  .ar-byline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 1.5rem;
+    padding: 1rem 0;
+    border-block: 1px solid var(--rule);
+  }
+
+  .ar-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+    color: rgb(var(--fg-muted));
+  }
+
+  .ar-meta strong {
+    font-weight: 600;
+    color: rgb(var(--fg));
+  }
+
+  /* A rule between items rather than a slash — quieter at this size. */
+  .ar-sep {
+    width: 1rem;
+    height: 1px;
+    background-color: var(--rule-strong);
+  }
+
+  .ar-share {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .ar-share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.25rem;
+    padding-inline: 0.875rem;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background-color: rgb(var(--surface-raised));
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgb(var(--fg-muted));
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .ar-share-btn--icon {
+    width: 2.25rem;
+    padding-inline: 0;
+    justify-content: center;
+  }
+
+  .ar-share-btn:hover {
+    color: rgb(var(--accent));
+    border-color: rgb(var(--brand) / 0.35);
+    background-color: rgb(var(--lisat-ice));
+  }
+
+  .ar-share-btn.is-done {
+    color: rgb(var(--accent));
+    border-color: rgb(var(--brand) / 0.4);
+  }
+
+  /* ---- The photographs ---- */
+  /*
+   * Native scrolling is the resting state and Embla takes over once it has
+   * initialised. The other way round, a reader without JavaScript gets the
+   * first photograph and dead arrows over the rest.
+   */
+  .ag-viewport {
+    position: relative;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* The site's card radius. These are Tailwind theme values, not custom
+       properties, so the number is written out rather than referenced. */
+    border-radius: 1.75rem;
+    background-color: rgb(var(--lisat-mist));
+  }
+
+  .ag[data-ready] .ag-viewport {
+    overflow: hidden;
+    scroll-snap-type: none;
+  }
+
+  /* Nothing to press before Embla is listening. */
+  .ag:not([data-ready]) .ag-arrow,
+  .ag:not([data-ready]) .ag-dots {
+    display: none;
+  }
+
+  .ag-track {
+    display: flex;
+  }
+
+  .ag-slide {
+    scroll-snap-align: start;
+  }
+
+  .ag-slide {
+    position: relative;
+    flex: 0 0 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .ag-arrow {
+    position: absolute;
+    top: 50%;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    border: 1px solid rgb(var(--lisat-white) / 0.35);
+    /*
+     * Over a photograph, so it carries its own contrast rather than trusting
+     * whatever happens to be behind it.
+     */
+    background-color: rgb(var(--lisat-midnight) / 0.55);
+    backdrop-filter: blur(8px);
+    color: rgb(var(--lisat-white));
+    transform: translateY(-50%);
+    transition:
+      background-color 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  .ag-arrow:hover {
+    background-color: rgb(var(--lisat-midnight) / 0.8);
+  }
+
+  .ag-arrow--prev {
+    left: 1rem;
+  }
+
+  .ag-arrow--next {
+    right: 1rem;
+  }
+
+  .ag-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 1.125rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4375rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    background-color: rgb(var(--lisat-midnight) / 0.45);
+    backdrop-filter: blur(8px);
+    transform: translateX(-50%);
+  }
+
+  .ag-dot {
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border-radius: 999px;
+    background-color: rgb(var(--lisat-white) / 0.45);
+    transition:
+      width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.35s ease;
+  }
+
+  .ag-dot.is-on {
+    width: 1.25rem;
+    background-color: rgb(var(--lisat-white));
+  }
+
+  .ag-caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.875rem;
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: rgb(var(--fg-faint));
+  }
+
+  .ag-count {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    color: rgb(var(--accent));
+  }
+
+  /* ---- The piece ---- */
+  .ar-body {
+    max-width: 44rem;
+  }
+
+  .ar-body > p {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: rgb(var(--fg-muted));
+  }
+
+  .ar-body > p + p {
+    margin-top: 1.375rem;
+  }
+
+  /*
+   * The pull quote, with the rule the team's own posts use: a blue bar on the
+   * left and the sentence set large enough to stop the eye.
+   */
+  .ar-quote {
+    margin: 2.5rem 0;
+    padding-left: 1.5rem;
+    border-left: 3px solid rgb(var(--brand));
+  }
+
+  .ar-quote p {
+    font-size: clamp(1.25rem, 2.1vw, 1.625rem);
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: -0.022em;
+    color: rgb(var(--fg));
+    text-wrap: pretty;
+  }
+
+  .ar-attribution {
+    margin-top: -1.75rem;
+    margin-bottom: 2.5rem;
+    padding-left: 1.5rem;
+    font-size: 0.875rem;
+    font-style: italic;
+    color: rgb(var(--fg-faint));
+  }
+
+  .ar-related-title {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: rgb(var(--fg));
+  }
+
+  @media (max-width: 767px) {
+    .ar-byline {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .ag-arrow {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    .ag-arrow--prev {
+      left: 0.625rem;
+    }
+
+    .ag-arrow--next {
+      right: 0.625rem;
+    }
+
+    /*
+     * The category is the item that wraps to its own line, which left the
+     * rule before it dangling at the end of the line above.
+     */
+    .ar-meta .ar-sep:last-of-type {
+      display: none;
+    }
+
+    /* The label is the only thing that will not fit; the icon still says it. */
+    .ar-share-label {
+      display: none;
+    }
+
+    .ar-share-btn {
+      width: 2.25rem;
+      padding-inline: 0;
+      justify-content: center;
+    }
+  }
 }
 
 @layer utilities {

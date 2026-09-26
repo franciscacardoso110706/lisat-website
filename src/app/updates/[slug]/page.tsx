@@ -4,9 +4,10 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { Container, Section } from '@/components/ui/Section'
-import { Gallery } from '@/components/ui/Gallery'
 import { CtaBand } from '@/components/ui/CtaBand'
 import { UpdateCard } from '@/components/updates/UpdateCard'
+import { ArticleGallery } from '@/components/updates/ArticleGallery'
+import { ArticleShare } from '@/components/updates/ArticleShare'
 import {
   categoryLabel,
   getUpdate,
@@ -67,6 +68,10 @@ export default async function UpdatePage({
     publisher: { '@type': 'Organization', name: site.fullName },
   }
 
+  /** The cover leads; the gallery follows. One sequence, not two blocks. */
+  const photographs = [update.cover, ...(update.gallery ?? [])]
+  const url = new URL(`/updates/${update.slug}`, site.url).toString()
+
   return (
     <>
       <script
@@ -74,86 +79,65 @@ export default async function UpdatePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <article>
-        {/* Header */}
-        <header className="tone-void pt-[var(--nav-height)]">
-          <Container className="py-14 md:py-20">
-            <Link
-              href="/updates"
-              className="inline-flex items-center gap-2 font-mono text-xs text-fg-muted transition-colors hover:text-fg"
-            >
+      <article className="ar">
+        <Section tone="paper" spacing="none" className="pt-[calc(var(--nav-height)+2.5rem)]">
+          <Container>
+            <Link href="/updates" className="ar-back">
               <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-              All updates
+              Back to updates
             </Link>
 
-            <p className="eyebrow mt-10 flex flex-wrap items-center gap-2.5 text-fg-faint">
-              <span className="text-accent">{categoryLabel(update.category)}</span>
-              <span aria-hidden="true" className="opacity-40">
-                /
-              </span>
-              <time dateTime={update.date}>{formatDate(update.date)}</time>
-              <span aria-hidden="true" className="opacity-40">
-                /
-              </span>
-              <span>{minutes} min read</span>
-            </p>
+            <h1 className="ar-title mt-8">{update.title}</h1>
 
-            <h1 className="mt-5 text-balance text-[clamp(2rem,5.5vw,3.75rem)] font-semibold leading-[1.02] tracking-tightest">
-              {update.title}
-            </h1>
+            {update.lead ? <p className="ar-lead mt-6">{update.lead}</p> : null}
 
-            {update.lead ? (
-              <p className="mt-7 max-w-prose text-lg leading-relaxed text-fg-muted md:text-xl">
-                {update.lead}
+            {/*
+              Ruled above and below: the byline is the seam between the
+              headline and the article, and a line either side is what a
+              printed page would use to say so.
+            */}
+            <div className="ar-byline mt-9">
+              <p className="ar-meta">
+                <span>
+                  By <strong>{site.name} Team</strong>
+                </span>
+                <span aria-hidden="true" className="ar-sep" />
+                <time dateTime={update.date}>{formatDate(update.date)}</time>
+                <span aria-hidden="true" className="ar-sep" />
+                <span>{minutes} min read</span>
+                <span aria-hidden="true" className="ar-sep" />
+                <span className="text-accent">{categoryLabel(update.category)}</span>
               </p>
-            ) : null}
-          </Container>
-        </header>
 
-        {/* Cover */}
-        <div className="tone-void">
-          <Container>
-            <div className="relative aspect-[16/9] overflow-hidden rounded-card bg-surface">
-              <Image
-                src={update.cover.src}
-                alt={update.cover.alt}
-                fill
-                priority
-                sizes="(min-width: 1120px) 1120px, 100vw"
-                className="object-cover"
-              />
+              <ArticleShare url={url} title={update.title} />
             </div>
           </Container>
-        </div>
+        </Section>
 
-        {/* Body */}
-        <Section tone="paper" spacing="default">
+        {/* The photographs */}
+        <Section tone="paper" spacing="none" className="pt-10 md:pt-12">
           <Container>
-            <div className="prose-lisat mx-auto max-w-prose">
+            <ArticleGallery images={photographs} />
+          </Container>
+        </Section>
+
+        {/* The article */}
+        <Section tone="paper" spacing="none" className="py-14 md:py-20">
+          <Container>
+            <div className="ar-body">
               {update.body.map((paragraph, i) => {
                 // Lines the team wrote as pull quotes or attributions.
-                const isQuote = paragraph.startsWith('“')
-                const isAttribution = paragraph.startsWith('—')
-
-                if (isQuote) {
+                if (paragraph.startsWith('“')) {
                   return (
-                    <blockquote
-                      key={i}
-                      className="my-10 border-l-2 border-accent pl-6"
-                    >
-                      <p className="!text-xl !leading-relaxed !text-fg md:!text-2xl">
-                        {paragraph}
-                      </p>
+                    <blockquote key={i} className="ar-quote">
+                      <p>{paragraph}</p>
                     </blockquote>
                   )
                 }
 
-                if (isAttribution) {
+                if (paragraph.startsWith('—')) {
                   return (
-                    <p
-                      key={i}
-                      className="!mt-3 font-mono !text-sm !text-fg-faint"
-                    >
+                    <p key={i} className="ar-attribution">
                       {paragraph}
                     </p>
                   )
@@ -164,27 +148,17 @@ export default async function UpdatePage({
             </div>
           </Container>
         </Section>
-
-        {/* Gallery */}
-        {update.gallery && update.gallery.length > 0 ? (
-          <Section tone="paper" spacing="none" className="pb-20 md:pb-28">
-            <Container wide>
-              <h2 className="eyebrow text-fg-faint">Gallery</h2>
-              <Gallery images={update.gallery} className="mt-6" />
-            </Container>
-          </Section>
-        ) : null}
       </article>
 
       {/* Related */}
       {related.length > 0 ? (
-        <Section tone="cloud" join="soft" spacing="loose">
+        <Section tone="cloud" join="soft" spacing="default">
           <Container wide>
-            <h2 className="eyebrow text-fg-faint">More updates</h2>
-            <ul className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            <h2 className="ar-related-title">Related articles</h2>
+            <ul className="mt-9 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((item) => (
                 <li key={item.slug}>
-                  <UpdateCard update={item} />
+                  <UpdateCard update={item} showExcerpt={false} />
                 </li>
               ))}
             </ul>
