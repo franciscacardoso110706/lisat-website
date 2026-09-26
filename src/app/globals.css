@@ -2206,6 +2206,120 @@
       gap: 2rem;
     }
   }
+
+  /* ======================================================================
+   * MISSION — CubeSat Portugal.
+   *
+   * A photograph with a band lying on it. Nothing here is interactive and
+   * nothing moves: the programme is context, and context that animates reads
+   * as a claim.
+   * ==================================================================== */
+
+  .cp {
+    display: grid;
+    place-items: center;
+    /*
+     * Tall enough that the photograph is a photograph. At the first size the
+     * band covered three quarters of the section and the stage survived only
+     * as two strips at the edges — which is a texture, not a room.
+     */
+    min-height: min(46rem, 90vh);
+    padding: 6rem 0;
+  }
+
+  /*
+   * The photograph is the section's background, so it sits under everything
+   * the section paints rather than beside it.
+   */
+  .cp-photo {
+    z-index: 0;
+    /*
+     * Pushed up so the lit stage sits above the band rather than behind it.
+     * Centred, the one thing worth seeing was exactly what the band covered.
+     */
+    object-position: 50% 34%;
+  }
+
+  .cp-band {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    /*
+     * Translucent, not solid. The point of the picture is that this is a real
+     * programme in a real room; covering it leaves only the texture of one.
+     */
+    background-color: rgb(var(--lisat-navy) / 0.84);
+    backdrop-filter: blur(3px) saturate(115%);
+    border-block: 1px solid rgb(var(--lisat-blue-soft) / 0.18);
+    padding: 3rem 0;
+  }
+
+  .cp-inner {
+    max-width: 56rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    text-align: center;
+  }
+
+  /* The programme's name, badged rather than set as a heading — it is not
+     LISAT's chapter title, it is the thing LISAT entered. */
+  .cp-pill {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    border: 1px solid rgb(var(--lisat-blue-soft) / 0.45);
+    border-radius: 999px;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(var(--lisat-white));
+  }
+
+  .cp-copy {
+    margin-top: 2rem;
+    font-size: clamp(1rem, 1.35vw, 1.1875rem);
+    line-height: 1.7;
+    color: rgb(var(--lisat-white) / 0.88);
+    text-wrap: pretty;
+  }
+
+  .cp-facts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem 4rem;
+    margin-top: 2.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgb(var(--lisat-blue-soft) / 0.2);
+  }
+
+  .cp-fact {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgb(var(--lisat-white));
+  }
+
+  @media (max-width: 767px) {
+    .cp {
+      min-height: 0;
+      padding: 3.5rem 0;
+    }
+
+    .cp-band {
+      padding: 2.5rem 0;
+    }
+
+    .cp-copy {
+      margin-top: 1.5rem;
+    }
+
+    .cp-facts {
+      gap: 1.5rem 3rem;
+      margin-top: 2rem;
+    }
+  }
 }
 
 @layer utilities {
