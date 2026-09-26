@@ -108,6 +108,18 @@ function beat(p: number, inKey: string, outKey: string) {
   return ease(span(p, inKey)) * (1 - span(p, outKey))
 }
 
+/**
+ * The same, for the phrase that opens the page.
+ *
+ * Its arrival cannot be a fade from nothing: the sequence is the hero, so at
+ * scroll zero the reader was landing on an empty navy screen and had to guess
+ * that scrolling would put something there. It is present on arrival and its
+ * first beat is spent leaving, not appearing.
+ */
+function firstBeat(p: number, outKey: string) {
+  return 1 - span(p, outKey)
+}
+
 const TONES = ['tone-ice', 'tone-void', 'tone-cloud'] as const
 
 export function MissionIntro() {
@@ -182,7 +194,7 @@ export function MissionIntro() {
         ) as Record<(typeof vars)[number], (v: string) => void>
 
         const render = (p: number) => {
-          set.p0(String(beat(p, 'p0in', 'p0out')))
+          set.p0(String(firstBeat(p, 'p0out')))
           set.p1(String(beat(p, 'p1in', 'p1out')))
           set.p2(String(beat(p, 'p2in', 'p2out')))
           set.change(String(beat(p, 'changein', 'changeout')))
@@ -253,7 +265,8 @@ export function MissionIntro() {
       <div ref={viewport} className="mi-viewport relative overflow-hidden">
         {/* ── The problem ───────────────────────────────────────── */}
         <div className="mi-layer mi-phrases">
-          <Container wide>
+          {/* `grid` is what lets the three phrases occupy one cell. */}
+          <Container wide className="grid">
             {PHRASES.map((text, i) => (
               <p
                 key={text}

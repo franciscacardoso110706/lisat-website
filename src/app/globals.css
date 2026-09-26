@@ -563,11 +563,16 @@
     will-change: opacity, transform;
   }
 
-  /* Only one phrase is ever on screen; they share the same place. */
+  /*
+   * Only one phrase is ever on screen; they share the same place.
+   *
+   * Stacked in one grid cell rather than absolutely positioned. `position:
+   * absolute` resolved against the full-screen layer, not the container, so
+   * every phrase sat flush against the left edge of the window with no
+   * gutter at all.
+   */
   .mi[data-mode='pinned'] .mi-phrase {
-    position: absolute;
-    left: 0;
-    right: 0;
+    grid-area: 1 / 1;
   }
 
   .mi[data-mode='pinned'] .mi-phrase[data-phrase='0'] {
@@ -639,12 +644,24 @@
     stroke-dasharray: 1;
   }
 
+  /*
+   * The `opacity` gate is what keeps the rings absent rather than merely
+   * undrawn. A round line cap paints even at zero length, so each ring left
+   * a blue dot sitting on the page from the very top of the scroll — two
+   * marks with no explanation, hanging where the logo would eventually be.
+   *
+   * Multiplying by 90 makes the gate effectively a step: it opens on the
+   * first perceptible fraction of the arc, by which point there is a real
+   * line under the cap and the dot is its beginning.
+   */
   .mi[data-mode='pinned'] .mi-symbol [data-symbol='orbit'] {
     stroke-dashoffset: calc(1 - var(--symbol));
+    opacity: clamp(0, calc(var(--symbol) * 90), 1);
   }
 
   .mi[data-mode='pinned'] .mi-symbol [data-symbol='satellite'] {
     stroke-dashoffset: calc(1 - var(--sat));
+    opacity: clamp(0, calc(var(--sat) * 90), 1);
   }
 
   /*

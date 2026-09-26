@@ -1,13 +1,10 @@
 import type { Metadata } from 'next'
-import { Container, Section, SectionHeading } from '@/components/ui/Section'
 import { CtaBand } from '@/components/ui/CtaBand'
-import { PartnerLogo } from '@/components/partners/PartnerLogo'
 import { MissionSpacecraft } from '@/components/mission/MissionSpacecraft'
 import { MissionIntro } from '@/components/mission/MissionIntro'
 import { MissionJourney } from '@/components/mission/MissionJourney'
 import { MissionCompetition } from '@/components/mission/MissionCompetition'
 import { mission } from '@/data/mission'
-import { partners } from '@/data/partners'
 import { contact } from '@/data/site'
 
 export const metadata: Metadata = {
@@ -20,20 +17,6 @@ export const metadata: Metadata = {
     url: '/mission/lisat-01',
   },
 }
-
-/** Partners with a stated role in the mission, shown near the foot of the page. */
-const missionPartnerIds = [
-  'meo',
-  'thales',
-  'marinha-portuguesa',
-  'instituto-telecomunicacoes',
-  'nanosatlab',
-  'instituto-superior-tecnico',
-]
-
-const missionPartners = missionPartnerIds
-  .map((id) => partners.find((p) => p.id === id))
-  .filter((p): p is (typeof partners)[number] => Boolean(p))
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -65,25 +48,6 @@ export default function MissionPage() {
       <MissionJourney />
       <MissionSpacecraft />
       <MissionCompetition />
-
-      {/* Partners on the mission */}
-      <Section tone="cloud" spacing="default">
-        <Container wide>
-          <SectionHeading
-            eyebrow="Support"
-            index="04"
-            title="Partners on this mission"
-            lead="Organisations contributing expertise, facilities and hardware to LISAT-01."
-          />
-          <ul className="mt-12 grid grid-cols-2 gap-px border border-rule bg-rule sm:grid-cols-3 lg:grid-cols-6">
-            {missionPartners.map((partner) => (
-              <li key={partner.id}>
-                <PartnerLogo partner={partner} size="sm" />
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
 
       <CtaBand
         eyebrow="Get involved"

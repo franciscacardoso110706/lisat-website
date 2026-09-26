@@ -12,7 +12,7 @@ export function MissionCompetition() {
       <Container wide>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">
-            <Eyebrow index="05">Programme</Eyebrow>
+            <Eyebrow index="04">Programme</Eyebrow>
             <h2 className="mt-6 text-[clamp(2rem,4.5vw,3.25rem)] font-semibold leading-[1.04] tracking-tightest">
               {competition.name}
             </h2>
