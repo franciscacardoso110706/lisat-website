@@ -10,11 +10,10 @@ import { challenge, impact, mission, pillars } from '@/data/mission'
 /**
  * The mission, opened by asking.
  *
- * Closed, this is a statement and a hint: the headline, one line under it, and
- * three images cropped to a strip so you can see there is more without being
- * told what. Clicking the button does not navigate, does not raise a modal and
- * does not cut — the same three images grow into the three chapters they were
- * previews of, and the composition reorganises around them.
+ * Closed, this is a statement and an offer: the headline, one line under it
+ * and a button. Clicking does not navigate, does not raise a modal and does
+ * not cut — the section itself opens, and the three chapters of the mission
+ * arrive inside it.
  *
  * ── Why a click ───────────────────────────────────────────────────────────
  *
@@ -26,14 +25,14 @@ import { challenge, impact, mission, pillars } from '@/data/mission'
  * listener, no pin. Scrolling past without opening is a legitimate reading of
  * the page.
  *
- * ── Why Flip ──────────────────────────────────────────────────────────────
+ * ── Why there is no shared-element transition ─────────────────────────────
  *
- * The three images are one set of DOM nodes in both states. CSS describes the
- * two layouts; GSAP Flip measures the first, lets the class change happen, and
- * animates the difference. Rendering new cards in the open state and fading
- * the old ones out would look similar for about eighty milliseconds and then
- * break the only claim the interaction makes — that the small thing and the
- * large thing are the same thing.
+ * There was one, when the closed state showed the three images compressed
+ * into a strip: GSAP Flip grew those same nodes into these panels, and the
+ * point of it was that the small thing and the large thing were the same
+ * thing. With the strip gone there is nothing visible to grow from, so the
+ * chapters simply arrive — staggered, from below — while the statement
+ * recedes and the section opens around them.
  */
 
 /**
@@ -112,104 +111,106 @@ export function MissionOverview() {
     }
 
     busy.current = true
-    const [{ gsap }, { Flip }] = await Promise.all([
-      import('gsap'),
-      import('gsap/Flip'),
-    ])
-    gsap.registerPlugin(Flip)
+    const { gsap } = await import('gsap')
 
-    const media = rootEl.querySelectorAll<HTMLElement>('[data-flip]')
-    const bodies = rootEl.querySelectorAll<HTMLElement>('[data-story-body]')
+    const items = rootEl.querySelectorAll<HTMLElement>('.mv-item')
     const head = rootEl.querySelector<HTMLElement>('.mv-head')
     const title = rootEl.querySelector<HTMLElement>('.mv-title')
 
-    // Measure, change the layout, animate the difference.
-    const before = Flip.getState(media, { props: 'borderRadius' })
-    const heightBefore = stageEl.offsetHeight
-    const headBefore = head?.getBoundingClientRect().top ?? 0
+    /** The head, the statement and the section's own height, in both directions. */
+    const reshape = () => {
+      const heightBefore = stageEl.offsetHeight
+      const headBefore = head?.getBoundingClientRect().top ?? 0
 
-    rootEl.dataset.open = String(next)
-    setOpen(next)
+      rootEl.dataset.open = String(next)
+      setOpen(next)
 
-    const heightAfter = stageEl.offsetHeight
-    const headAfter = head?.getBoundingClientRect().top ?? 0
+      const heightAfter = stageEl.offsetHeight
+      const headAfter = head?.getBoundingClientRect().top ?? 0
 
-    /*
-     * The head does its own flip by hand. Losing the lead and the button
-     * shortens it by well over a hundred pixels, and without this it makes
-     * that whole journey in a single frame while the images glide.
-     */
-    if (head && headBefore !== headAfter) {
+      /*
+       * The head does its own flip by hand. Losing the lead and the button
+       * shortens it by well over a hundred pixels, and without this it makes
+       * that whole journey in a single frame.
+       */
+      if (head && headBefore !== headAfter) {
+        gsap.fromTo(
+          head,
+          { y: headBefore - headAfter },
+          {
+            y: 0,
+            duration: DURATION,
+            ease: 'power3.inOut',
+            clearProps: 'transform',
+          },
+        )
+      }
+
+      /*
+       * The statement recedes rather than shrinks: a `font-size` change would
+       * reflow the head mid-movement, and scale costs nothing.
+       */
+      if (title) {
+        gsap.to(title, {
+          scale: next ? 0.8 : 1,
+          duration: DURATION,
+          ease: 'power3.inOut',
+        })
+      }
+
+      // Everything below the section has to travel too, or it jumps the whole
+      // difference in one frame.
       gsap.fromTo(
-        head,
-        { y: headBefore - headAfter },
-        { y: 0, duration: DURATION, ease: 'power3.inOut', clearProps: 'transform' },
+        stageEl,
+        { height: heightBefore },
+        {
+          height: heightAfter,
+          duration: DURATION,
+          ease: 'power3.inOut',
+          onComplete: () => {
+            gsap.set(stageEl, { clearProps: 'height' })
+            busy.current = false
+          },
+        },
       )
     }
 
-    /*
-     * The statement recedes rather than shrinks: a `font-size` change would
-     * reflow the head mid-movement, and scale costs nothing.
-     */
-    if (title) {
-      gsap.to(title, {
-        scale: next ? 0.8 : 1,
-        duration: DURATION,
-        ease: 'power3.inOut',
+    if (next) {
+      reshape()
+      /*
+       * Set in the same frame the grid appears in, so there is never a paint
+       * with the chapters at full strength before the movement starts.
+       */
+      gsap.set(items, { opacity: 0, y: 36, scale: 0.94 })
+      gsap.to(items, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.7,
+        ease: 'power3.out',
+        stagger: 0.08,
+        delay: 0.14,
+        clearProps: 'opacity,transform',
+      })
+    } else {
+      /*
+       * Out first, then collapse. Closing the layout underneath them would
+       * take the chapters off the page in a single frame while the section
+       * was still shrinking around where they had been.
+       */
+      gsap.to(items, {
+        opacity: 0,
+        y: 16,
+        scale: 0.97,
+        duration: 0.32,
+        ease: 'power2.in',
+        stagger: 0.04,
+        onComplete: () => {
+          reshape()
+          gsap.set(items, { clearProps: 'opacity,transform' })
+        },
       })
     }
-
-    /*
-     * The section's own height has to travel too. Flip moves the images
-     * beautifully and leaves everything below them to jump the full
-     * difference in one frame.
-     */
-    gsap.fromTo(
-      stageEl,
-      { height: heightBefore },
-      { height: heightAfter, duration: DURATION, ease: 'power3.inOut' },
-    )
-
-    /*
-     * Held at nothing for the whole flight, and only then let in.
-     *
-     * `absolute: true` lifts the images out of flow, so while they travel
-     * each caption sits where its image is about to land. Fading the text in
-     * partway through the movement — which is what a delay did — painted it
-     * across the photograph for about a third of a second.
-     */
-    if (next) gsap.set(bodies, { opacity: 0, y: 16 })
-    else gsap.to(bodies, { opacity: 0, duration: 0.28, ease: 'power2.in' })
-
-    Flip.from(before, {
-      duration: DURATION,
-      ease: 'power3.inOut',
-      absolute: true,
-      stagger: 0.045,
-      onComplete: () => {
-        /*
-         * The explicit height comes off here rather than on the height
-         * tween's own completion. `absolute: true` lifts the images out of
-         * flow for the duration, so clearing it a frame early measures a
-         * section with nothing in it and collapses it for that frame.
-         */
-        gsap.set(stageEl, { clearProps: 'height' })
-        busy.current = false
-
-        if (next) {
-          gsap.to(bodies, {
-            opacity: 1,
-            y: 0,
-            duration: 0.45,
-            ease: 'power3.out',
-            stagger: 0.06,
-            clearProps: 'opacity,transform',
-          })
-        } else {
-          gsap.set(bodies, { clearProps: 'opacity,transform' })
-        }
-      },
-    })
   }, [open])
 
   /** Escape closes it, as anything that opens over the page should. */

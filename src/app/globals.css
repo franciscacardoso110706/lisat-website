@@ -1744,19 +1744,8 @@
     background-color: rgb(var(--lisat-navy));
   }
 
-  /* ---- Closed: a compressed strip that says there is more ---- */
+  /* ---- Closed: the chapters are not on the page at all ---- */
   .mv[data-open='false'] .mv-grid {
-    max-width: 30rem;
-    margin: 4rem auto 0;
-    gap: 0.75rem;
-  }
-
-  .mv[data-open='false'] .mv-media {
-    aspect-ratio: 16 / 10;
-    border-radius: 0.75rem;
-  }
-
-  .mv[data-open='false'] .mv-body {
     display: none;
   }
 
@@ -1806,11 +1795,6 @@
       grid-template-columns: minmax(0, 1fr);
       gap: 3rem;
       margin-top: 3.5rem;
-    }
-
-    .mv[data-open='false'] .mv-grid {
-      max-width: 22rem;
-      margin-top: 3rem;
     }
 
     .mv-close {
