@@ -1,0 +1,8 @@
+{
+  "$comment": "Used only by the Sanity command line, so that `npx sanity deploy` knows which project to host the Studio for. The website itself reads these values from .env.local instead - see src/sanity/env.ts. Neither is a secret.",
+  "api": {
+    "projectId": "1ljhto3f",
+    "dataset": "production"
+  },
+  "studioHost": "lisat"
+}

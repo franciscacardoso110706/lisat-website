@@ -1,0 +1,1093 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * ---------------------------------------------------------------------
+   * 1. Primitives — the LISAT palette.
+   * ---------------------------------------------------------------------
+   * These are the brand colours themselves. They never change: nothing
+   * reassigns them per tone, per page or per component. Everything else on
+   * the site is expressed in terms of these nine values.
+   *
+   * Stored as raw channel triplets (`58 118 217`, not `#3A76D9`) because
+   * Tailwind can only apply an opacity modifier — `bg-brand/20`,
+   * `text-accent/70` — to a colour it can wrap as
+   * `rgb(var(--x) / <alpha-value>)`. A plain `var(--x)` holding a hex string
+   * silently produces no rule at all, which is a mistake that hides well.
+   */
+  :root {
+    --lisat-blue: 58 118 217; /* #3A76D9 — the brand blue */
+    --lisat-blue-soft: 127 169 235; /* #7FA9EB */
+    --lisat-blue-deep: 39 100 201; /* #2764C9 */
+    --lisat-mist: 221 233 248; /* #DDE9F8 */
+    --lisat-ice: 234 241 251; /* #EAF1FB */
+    --lisat-cloud: 246 248 252; /* #F6F8FC */
+    --lisat-white: 252 252 250; /* #FCFCFA */
+    --lisat-navy: 20 32 51; /* #142033 */
+    --lisat-midnight: 12 23 40; /* #0C1728 */
+    --lisat-slate: 83 101 125; /* #53657D */
+
+    /* Two derived greys the palette implies but does not name: a body-copy
+       weight between navy and slate, and the two light greys used for text
+       on dark surfaces. */
+    --lisat-steel: 68 85 105; /* #445569 */
+    --lisat-frost: 169 184 208; /* #A9B8D0 */
+    --lisat-haze: 126 142 168; /* #7E8EA8 */
+
+    /* Rhythm */
+    --gutter: 1.25rem;
+    --nav-height: 4.5rem;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --gutter: 2.5rem;
+      --nav-height: 5rem;
+    }
+  }
+
+  /**
+   * ---------------------------------------------------------------------
+   * 2. Semantic tokens, bound by tone.
+   * ---------------------------------------------------------------------
+   * A section applies one `tone-*` class; everything inside it then resolves
+   * `fg`, `rule`, `accent`, `glow` and `surface` against the right palette,
+   * so `text-fg-muted`, `border-rule` and `text-accent` stay legible on any
+   * surface without conditional class names.
+   *
+   * On the two blues:
+   *
+   *   `--brand` is #3A76D9 everywhere — the recognisable LISAT blue. It is
+   *   what the eye reads as "the blue": illumination, nodes, timeline
+   *   progress, decorative fills, large display words.
+   *
+   *   `--accent` is the *working* blue for interface text, and it shifts per
+   *   tone because #3A76D9 is not readable at small sizes on either extreme
+   *   (4.28:1 on warm white, 4.08:1 on midnight — both under AA). On light it
+   *   deepens to #2764C9, on dark it lifts to #7FA9EB. Same hue, same
+   *   saturation, different value: it still reads as the LISAT blue, it just
+   *   passes WCAG. See the contrast table in `tailwind.config.ts`.
+   */
+
+  /* ---- Light tones ---- */
+  .tone-paper,
+  .tone-cloud,
+  .tone-ice,
+  .tone-mist,
+  :root {
+    --fg: var(--lisat-navy);
+    --fg-muted: var(--lisat-steel);
+    --fg-faint: var(--lisat-slate);
+    /* Hairlines derive from navy, never from black — a black rule on an
+       off-white surface reads as a printed line rather than an edge. */
+    --rule: rgb(20 32 51 / 0.11);
+    --rule-strong: rgb(20 32 51 / 0.22);
+    --accent: var(--lisat-blue-deep);
+    /* Decorative only — a pale blue used in glares and glows, never for
+       text, where it would not reach AA on either tone. */
+    --accent-soft: var(--lisat-blue);
+    /* A filled blue surface and the text that sits on it. Kept separate from
+       `--accent` because the two pull in opposite directions: text wants the
+       blue darker, a fill under white text wants it darker still, and on a
+       dark section accent text wants it lighter. One token cannot do both. */
+    --accent-solid: var(--lisat-blue-deep);
+    --accent-fg: var(--lisat-white);
+    --accent-hover: 30 78 160;
+    --brand: var(--lisat-blue);
+    --glow: var(--lisat-blue);
+    /* A card lifted off the current surface, and a well sunk into it. Cards
+       carry these instead of picking their own hex, which is what kept the
+       dark panels from drifting apart from their sections. */
+    --surface-raised: var(--lisat-white);
+    --surface-sunken: var(--lisat-ice);
+  }
+
+  .tone-paper,
+  .tone-cloud,
+  .tone-ice,
+  .tone-mist {
+    color: rgb(var(--fg));
+    background-color: rgb(var(--surface));
+  }
+
+  /* The site is light-first, so the document itself defaults to warm white
+     and dark areas opt in with a tone class. */
+  :root,
+  .tone-paper {
+    --surface: var(--lisat-white);
+    --surface-raised: var(--lisat-cloud);
+  }
+
+  .tone-cloud {
+    --surface: var(--lisat-cloud);
+  }
+
+  .tone-ice {
+    --surface: var(--lisat-ice);
+  }
+
+  .tone-mist {
+    --surface: var(--lisat-mist);
+  }
+
+  /* ---- Dark tones ---- */
+  .tone-void,
+  .tone-space,
+  .tone-hull {
+    --fg: var(--lisat-cloud);
+    --fg-muted: var(--lisat-frost);
+    --fg-faint: var(--lisat-haze);
+    --rule: rgb(246 248 252 / 0.12);
+    --rule-strong: rgb(246 248 252 / 0.22);
+    --accent: var(--lisat-blue-soft);
+    --accent-soft: 169 200 250;
+    /* On a dark section the fill can be the brand blue almost exactly — two
+       percent darker, which is where warm-white type on it clears AA (4.74:1).
+       #3A76D9 itself reaches only 4.40 against white and 4.08 against
+       midnight, so neither pairing works at button size. */
+    --accent-solid: 49 112 215; /* #3170D7 */
+    --accent-fg: var(--lisat-white);
+    --accent-hover: var(--lisat-blue-deep);
+    --brand: var(--lisat-blue);
+    /* Illumination on a dark surface is lifted a step so it reads as light
+       rather than as a patch of paint. Same hue as #3A76D9. */
+    --glow: 75 130 220;
+    --surface-raised: 21 34 56; /* #152238 */
+    --surface-sunken: 10 20 34; /* #0A1422 */
+    color: rgb(var(--fg));
+    background-color: rgb(var(--surface));
+  }
+
+  .tone-void {
+    --surface: var(--lisat-midnight);
+  }
+
+  .tone-space {
+    --surface: 16 29 51; /* #101D33 — between midnight and navy */
+  }
+
+  .tone-hull {
+    --surface: var(--lisat-navy);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface font-sans text-fg antialiased;
+    font-feature-settings: 'cv05' 1, 'ss03' 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Numbers in specs, stats and timelines should line up in columns. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    @apply bg-brand/25 text-fg;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+  }
+
+  /* Headings are set in the brand face; running text is not. Montserrat is
+     wider than the text face at the same size, so the display tracking in
+     `tailwind.config.ts` is pulled tighter to compensate. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-semibold tracking-tightest;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  .skip-link {
+    @apply sr-only;
+  }
+
+  .skip-link:focus {
+    @apply not-sr-only fixed left-4 top-4 z-[100] rounded-control bg-navy px-5 py-2.5 text-sm font-medium text-cloud;
+  }
+}
+
+@layer components {
+  /* The small uppercase mono label used above most section headings. */
+  /* The small uppercase label above most section headings.
+     Deliberately still monospaced: it is an engineering annotation, not a
+     heading, and it is one of the few things carrying the technical character
+     of the site. Montserrat is used for labels that are interface — buttons,
+     navigation, filters — not for these. */
+  .eyebrow {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.18em];
+  }
+
+  /* Navigation and interface labels: the brand face, not the annotation
+     face. Same size and rhythm as `.eyebrow` so the header keeps its
+     proportions — only the letterforms change. */
+  .nav-label {
+    @apply font-display text-[0.6875rem] font-semibold uppercase tracking-[0.16em];
+  }
+
+  /* Faint engineering grid, tinted by the current tone. */
+  .grid-overlay {
+    background-image:
+      linear-gradient(to right, var(--rule) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.55;
+  }
+
+  /* Scroll reveal.
+     Elements are visible by default so content never depends on JavaScript;
+     the Reveal component only opts them in once the script runs. */
+  [data-reveal='hidden'] {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  [data-reveal='shown'] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /**
+   * Blue light as a material, not a colour.
+   *
+   * `.ambient` is a large, heavily blurred radial that sits *behind* an
+   * element so the object appears to be emitting light into the space around
+   * it. It is deliberately not a box-shadow: shadows hug the border and read
+   * as UI chrome, while a blurred layer behind reads as illumination.
+   */
+  .ambient {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(58px);
+    pointer-events: none;
+    will-change: opacity, transform;
+  }
+
+  /**
+   * A soft curved boundary between two sections, used instead of a hard
+   * horizontal edge. The element carrying it should sit at the top of the
+   * lower section and take that section's colour.
+   */
+  .soft-edge-top {
+    border-top-left-radius: 50% 2.5rem;
+    border-top-right-radius: 50% 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .soft-edge-top {
+      border-top-left-radius: 50% 4rem;
+      border-top-right-radius: 50% 4rem;
+    }
+  }
+
+  /**
+   * TEAM — FOCUS.
+   *
+   * Resting on one person makes them the subject and lets everyone else step
+   * back. `:has()` is what allows this to be one CSS rule rather than thirty
+   * event listeners: the wall asks whether any of its children is being
+   * pointed at, and every child that is not dims itself.
+   *
+   * Touch has no hover, so a tap sets `data-focus` and the same rules apply.
+   * Keyboard focus comes free through `:focus-within`, because the only thing
+   * revealed is a link, which is focusable by definition.
+   */
+  /*
+   * Three elements, three owners, no argument:
+   *
+   *   .wall-item   Framer owns its transform, for the reflow when a filter
+   *                changes.
+   *   (inner)      Framer owns its opacity and scale, for entering and
+   *                leaving.
+   *   .wall-inner  CSS owns everything below.
+   *
+   * They are separate because an inline style always beats a stylesheet. With
+   * the dimming and the enter animation on one element, Framer's
+   * `style="opacity:1"` silently won and nothing ever dimmed.
+   */
+  .wall-inner {
+    position: relative;
+    transition:
+      opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .wall:has(.wall-item:hover) .wall-item:not(:hover) .wall-inner,
+  .wall:has(.wall-item:focus-within) .wall-item:not(:focus-within) .wall-inner,
+  .wall:has(.wall-item[data-focus='true'])
+    .wall-item:not([data-focus='true'])
+    .wall-inner {
+    opacity: 0.38;
+  }
+
+  .wall-item:hover .wall-inner,
+  .wall-item:focus-within .wall-inner,
+  .wall-item[data-focus='true'] .wall-inner {
+    transform: translateY(-6px);
+    z-index: 2;
+  }
+
+  /* The photograph itself. Sharpens and grows a little; the frame does not
+     move, so the grid never reflows. */
+  .wall-photo {
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .wall-item:hover .wall-photo,
+  .wall-item:focus-within .wall-photo,
+  .wall-item[data-focus='true'] .wall-photo {
+    transform: scale(1.04);
+  }
+
+  /* Role and LinkedIn. Present in the accessibility tree at all times — this
+     is opacity, not `display: none` — and revealed on focus. */
+  .wall-more {
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity 0.35s ease-out,
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .wall-item:hover .wall-more,
+  .wall-item:focus-within .wall-more,
+  .wall-item[data-focus='true'] .wall-more {
+    opacity: 1;
+    transform: none;
+  }
+
+  /**
+   * TEAM — FLOW.
+   *
+   * The disciplines drift sideways. Two identical runs sit side by side and
+   * the pair is translated by exactly half its width, so the loop has no seam
+   * and no JavaScript.
+   */
+  .flow-track {
+    display: flex;
+    width: max-content;
+    animation: flow-drift 90s linear infinite;
+  }
+
+  .flow:hover .flow-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes flow-drift {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  /**
+   * TEAM — OPEN.
+   *
+   * A shape that grows into the surface it is announcing. Used twice: the
+   * hero photograph arriving, and the closing invitation. Driven by
+   * `data-open`, which an IntersectionObserver sets once — like every other
+   * reveal on this site, the resting state is the truthful one, so a page
+   * without JavaScript shows the finished thing rather than nothing.
+   */
+  [data-open='closed'] {
+    clip-path: inset(18% 26% round 999px);
+    opacity: 0.55;
+  }
+
+  [data-open='shown'] {
+    clip-path: inset(0% 0% round var(--open-radius, 3rem));
+    opacity: 1;
+    transition:
+      clip-path 1.15s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.8s ease-out;
+  }
+
+  /**
+   * How it works — the shutter.
+   *
+   * One stage and three transformations, rather than three panels sliding
+   * past each other. Two rails sit either side of a central panel; as the
+   * reader scrolls the rails move inward and the panel closes behind them,
+   * the content is swapped while it is hidden, and the whole thing opens
+   * again on the next step.
+   *
+   * The scroll handler writes exactly one number — `--shut`, 0 open to 1
+   * closed — and everything below is derived from it in CSS. No layout is
+   * read or written per frame.
+   *
+   * Vertical and unpinned by default. `data-mode="pinned"` is added only once
+   * GSAP has loaded and decided the screen is big enough and motion is
+   * wanted, so no JavaScript, a phone or reduced motion all leave three
+   * readable panels stacked down the page.
+   */
+  .hiw {
+    --shut: 0;
+    --rail: 3.25rem;
+  }
+
+  .hiw-viewport {
+    position: relative;
+  }
+
+  .hiw-frame {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr) var(--rail);
+    gap: 0.5rem;
+    align-items: stretch;
+    transition: color 0.45s ease-out;
+    /*
+     * The frame carries a `tone-*` class so the rails and the type inside it
+     * follow the active step, but it must not paint. A tone class also sets
+     * `background-color`, and on a square, full-width box that put a hard
+     * rectangle behind the rounded rails and panel — invisible on the step
+     * whose tone matched the section, obvious on the other two.
+     *
+     * This lives in the components layer, which is why it beats the tone
+     * class in the base layer without needing `!important`.
+     */
+    background-color: transparent;
+  }
+
+  /* ---- The rails ---- */
+  .hiw-rail {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border: 1px solid var(--rule);
+    border-radius: 1.5rem;
+    background: rgb(var(--surface));
+    transition: background-color 0.45s ease-out, border-color 0.45s ease-out;
+    will-change: transform;
+  }
+
+  /* Closing moves the rails inward, which is what makes them read as
+     shutters rather than as decoration beside the picture. */
+  .hiw-rail--left {
+    transform: translateX(calc(var(--shut) * 0.85rem));
+  }
+
+  .hiw-rail--right {
+    transform: translateX(calc(var(--shut) * -0.85rem));
+  }
+
+  .hiw-rail-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-size: 0.6875rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .hiw-rail--left .hiw-rail-label {
+    transform: rotate(180deg);
+  }
+
+  /* Only the active step's label and number are shown. They are all in the
+     DOM so the swap is an attribute change, not a React render. */
+  .hiw-rail-label,
+  .hiw-rail-index {
+    display: none;
+  }
+
+  .hiw-rail-label[data-on='true'],
+  .hiw-rail-index[data-on='true'] {
+    display: block;
+  }
+
+  /* ---- The stage ---- */
+  .hiw-stage {
+    position: relative;
+    overflow: hidden;
+    /* The shutter itself. The radius grows as it closes, so the panel reads
+       as a physical thing narrowing rather than a mask being applied. */
+    clip-path: inset(
+      0 calc(var(--shut) * 46%) 0 calc(var(--shut) * 46%) round
+        calc(2rem + var(--shut) * 3rem)
+    );
+    border-radius: 2rem;
+    background: rgb(var(--surface));
+    will-change: clip-path;
+  }
+
+  @media (min-width: 768px) {
+    .hiw-stage {
+      border-radius: 3rem;
+      clip-path: inset(
+        0 calc(var(--shut) * 46%) 0 calc(var(--shut) * 46%) round
+          calc(3rem + var(--shut) * 4rem)
+      );
+    }
+  }
+
+  .hiw-panel {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.12s linear;
+  }
+
+  .hiw-panel[data-on='true'] {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* The photograph pushes gently toward the middle as the shutter closes. A
+     scale, never a squash — the frame changes shape, the picture does not. */
+  .hiw-media {
+    position: absolute;
+    inset: 0;
+    transform: scale(calc(1 + var(--shut) * 0.14));
+    will-change: transform;
+  }
+
+  /* ---- The signal line, which doubles as the progress indicator ---- */
+  /*
+   * One line, not three segments. The signal has to travel the whole way from
+   * the vessel to the ground, so the track is a single element and the three
+   * markers sit on top of it — two tracks each scaled by the same progress
+   * would fill in parallel, which reads as two signals rather than one.
+   */
+  .hiw-track {
+    position: relative;
+    flex: 1;
+    height: 0.75rem;
+  }
+
+  .hiw-track::before,
+  .hiw-track::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    height: 2px;
+    margin-top: -1px;
+    border-radius: 999px;
+  }
+
+  .hiw-track::before {
+    left: 0;
+    right: 0;
+    background: var(--rule-strong);
+  }
+
+  .hiw-track::after {
+    left: 0;
+    width: 100%;
+    transform-origin: left center;
+    transform: scaleX(var(--signal, 0));
+    background: linear-gradient(
+      to right,
+      rgb(var(--brand) / 0.35),
+      rgb(var(--brand))
+    );
+  }
+
+  .hiw-dot {
+    position: absolute;
+    top: 50%;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin: -0.25rem 0 0 -0.25rem;
+    border-radius: 999px;
+    border: 1px solid rgb(var(--brand) / 0.5);
+    background: rgb(var(--surface));
+    /* Not a transform: the dot is positioned with one, and two would fight. */
+    transition: background-color 0.35s ease-out, box-shadow 0.35s ease-out;
+  }
+
+  .hiw-dot[data-on='true'] {
+    background: rgb(var(--brand));
+    box-shadow: 0 0 0 3px rgb(var(--brand) / 0.18);
+  }
+
+  /* ---- Stacked: no JavaScript, small screens, reduced motion ---- */
+  .hiw:not([data-mode='pinned']) .hiw-frame {
+    display: block;
+  }
+
+  /*
+   * The rails are indicators for a sequence that is not running, and only
+   * ever show one step's label — stacked, they would sit beside all three
+   * panels announcing the first. Each panel carries its own "01 / Vessel"
+   * anyway, so the rails simply step aside.
+   */
+  .hiw:not([data-mode='pinned']) .hiw-rail {
+    display: none;
+  }
+
+  .hiw:not([data-mode='pinned']) .hiw-stage {
+    /* No shutter when nothing is driving it, and no frame around a frame. */
+    clip-path: none;
+    overflow: visible;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .hiw:not([data-mode='pinned']) .hiw-panel {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .hiw:not([data-mode='pinned']) .hiw-media {
+    transform: none;
+  }
+
+  /* Gaps between the stacked panels. Pinned, the panels sit on top of one
+     another and are shown by `data-on`, so nothing here applies — an earlier
+     version also hid the siblings in pinned mode, which removed two thirds of
+     the sequence. */
+  .hiw:not([data-mode='pinned']) .hiw-step + .hiw-step {
+    margin-top: 1.5rem;
+  }
+
+  /* ---- Pinned ---- */
+  .hiw[data-mode='pinned'] .hiw-viewport {
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.25rem;
+    /* The header floats over the pinned section, so the top of the rails has
+       to clear it — otherwise the active step number sits underneath the
+       navigation and cannot be read. */
+    padding: calc(var(--nav-height) + 0.75rem) 0 1.5rem;
+  }
+
+  .hiw[data-mode='pinned'] .hiw-frame {
+    flex: 1;
+    min-height: 0;
+  }
+
+  /**
+   * Mission journey.
+   *
+   * Vertical by default; the horizontal layout is opt-in via
+   * `[data-journey='horizontal']`, which the component sets only once GSAP has
+   * loaded and taken over. No JavaScript, a small screen or reduced motion all
+   * leave a readable vertical timeline rather than a broken horizontal one.
+   *
+   * The vertical rules are scoped with `:not()` rather than using `!important`
+   * to override the inline coordinates — `!important` would also beat the
+   * horizontal rules, which is exactly what went wrong the first time.
+   */
+  .journey-viewport {
+    position: relative;
+  }
+
+  .journey-track {
+    position: relative;
+  }
+
+  .journey:not([data-journey='horizontal']) .journey-track {
+    width: 100%;
+  }
+
+  .journey:not([data-journey='horizontal']) .journey-path {
+    display: none;
+  }
+
+  .journey:not([data-journey='horizontal']) .journey-list {
+    position: relative;
+    height: auto;
+    padding: 0 var(--gutter) 3rem;
+    margin: 0 auto;
+    max-width: 44rem;
+  }
+
+  /* The vertical thread, drawn with a gradient rather than an SVG path. */
+  .journey:not([data-journey='horizontal']) .journey-list::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--gutter) + 0.5rem);
+    top: 0.75rem;
+    bottom: 3.75rem;
+    width: 2px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to bottom,
+      rgb(var(--brand) / 0.85),
+      rgb(var(--brand) / 0.2)
+    );
+  }
+
+  .journey:not([data-journey='horizontal']) .journey-item {
+    position: relative;
+    transform: none;
+    padding-left: 2.75rem;
+    padding-bottom: 3.5rem;
+    list-style: none;
+  }
+
+  .journey:not([data-journey='horizontal']) .journey-slot {
+    position: static;
+    width: auto;
+    transform: none;
+  }
+
+  .journey:not([data-journey='horizontal']) .journey-node {
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+  }
+
+  .journey:not([data-journey='horizontal']) .journey-content {
+    max-width: 34rem;
+  }
+
+  .journey:not([data-journey='horizontal']) .journey-slot--media {
+    max-width: 20rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .journey:not([data-journey='horizontal']) .journey-tail {
+    padding: 0 var(--gutter) 1rem calc(var(--gutter) + 2.75rem);
+    margin: 0 auto;
+    max-width: 44rem;
+  }
+
+  .journey-item {
+    list-style: none;
+  }
+
+  .journey-node {
+    display: grid;
+    place-items: center;
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .journey-tail {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  /* ---- Horizontal, once the script has taken over ---- */
+  [data-journey='horizontal'] .journey-viewport {
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  [data-journey='horizontal'] .journey-track {
+    width: var(--track-w);
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    will-change: transform;
+  }
+
+  [data-journey='horizontal'] .journey-path {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  /* The list shares the SVG's box exactly, so every node sits on the path. */
+  [data-journey='horizontal'] .journey-list {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: var(--track-w);
+    height: var(--track-h);
+    transform: translateY(-50%);
+    padding: 0;
+    margin: 0;
+    max-width: none;
+  }
+
+  [data-journey='horizontal'] .journey-item {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    padding: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  [data-journey='horizontal'] .journey-slot {
+    position: absolute;
+    left: 50%;
+    width: 22rem;
+    transform: translateX(-50%);
+  }
+
+  /*
+   * A milestone sits either side of a path running near the middle of the
+   * viewport, so its content has roughly 330px of room. Photography and
+   * description are capped to fit inside that — without this the taller
+   * milestones ran up under the header.
+   */
+  [data-journey='horizontal'] .journey-content p:last-child {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /*
+   * Photography sits above the path, words below it — and is deliberately
+   * narrower than the text column, so the milestone title stays the primary
+   * element and the picture supports it. The frame keeps the photograph's own
+   * ratio, so shrinking the width never reintroduces cropping.
+   */
+  [data-journey='horizontal'] .journey-slot--media {
+    bottom: 1.75rem;
+    width: 18rem;
+  }
+
+  [data-journey='horizontal'] .journey-slot--text {
+    top: 1.75rem;
+  }
+
+  [data-journey='horizontal'] .journey-slot--above {
+    bottom: 1.75rem;
+  }
+
+  [data-journey='horizontal'] .journey-slot--below {
+    top: 1.75rem;
+  }
+
+  [data-journey='horizontal'] .journey-node {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  [data-journey='horizontal'] .journey-tail {
+    align-self: center;
+    margin-left: auto;
+    padding: 0 7rem 10rem 3rem;
+    white-space: nowrap;
+  }
+
+  /* Node, shared by both layouts. */
+  .journey-dot {
+    position: relative;
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 999px;
+    background: rgb(var(--brand));
+    box-shadow:
+      0 0 0 4px rgb(var(--glow) / 0.16),
+      0 0 22px 4px rgb(var(--glow) / 0.45);
+  }
+
+  .journey-dot--planned {
+    background: rgb(var(--surface));
+    border: 2px solid rgb(var(--brand) / 0.5);
+    box-shadow: 0 0 0 4px rgb(var(--glow) / 0.08);
+  }
+
+  .journey-pulse {
+    position: absolute;
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 999px;
+    background: rgb(var(--glow) / 0.4);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /**
+   * The updates cover stack fans out on load.
+   *
+   * Each photograph carries its own `--rot`, `--tx` and `--ty`; the animation
+   * runs from clustered-and-upright to its resting place. It is CSS so it
+   * plays without JavaScript, and it owns this element's transform alone —
+   * hover and cursor parallax live on separate elements inside, so nothing
+   * competes for the property.
+   */
+  .photo-fan {
+    animation: photo-fan 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: transform;
+  }
+
+  @keyframes photo-fan {
+    from {
+      transform: translate(calc(var(--tx) * 0.25), 22px) rotate(0deg) scale(0.92);
+      opacity: 0;
+    }
+    to {
+      transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Masked line reveal, used for the site's major statements.
+     Each line sits inside an overflow-hidden wrapper and rises into place.
+     Like `[data-reveal]`, lines are visible by default and only opt *into*
+     being hidden once JavaScript has confirmed it can reveal them again. */
+  [data-lines='hidden'] .line-inner {
+    transform: translateY(115%);
+  }
+
+  [data-lines='shown'] .line-inner {
+    transform: none;
+    transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--line-index, 0) * 80ms);
+  }
+
+  /* Editorial image reveal: a mask wipes up the frame while the photograph
+     itself settles more slowly, which reads as depth rather than a fade.
+     The mask finishes first so the image is never withheld from the reader. */
+  [data-img='hidden'] {
+    clip-path: inset(0 0 100% 0);
+  }
+
+  [data-img='hidden'] .img-inner {
+    transform: scale(1.1) translateY(3%);
+  }
+
+  [data-img='shown'] {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  [data-img='shown'] .img-inner {
+    transform: none;
+    transition: transform 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Hero entrance. Pure CSS, so it plays even if hydration never happens.
+     `both` fill mode means the reduced-motion override lands the element on
+     its final state instead of leaving it hidden. */
+  .enter-up,
+  .enter-fade {
+    animation-duration: 0.9s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: both;
+  }
+
+  .enter-up {
+    animation-name: enter-up;
+  }
+
+  .enter-fade {
+    animation-name: enter-fade;
+  }
+
+  @keyframes enter-up {
+    from {
+      transform: translateY(110%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes enter-fade {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer utilities {
+  .gutter {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+
+  /* Long-form article and section copy. Sized for comfortable laptop reading. */
+  .prose-lisat p {
+    @apply text-[1.125rem] leading-[1.7] text-fg-muted md:text-[1.1875rem];
+  }
+
+  .prose-lisat p + p {
+    @apply mt-6;
+  }
+
+  /* Hairline that reads like a drawing annotation. */
+  .rule-line {
+    @apply h-px w-full;
+    background-color: var(--rule);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-lines] .line-inner,
+  [data-img] .img-inner {
+    transform: none !important;
+  }
+
+  .photo-fan {
+    animation: none !important;
+    transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) !important;
+    opacity: 1 !important;
+  }
+
+  [data-img] {
+    clip-path: none !important;
+  }
+
+  .flow-track {
+    animation: none !important;
+  }
+
+  [data-open] {
+    clip-path: none !important;
+    opacity: 1 !important;
+  }
+
+  .wall-inner,
+  .wall-item:hover .wall-inner,
+  .wall-item:focus-within .wall-inner,
+  .wall-item[data-focus='true'] .wall-inner {
+    transform: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

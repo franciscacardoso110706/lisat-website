@@ -1,0 +1,18 @@
+node_modules
+.next
+out
+build
+.DS_Store
+*.pem
+npm-debug.log*
+
+# Environment. Every .env file is ignored except the example, which carries
+# no real values. `.env*.local` alone would have left a plain `.env` - a
+# natural place to put a token - committable.
+.env
+.env.*
+!.env*.example
+
+.vercel
+*.tsbuildinfo
+next-env.d.ts
