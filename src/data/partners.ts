@@ -1,4 +1,9 @@
-import type { Partner, PartnerTier, PartnerTierMeta } from '@/lib/types'
+import type {
+  Partner,
+  PartnerPriority,
+  PartnerTier,
+  PartnerTierMeta,
+} from '@/lib/types'
 
 /**
  * Organisations supporting LISAT.
@@ -13,6 +18,13 @@ import type { Partner, PartnerTier, PartnerTierMeta } from '@/lib/types'
  * tier. Academic bodies are grouped as `institutional` and everything else as
  * `supporter` — change a `tier` value here if a relationship is formally
  * different.
+ *
+ * `priority` only decides how large a partner is drawn on the Partners page;
+ * it follows the tier unless set. Oeiras Valley is set to `featured` so it sits
+ * beside MEO, at the team's request — its official tier is unchanged.
+ *
+ * These records are the fallback. A partner published in Sanity Studio with
+ * the same key replaces the fields it sets — see `src/lib/partner-source.ts`.
  */
 export const partners: Partner[] = [
   {
@@ -22,6 +34,10 @@ export const partners: Partner[] = [
     logo: '/images/partners/meo.png',
     url: 'https://www.meo.pt',
     contribution: 'Main partner. Hosted the team at its Satellite Operations Center.',
+    featuredImage: {
+      src: '/images/updates/altice-01.jpg',
+      alt: 'The LISAT team at MEO’s Satellite Operations Center, in front of a ground-station antenna',
+    },
   },
 
   {
@@ -48,6 +64,7 @@ export const partners: Partner[] = [
     tier: 'gold',
     logo: '/images/partners/oeiras-valley.png',
     url: 'https://oeirasvalley.com',
+    priority: 'featured',
   },
   {
     id: 'instituto-telecomunicacoes',
@@ -258,6 +275,58 @@ export const partnerTiers: PartnerTierMeta[] = [
     description: 'Organisations contributing materials, services and equipment.',
   },
 ]
+
+/**
+ * The size each tier is drawn at when a partner has no `priority` of its own.
+ * The main partner leads; gold and silver have contributions worth writing
+ * out; everyone else flows past as a logo.
+ */
+const tierPriority: Record<PartnerTier, PartnerPriority> = {
+  main: 'featured',
+  gold: 'major',
+  silver: 'major',
+  bronze: 'standard',
+  technical: 'standard',
+  institutional: 'standard',
+  supporter: 'standard',
+}
+
+/** A tier as a singular label, for one partner: "Gold partner". */
+export const tierBadge: Record<PartnerTier, string> = {
+  main: 'Main partner',
+  gold: 'Gold partner',
+  silver: 'Silver partner',
+  bronze: 'Bronze partner',
+  technical: 'Technical partner',
+  institutional: 'Institutional partner',
+  supporter: 'Supporter',
+}
+
+export function partnerPriority(partner: Partner): PartnerPriority {
+  return partner.priority ?? tierPriority[partner.tier]
+}
+
+const priorityRank: Record<PartnerPriority, number> = {
+  featured: 0,
+  major: 1,
+  standard: 2,
+}
+
+const tierRank = new Map(partnerTiers.map((t, i) => [t.id, i]))
+
+/**
+ * Display order: priority, then official tier, then `order`. The sort is
+ * stable, so partners with no `order` keep the order of the list above — and
+ * within "major" a gold partner always precedes a silver one.
+ */
+export function sortPartners(list: Partner[]): Partner[] {
+  return [...list].sort(
+    (a, b) =>
+      priorityRank[partnerPriority(a)] - priorityRank[partnerPriority(b)] ||
+      (tierRank.get(a.tier) ?? 99) - (tierRank.get(b.tier) ?? 99) ||
+      (a.order ?? 1000) - (b.order ?? 1000),
+  )
+}
 
 export function partnersByTier(tier: PartnerTier): Partner[] {
   return partners.filter((p) => p.tier === tier)

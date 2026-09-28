@@ -87,11 +87,20 @@ export function Hero() {
           className="enter-fade text-accent [&>span]:text-accent"
         />
 
+        {/*
+          Each line is a mask for the entrance, and at a 0.9 line-height
+          Montserrat's descenders fall below the line box — the mask was
+          cutting the tail off the "g". The inner line carries the room for
+          them as padding (so the entrance still starts fully hidden, since
+          it travels 110% of the padded height) and the mask gives the same
+          amount back as negative margin, so the lines sit exactly as tight
+          as before.
+        */}
         <h1 className="mt-[clamp(1rem,3vh,2rem)] text-display-xl font-semibold">
           {headline.map((line, i) => (
-            <span key={line} className="block overflow-hidden">
+            <span key={line} className="-mb-[0.2em] block overflow-hidden">
               <span
-                className="enter-up block"
+                className="enter-up block pb-[0.2em]"
                 style={{ animationDelay: `${140 + i * 110}ms` }}
               >
                 {line}

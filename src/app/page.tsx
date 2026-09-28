@@ -5,7 +5,7 @@ import { People } from '@/components/home/People'
 import { DepartmentsOverview } from '@/components/home/DepartmentsOverview'
 import { UpdatesPreview } from '@/components/home/UpdatesPreview'
 import { PartnersStrip } from '@/components/home/PartnersStrip'
-import { JoinCta } from '@/components/home/JoinCta'
+import { NextCta } from '@/components/join/NextCta'
 
 /**
  * Homepage narrative:
@@ -31,7 +31,7 @@ export default function HomePage() {
       <DepartmentsOverview />
       <UpdatesPreview />
       <PartnersStrip />
-      <JoinCta />
+      <NextCta join="soft" />
     </>
   )
 }

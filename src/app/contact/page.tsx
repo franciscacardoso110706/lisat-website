@@ -3,7 +3,7 @@ import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react'
 import { Container, Section, SectionHeading } from '@/components/ui/Section'
 import { OrbitBackdrop } from '@/components/ui/OrbitBackdrop'
 import { Reveal } from '@/components/ui/Reveal'
-import { contact, site, socials } from '@/data/site'
+import { contact, pressMentions, site, socials } from '@/data/site'
 import { board } from '@/data/team'
 
 export const metadata: Metadata = {
@@ -204,6 +204,30 @@ export default function ContactPage() {
                         className="h-4 w-4 text-fg-faint transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
                         aria-hidden="true"
                       />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Moved here from the homepage close, which is now a single
+                  call to join. */}
+              <h3 className="eyebrow mt-14 text-fg-faint">In the press</h3>
+              <ul className="mt-4 space-y-4">
+                {pressMentions.map((mention) => (
+                  <li key={mention.url}>
+                    <a
+                      href={mention.url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="group block border-t border-rule pt-4"
+                    >
+                      <p className="text-sm leading-relaxed text-fg-muted transition-colors group-hover:text-fg">
+                        &ldquo;{mention.quote}&rdquo;
+                      </p>
+                      <p className="mt-2 inline-flex items-center gap-1 font-mono text-xs text-accent">
+                        {mention.outlet}
+                        <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
+                      </p>
                     </a>
                   </li>
                 ))}

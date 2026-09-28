@@ -119,16 +119,36 @@ export type PartnerTier =
   | 'institutional'
   | 'supporter'
 
+/**
+ * How much room a partner gets on the Partners page. A display hierarchy, not
+ * a public label: the official classification is `tier`.
+ *
+ *   featured   a large editorial placement of its own
+ *   major      a medium tile with its contribution written out
+ *   standard   a logo in the moving stream
+ *
+ * Leave it unset and it follows the tier (see `partnerPriority`).
+ */
+export type PartnerPriority = 'featured' | 'major' | 'standard'
+
 export interface Partner {
   id: string
   name: string
   tier: PartnerTier
-  /** Path under /public/images/partners. */
+  /** Path under /public/images/partners, or a Sanity CDN URL. */
   logo: string
   /** Official site. Omit when the current site does not link one. */
   url?: string
   /** One line on what the partnership provides, when we know it. */
   contribution?: string
+  /** Overrides the size that `tier` would give this partner. */
+  priority?: PartnerPriority
+  /** Lower comes first within the same priority and tier. */
+  order?: number
+  /** A real photograph of the partnership, shown with featured partners. */
+  featuredImage?: { src: string; alt: string }
+  /** Where this record came from. Only set for CMS partners. */
+  source?: 'sanity'
 }
 
 export interface PartnerTierMeta {

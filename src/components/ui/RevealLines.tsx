@@ -67,9 +67,13 @@ export function RevealLines({
         const text = typeof line === 'string' ? line : line.text
         const own = typeof line === 'string' ? undefined : line.className
         return (
-          <span key={text + i} className="block overflow-hidden pb-[0.08em]">
+          // The display sizes run a line-height under 1, which puts the
+          // descenders of g, y, p below the line box. The inner line is padded
+          // to hold them and the mask hands most of it back as negative
+          // margin, so nothing is clipped and the rhythm is unchanged.
+          <span key={text + i} className="-mb-[0.12em] block overflow-hidden">
             <span
-              className={clsx('line-inner block', lineClassName, own)}
+              className={clsx('line-inner block pb-[0.2em]', lineClassName, own)}
               style={{ '--line-index': i } as CSSProperties}
             >
               {text}

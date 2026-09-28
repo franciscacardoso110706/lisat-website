@@ -9,7 +9,8 @@ import { mission } from '@/data/mission'
 import { contact } from '@/data/site'
 
 export const metadata: Metadata = {
-  title: `${mission.name} — ${mission.headline}`,
+  // Short in the tab; the headline stays on the share card below.
+  title: mission.name,
   description: mission.summary,
   alternates: { canonical: '/mission/lisat-01' },
   openGraph: {

@@ -25,7 +25,7 @@ export default defineConfig({
   schema: { types: schemaTypes },
   plugins: [
     structureTool({
-      // A plain two-item menu. The default would be an alphabetical list of
+      // A plain three-item menu. The default would be an alphabetical list of
       // document types, which reads like a database to someone who is here to
       // update a photograph.
       structure: (S) =>
@@ -48,6 +48,16 @@ export default defineConfig({
                 S.documentTypeList('department')
                   .title('Departments')
                   .defaultOrdering([{ field: 'order', direction: 'asc' }]),
+              ),
+            S.listItem()
+              .title('Partners')
+              .child(
+                S.documentTypeList('partner')
+                  .title('Partners')
+                  .defaultOrdering([
+                    { field: 'order', direction: 'asc' },
+                    { field: 'name', direction: 'asc' },
+                  ]),
               ),
           ]),
     }),

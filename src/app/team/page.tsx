@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { Container, Section } from '@/components/ui/Section'
 import { SectionIndex } from '@/components/ui/Technical'
 import { ButtonLink } from '@/components/ui/Button'
 import { TeamCarousel } from '@/components/team/TeamCarousel'
 import { TeamPortrait } from '@/components/team/TeamPortrait'
+import { NextCta } from '@/components/join/NextCta'
 import { getTeam } from '@/lib/team-source'
 import { departmentRoute } from '@/data/departments'
 import { site } from '@/data/site'
@@ -178,26 +179,7 @@ export default async function TeamPage() {
       </Section>
 
       {/* ── The way in ──────────────────────────────────────────────── */}
-      <Section tone="paper" join="soft" spacing="none" className="py-16 md:py-24">
-        <Container wide>
-          <div>
-            <Link href="/join-us" className="join-card group">
-              <p className="join-title">
-                We&rsquo;re
-                <br />
-                missing you.
-              </p>
-              <span className="join-action">
-                Join {site.name}
-                <ArrowRight
-                  className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
-              </span>
-            </Link>
-          </div>
-        </Container>
-      </Section>
+      <NextCta tone="paper" join="soft" />
     </>
   )
 }

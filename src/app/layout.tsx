@@ -47,8 +47,11 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
+  /* The tab reads "LISAT" and nothing more. Inner pages still say where you
+     are ("Team — LISAT"), which is what makes a row of tabs or a history list
+     usable. The tagline lives on in the share cards below. */
   title: {
-    default: `${site.name} — ${site.tagline}`,
+    default: site.name,
     template: `%s — ${site.name}`,
   },
   description: site.description,

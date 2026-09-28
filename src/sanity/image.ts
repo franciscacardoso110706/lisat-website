@@ -1,8 +1,8 @@
-import imageUrlBuilder from '@sanity/image-url'
+import { createImageUrlBuilder } from '@sanity/image-url'
 import type { Image as SanityImage } from 'sanity'
 import { dataset, projectId } from './env'
 
-const builder = imageUrlBuilder({ projectId, dataset })
+const builder = createImageUrlBuilder({ projectId, dataset })
 
 /**
  * Builds a URL for an uploaded image.
@@ -32,5 +32,30 @@ export function memberPhotoUrl(
     .crop('top')
     .auto('format')
     .quality(82)
+    .url()
+}
+
+/**
+ * A partner logo. Rasterised to PNG at a fixed width, so an SVG upload
+ * arrives as something `next/image` will draw, and transparency survives.
+ */
+export function partnerLogoUrl(source: SanityImage): string | null {
+  if (!source?.asset) return null
+  return builder.image(source).width(640).format('png').url()
+}
+
+/** A landscape photograph, cropped around the editor's hotspot. */
+export function landscapePhotoUrl(
+  source: SanityImage,
+  width: number,
+): string | null {
+  if (!source?.asset) return null
+  return builder
+    .image(source)
+    .width(width)
+    .height(Math.round((width * 2) / 3))
+    .fit('crop')
+    .auto('format')
+    .quality(80)
     .url()
 }
