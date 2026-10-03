@@ -33,7 +33,8 @@ const archive = updates.slice(4)
  */
 export default function UpdatesPage() {
   return (
-    <>
+    // .upd sets the journal's labels and headlines in the header face.
+    <div className="upd">
       <UpdatesCover />
 
       <LatestUpdates updates={latest} />
@@ -47,7 +48,6 @@ export default function UpdatesPage() {
       <CtaBand
         eyebrow="Follow along"
         title="Keep up with the mission."
-        body="We post progress as it happens — lab sessions, reviews, and the work behind each milestone."
         primary={
           instagram
             ? { label: 'Follow on Instagram', href: instagram.href, external: true }
@@ -56,6 +56,6 @@ export default function UpdatesPage() {
         secondary={{ label: 'About LISAT-01', href: '/mission/lisat-01' }}
         tone="void"
       />
-    </>
+    </div>
   )
 }

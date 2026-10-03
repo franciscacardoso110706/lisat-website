@@ -1,72 +1,54 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight, Mail, MapPin } from 'lucide-react'
-import { contact, footerNav, site, socials } from '@/data/site'
+import { Instagram, Linkedin } from 'lucide-react'
+import { footerNav, site, socials } from '@/data/site'
+
+/**
+ * The close of every page.
+ *
+ * Quiet on purpose, after pages that are not: the mark and the name on the
+ * left, three short columns of links on the right, one long hairline, and the
+ * two social accounts centred above the copyright. No descriptions, no
+ * address block, no decoration; Contact carries all of that.
+ *
+ * The social accounts are icons only. Their names are for screen readers.
+ */
+
+const socialIcons: Record<string, typeof Instagram> = {
+  Instagram,
+  LinkedIn: Linkedin,
+}
 
 export function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="tone-void relative border-t border-rule">
-      <div
-        className="grid-overlay pointer-events-none absolute inset-0"
-        aria-hidden="true"
-      />
-
-      <div className="relative mx-auto max-w-content gutter py-16 md:py-20">
-        <div className="grid gap-12 md:grid-cols-12">
+    <footer className="ft tone-void">
+      <div className="mx-auto max-w-content gutter">
+        <div className="grid gap-12 md:grid-cols-12 md:gap-8">
           {/* Identity */}
           <div className="md:col-span-5">
-            <Link href="/" className="inline-flex items-center gap-3">
+            <Link href="/" className="inline-flex flex-col items-start gap-4">
               <Image
                 src="/images/brand/lisat-logo.png"
                 alt={site.name}
                 width={350}
                 height={339}
-                className="h-10 w-auto"
+                className="h-11 w-auto"
               />
+              <span className="nav-label text-fg-muted">{site.tagline}</span>
             </Link>
-            <p className="mt-6 max-w-sm text-[0.9375rem] leading-relaxed text-fg-muted">
-              {site.tagline}. A student-led team at {site.institution} building{' '}
-              LISAT-01, a 1U CubeSat that collects maritime AIS signals from orbit.
-            </p>
-
-            <address className="mt-8 space-y-3 not-italic">
-              <a
-                href={`mailto:${contact.email}`}
-                className="flex items-center gap-2.5 text-sm text-fg-muted transition-colors hover:text-fg"
-              >
-                <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
-                {contact.email}
-              </a>
-              <a
-                href={contact.mapUrl}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="flex items-start gap-2.5 text-sm text-fg-muted transition-colors hover:text-fg"
-              >
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                <span>
-                  {contact.address}
-                  <br />
-                  <span className="text-fg-faint">{contact.addressNote}</span>
-                </span>
-              </a>
-            </address>
           </div>
 
           {/* Navigation */}
-          <div className="grid gap-10 sm:grid-cols-3 md:col-span-6 md:col-start-7">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 md:col-span-6 md:col-start-7">
             {footerNav.map((group) => (
               <nav key={group.title} aria-label={group.title}>
-                <h2 className="eyebrow text-fg-faint">{group.title}</h2>
-                <ul className="mt-4 space-y-2.5">
+                <h2 className="eyebrow text-accent">{group.title}</h2>
+                <ul className="mt-5 space-y-3">
                   {group.items.map((item) => (
                     <li key={item.href + item.label}>
-                      <Link
-                        href={item.href}
-                        className="text-sm text-fg-muted transition-colors hover:text-fg"
-                      >
+                      <Link href={item.href} className="ft-link">
                         {item.label}
                       </Link>
                     </li>
@@ -77,55 +59,45 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Social */}
-        <div className="mt-14 border-t border-rule pt-8">
-          <ul className="flex flex-wrap gap-x-6 gap-y-3">
-            {socials.map((s) => (
-              <li key={s.href}>
-                <a
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="group inline-flex items-center gap-1 text-sm text-fg-muted transition-colors hover:text-fg"
-                >
-                  {s.label}
-                  <ArrowUpRight
-                    className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                    aria-hidden="true"
-                  />
-                </a>
-              </li>
-            ))}
+        <div className="ft-rule" aria-hidden="true" />
+
+        <div className="flex flex-col items-center gap-6">
+          <ul className="flex items-center gap-3">
+            {socials.map((s) => {
+              const Icon = socialIcons[s.label]
+              if (!Icon) return null
+              return (
+                <li key={s.href}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="ft-social"
+                    aria-label={`${site.name} on ${s.label} (opens in a new tab)`}
+                  >
+                    <Icon className="h-[1.0625rem] w-[1.0625rem]" strokeWidth={1.6} aria-hidden="true" />
+                  </a>
+                </li>
+              )
+            })}
           </ul>
-        </div>
 
-        {/* Legal */}
-        <div className="mt-8 flex flex-col gap-3 font-mono text-xs text-fg-faint sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {year} {site.fullName}. All rights reserved.
-          </p>
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
-            <p>
-              {site.institution} · {site.city}, {site.country}
-            </p>
+          <p className="text-center font-mono text-[0.6875rem] tracking-[0.04em] text-fg-faint">
+            © {year} {site.name}. All rights reserved.
             {/*
               The way in for the team, kept deliberately quiet: this is a
               public site and a prominent "Log in" would read as something a
-              visitor is meant to do.
-
-              It is not hidden for security. Anyone may follow it; Sanity asks
-              who they are and shows nothing to an account that is not a member
-              of the project. Obscurity is not the control here.
+              visitor is meant to do. It is not hidden for security; Sanity
+              asks who you are and shows nothing to an account outside the
+              project.
             */}
-            <Link
-              href="/studio"
-              className="inline-flex items-center gap-1.5 transition-colors hover:text-accent"
-            >
+            <span className="mx-2 opacity-50" aria-hidden="true">
+              ·
+            </span>
+            <Link href="/studio" className="transition-colors hover:text-fg">
               Team login
-              <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
             </Link>
-          </div>
+          </p>
         </div>
       </div>
     </footer>

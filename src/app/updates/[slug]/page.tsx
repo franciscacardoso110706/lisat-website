@@ -73,7 +73,7 @@ export default async function UpdatePage({
   const url = new URL(`/updates/${update.slug}`, site.url).toString()
 
   return (
-    <>
+    <div className="upd">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -135,10 +135,13 @@ export default async function UpdatePage({
                   )
                 }
 
+                // A leading dash in the data marks the signature under a
+                // quote. The style marks it on the page, so the dash is
+                // dropped rather than printed.
                 if (paragraph.startsWith('—')) {
                   return (
                     <p key={i} className="ar-attribution">
-                      {paragraph}
+                      {paragraph.replace(/^—\s*/, '')}
                     </p>
                   )
                 }
@@ -173,6 +176,6 @@ export default async function UpdatePage({
         primary={{ label: 'About LISAT-01', href: '/mission/lisat-01' }}
         secondary={{ label: 'Join us', href: '/join-us' }}
       />
-    </>
+    </div>
   )
 }

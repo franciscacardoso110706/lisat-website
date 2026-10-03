@@ -75,7 +75,7 @@ export const partner = defineType({
       rows: 2,
       group: 'basics',
       description:
-        'One sentence, and only what is confirmed — for example "Access to Ansys for structural and thermal analysis."',
+        'One sentence, and only what is confirmed, for example "Access to Ansys for structural and thermal analysis."',
       validation: (rule) => rule.max(180),
     }),
 
@@ -85,13 +85,13 @@ export const partner = defineType({
       type: 'string',
       group: 'page',
       description:
-        'How much room the partner gets. This is a layout choice, not a label — visitors never see the word. "Unchanged" keeps the size the partner has on the website today; for a new partner it follows the official tier (main partner → large; gold and silver → medium; everyone else → the moving logo stream).',
+        'How much room the partner gets. This is a layout choice, not a label: visitors never see the word. "Unchanged" keeps the size the partner has on the website today; for a new partner it follows the official tier (main partner → large; gold and silver → medium; everyone else → the moving logo stream).',
       options: {
         list: [
           { title: 'Unchanged', value: 'auto' },
-          { title: 'Large — a feature of its own', value: 'featured' },
-          { title: 'Medium — a tile with its description', value: 'major' },
-          { title: 'Small — in the logo stream', value: 'standard' },
+          { title: 'Large: a feature of its own', value: 'featured' },
+          { title: 'Medium: a tile with its description', value: 'major' },
+          { title: 'Small: in the logo stream', value: 'standard' },
         ],
         layout: 'radio',
       },
@@ -111,7 +111,7 @@ export const partner = defineType({
       type: 'image',
       group: 'page',
       description:
-        'A real photograph of the partnership — a visit, an event, the team on site. Only shown when the partner is drawn large. Optional.',
+        'A real photograph of the partnership: a visit, an event, the team on site. Only shown when the partner is drawn large. Optional.',
       options: { hotspot: true },
       fields: [
         defineField({
@@ -124,12 +124,26 @@ export const partner = defineType({
       ],
     }),
     defineField({
+      name: 'story',
+      title: 'Related update',
+      type: 'string',
+      group: 'page',
+      description:
+        'The address of a story about this partnership on the Updates page, for example "/updates/thales-portugal-visit". Optional.',
+      validation: (rule) =>
+        rule.custom((value) =>
+          !value || /^\/updates\/[a-z0-9-]+$/.test(value)
+            ? true
+            : 'Use the form /updates/the-story-slug.',
+        ),
+    }),
+    defineField({
       name: 'active',
       title: 'Show on the website',
       type: 'boolean',
       group: 'page',
       description:
-        'Turn this off to hide the partner — including one that is defined in the code.',
+        'Turn this off to hide the partner, including one that is defined in the code.',
       initialValue: true,
     }),
   ],

@@ -25,7 +25,7 @@ export function MissionArchitecture() {
               eyebrow="Specifications"
               index="02"
               title="CubeSat specifications"
-              lead="Figures marked TBC have not been published yet — they will be filled in as the design is frozen."
+              lead="Figures marked TBC have not been published yet. They will be filled in as the design is frozen."
             />
 
             <dl className="mt-10 border-t border-rule">

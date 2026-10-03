@@ -15,8 +15,8 @@ export default function NotFound() {
           Signal lost.
         </h1>
         <p className="mt-6 max-w-xl text-base leading-relaxed text-fg-muted md:text-lg">
-          This page is not in orbit. It may have moved when we rebuilt the site —
-          try the mission, the team, or the latest updates.
+          This page is not in orbit. It may have moved when we rebuilt the site.
+          Try the mission, the team, or the latest updates.
         </p>
         <div className="mt-9 flex flex-col gap-3 sm:flex-row">
           <ButtonLink href="/" arrow>

@@ -44,6 +44,7 @@ function applyPatch(base: Partner | undefined, patch: PartnerPatch) {
     'order',
     'url',
     'contribution',
+    'story',
     'logo',
     'featuredImage',
   ] as const) {

@@ -66,7 +66,7 @@ export const teamMember = defineType({
       type: 'string',
       group: 'basics',
       description:
-        'Their job title on the team — for example "Department Leader" or "Team Member".',
+        'Their job title on the team, for example "Department Leader" or "Team Member".',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -105,7 +105,7 @@ export const teamMember = defineType({
       type: 'string',
       group: 'studies',
       description:
-        'The course code as written at Técnico — for example "LEAer". Optional.',
+        'The course code as written at Técnico, for example "LEAer". Optional.',
     }),
     defineField({
       name: 'year',
@@ -129,7 +129,7 @@ export const teamMember = defineType({
       type: 'url',
       group: 'links',
       description:
-        'The full address of their public LinkedIn profile. Optional — leave it blank and no LinkedIn icon is shown.',
+        'The full address of their public LinkedIn profile. Optional. Leave it blank and no LinkedIn icon is shown.',
       validation: (rule) =>
         rule.uri({ scheme: ['http', 'https'] }).custom((value) => {
           if (!value) return true
@@ -145,7 +145,7 @@ export const teamMember = defineType({
       rows: 3,
       group: 'links',
       description:
-        'A public sentence or two about them. Optional. Not shown on the team page yet — it is stored for a future design.',
+        'A public sentence or two about them. Optional. Not shown on the team page yet; it is stored for a future design.',
     }),
 
     defineField({

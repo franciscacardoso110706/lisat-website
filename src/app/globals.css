@@ -232,11 +232,11 @@
     @apply font-mono text-[0.6875rem] uppercase tracking-[0.18em];
   }
 
-  /* Navigation and interface labels: the brand face, not the annotation
-     face. Same size and rhythm as `.eyebrow` so the header keeps its
-     proportions — only the letterforms change. */
+  /* Header labels: Montserrat, the face of the headings, in ordinary case.
+     Set as words rather than as tracked capitals, so the bar reads like the
+     titles on the page instead of like an annotation. */
   .nav-label {
-    @apply font-display text-[0.6875rem] font-semibold uppercase tracking-[0.16em];
+    @apply font-display text-[0.875rem] font-medium tracking-[-0.005em];
   }
 
   /* Faint engineering grid, tinted by the current tone. */
@@ -2210,6 +2210,587 @@
   }
 
   /* ======================================================================
+   * FOOTER
+   *
+   * Compact and still. The upper corners are rounded and the footer rises
+   * a little over the end of the page, so the section above shows in the
+   * corners instead of meeting a hard line.
+   * ==================================================================== */
+
+  .ft {
+    position: relative;
+    margin-top: -2rem;
+    padding-top: 4.5rem;
+    padding-bottom: 2.5rem;
+    border-top-left-radius: 2.25rem;
+    border-top-right-radius: 2.25rem;
+  }
+
+  .ft-link {
+    display: inline-block;
+    font-size: 0.9375rem;
+    color: rgb(var(--lisat-white) / 0.92);
+    transition:
+      color 0.3s ease,
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ft-link:hover {
+    color: rgb(var(--lisat-blue-soft));
+    transform: translateX(3px);
+  }
+
+  .ft-rule {
+    height: 1px;
+    margin: 3.5rem 0 2.75rem;
+    background-color: rgb(var(--lisat-blue-soft) / 0.16);
+  }
+
+  .ft-social {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgb(var(--lisat-frost) / 0.3);
+    border-radius: 999px;
+    color: rgb(var(--lisat-white) / 0.9);
+    transition:
+      border-color 0.3s ease,
+      color 0.3s ease,
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ft-social:hover {
+    border-color: rgb(var(--lisat-blue));
+    color: rgb(var(--lisat-blue));
+    transform: translateY(-2px);
+  }
+
+  @media (min-width: 768px) {
+    .ft {
+      margin-top: -3rem;
+      padding-top: 5.5rem;
+      padding-bottom: 3rem;
+      border-top-left-radius: 3rem;
+      border-top-right-radius: 3rem;
+    }
+
+    .ft-rule {
+      margin: 5rem 0 3rem;
+    }
+  }
+
+  /* ======================================================================
+   * HOME
+   *
+   * A photographic hero, then five short chapters on warm white: the
+   * mission, the ways further in, the latest updates, the partners and
+   * joining. Headings use the shared `.ed-title`; `.hm-title-sm` is the
+   * smaller size the side-by-side chapters take.
+   * ==================================================================== */
+
+  /* ---- Hero ---- */
+  .hm-hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    min-height: 72svh;
+    overflow: hidden;
+    /* Extra room at the bottom: the next section curves up into it. */
+    padding-block: calc(var(--nav-height) + 3rem) 7rem;
+  }
+
+  .hm-hero-photo {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    animation: hm-settle 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes hm-settle {
+    from {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Deep on the left where the type sits, opening up to the right so the
+     team stays in view. */
+  .hm-hero-veil {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(
+        90deg,
+        rgb(var(--lisat-midnight) / 0.94) 0%,
+        rgb(var(--lisat-midnight) / 0.78) 40%,
+        rgb(var(--lisat-midnight) / 0.35) 75%,
+        rgb(var(--lisat-midnight) / 0.2) 100%
+      ),
+      linear-gradient(to top, rgb(var(--lisat-midnight) / 0.5), transparent 40%);
+  }
+
+  .hm-hero-title {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(2.75rem, 6.4vw, 5.5rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+  }
+
+  .hm-hero-line {
+    max-width: 24rem;
+    margin-top: 1.5rem;
+    font-size: clamp(1rem, 1.3vw, 1.125rem);
+    line-height: 1.5;
+    color: rgb(var(--fg));
+  }
+
+  .hm-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-top: 2rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 999px;
+    background-color: rgb(var(--lisat-white));
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: rgb(var(--lisat-blue-deep));
+    transition: background-color 0.3s ease;
+  }
+
+  .hm-hero-cta:hover {
+    background-color: rgb(var(--lisat-ice));
+  }
+
+  .hm-hero-cta svg {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hm-hero-cta:hover svg {
+    transform: translateX(4px);
+  }
+
+  .hm-hero-tag {
+    position: absolute;
+    right: max(var(--gutter), calc((100% - 80rem) / 2 + var(--gutter)));
+    bottom: 5.5rem;
+    display: none;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    line-height: 1.7;
+    letter-spacing: 0.18em;
+    text-align: right;
+    text-transform: uppercase;
+    color: rgb(var(--fg-muted));
+  }
+
+  @media (min-width: 768px) {
+    .hm-hero {
+      padding-block: calc(var(--nav-height) + 4rem) 8.5rem;
+    }
+
+    .hm-hero-tag {
+      display: block;
+    }
+  }
+
+  /* ---- Shared ---- */
+  .ed-title.hm-title-sm {
+    font-size: clamp(1.75rem, 2.5vw, 2.375rem);
+  }
+
+  .ed-title.hm-title-md {
+    font-size: clamp(2rem, 3.8vw, 3.25rem);
+  }
+
+  .hm-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: rgb(var(--accent));
+    transition: color 0.3s ease;
+  }
+
+  .hm-link:hover {
+    color: rgb(var(--fg));
+  }
+
+  .hm-link svg {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hm-link:hover svg {
+    transform: translateX(4px);
+  }
+
+  .hm-go {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid rgb(var(--lisat-blue-soft) / 0.8);
+    border-radius: 999px;
+    color: rgb(var(--lisat-blue));
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.3s ease;
+  }
+
+  .group:hover .hm-go {
+    transform: translateX(3px);
+  }
+
+  .hm-go--light {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    border-color: rgb(var(--lisat-white) / 0.7);
+    color: rgb(var(--lisat-white));
+  }
+
+  .group:hover .hm-go--light {
+    background-color: rgb(var(--lisat-white) / 0.12);
+  }
+
+  /* A label column and a content column, for chapters 02 and 03. */
+  .hm-split {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .hm-split {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      column-gap: 2.5rem;
+    }
+  }
+
+  /* ---- 01 The mission ---- */
+  .hm-mission {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .hm-craft {
+    position: relative;
+  }
+
+  .hm-craft-orbit {
+    position: absolute;
+    inset: -1rem -2rem;
+    width: calc(100% + 4rem);
+    height: calc(100% + 2rem);
+  }
+
+  /* The render sits on white; multiplied, it sits on the page. */
+  .hm-craft-img {
+    position: relative;
+    width: 100%;
+    height: auto;
+    mix-blend-mode: multiply;
+  }
+
+  /* Under the render rather than over it: the antennas reach the edges. */
+  .hm-craft-label {
+    position: relative;
+    margin-top: 0.5rem;
+    text-align: right;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    line-height: 1.7;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgb(var(--accent));
+  }
+
+  .hm-figures {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 3rem;
+    border-block: 1px solid var(--rule);
+  }
+
+  .hm-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 1.5rem 0.75rem;
+    text-align: center;
+  }
+
+  .hm-figure:nth-child(odd) {
+    border-right: 1px solid var(--rule);
+  }
+
+  .hm-figure:nth-child(n + 3) {
+    border-top: 1px solid var(--rule);
+  }
+
+  .hm-figure-value {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: rgb(var(--fg));
+  }
+
+  .hm-figure-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgb(var(--fg-muted));
+  }
+
+  @media (min-width: 1024px) {
+    .hm-mission {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+      column-gap: 3rem;
+    }
+
+    .hm-figures {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 3.5rem;
+    }
+
+    .hm-figure:nth-child(odd) {
+      border-right: 0;
+    }
+
+    .hm-figure:nth-child(n + 3) {
+      border-top: 0;
+    }
+
+    .hm-figure + .hm-figure {
+      border-left: 1px solid var(--rule);
+    }
+  }
+
+  /* ---- 02 The ways further in ---- */
+  .hm-routes {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .hm-route {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 5 / 4;
+    border-radius: 1.5rem;
+    background-color: rgb(var(--lisat-navy));
+  }
+
+  .hm-route-img {
+    object-fit: cover;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hm-route:hover .hm-route-img {
+    transform: scale(1.04);
+  }
+
+  .hm-route-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgb(var(--lisat-midnight) / 0.88) 0%,
+      rgb(var(--lisat-midnight) / 0.35) 50%,
+      transparent 75%
+    );
+  }
+
+  .hm-route-body {
+    position: absolute;
+    left: 1.25rem;
+    right: 4.25rem;
+    bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    color: rgb(var(--lisat-white));
+  }
+
+  .hm-route-num {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: rgb(var(--lisat-blue-soft));
+  }
+
+  .hm-route-title {
+    margin-top: 0.375rem;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .hm-route-line {
+    margin-top: 0.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: rgb(var(--lisat-white) / 0.85);
+  }
+
+  @media (min-width: 640px) {
+    .hm-routes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hm-route {
+      aspect-ratio: 4 / 5;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hm-route {
+      aspect-ratio: 5 / 4;
+    }
+  }
+
+  /* ---- 03 Latest ---- */
+  .hm-news {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .hm-news-item {
+    display: block;
+  }
+
+  .hm-news-photo {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border-radius: 1rem;
+    background-color: rgb(var(--lisat-ice));
+  }
+
+  .hm-news-date {
+    display: block;
+    margin-top: 1rem;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(var(--fg-faint));
+  }
+
+  .hm-news-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .hm-news-title {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    color: rgb(var(--fg));
+    transition: color 0.3s ease;
+  }
+
+  .hm-news-item:hover .hm-news-title {
+    color: rgb(var(--accent));
+  }
+
+  @media (min-width: 640px) {
+    .hm-news {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  /* ---- 04 Partners: a strip of marks ---- */
+  .hm-logos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .hm-logos li {
+    display: flex;
+    align-items: center;
+    height: 3.25rem;
+  }
+
+  .hm-logo {
+    width: auto;
+    max-width: 8rem;
+    max-height: 3.25rem;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    filter: grayscale(1);
+    opacity: 0.8;
+    transition:
+      filter 0.4s ease,
+      opacity 0.4s ease;
+  }
+
+  .hm-logo:hover {
+    filter: none;
+    opacity: 1;
+  }
+
+  /* ---- 05 Join ---- */
+  .hm-join {
+    display: grid;
+    overflow: hidden;
+    border-radius: 2rem;
+    background: linear-gradient(
+      150deg,
+      rgb(var(--lisat-ice)) 0%,
+      rgb(var(--lisat-mist)) 100%
+    );
+  }
+
+  .hm-join-photo {
+    position: relative;
+    aspect-ratio: 16 / 9;
+  }
+
+  .hm-join-text {
+    padding: 2.25rem 1.75rem 2.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .hm-join {
+      grid-template-columns: minmax(0, 62fr) minmax(0, 38fr);
+      border-radius: 2.5rem;
+    }
+
+    .hm-join-photo {
+      aspect-ratio: auto;
+      min-height: 22rem;
+    }
+
+    .hm-join-text {
+      align-self: center;
+      padding: 3rem;
+    }
+  }
+
+  /* ======================================================================
    * THE WAY IN — "Build what comes next."
    *
    * A blue panel with a photograph set into it as a rounded window. The
@@ -2590,306 +3171,653 @@
   }
 
   /* ======================================================================
-   * PARTNERS — a hierarchy you can see.
+   * PARTNERS
    *
-   * featured  large editorial placements, asymmetric (.pf-*)
-   * major     a staggered row of medium tiles (.pm-*)
-   * standard  the moving logo stream (PartnerMarquee)
+   * Light from top to bottom. A headline and a deck of overlapping logo
+   * cards with the lead partner in front, one row of large numbers, the
+   * whole network on one open field, and a compact close.
    *
-   * FOCUS: pointing at one partner lets the others in its level recede.
-   * Logos arrive on white mattes, so every surface they sit on is light and
-   * the marks are multiplied into it.
+   *   .pt-head / .ed-title   the two section headings
+   *   .pd-*                  the key partner deck
+   *   .pt-stats              proof of scale
+   *   .nw-*                  the network, one open field of logos
+   *   .pt-cta                the close
+   *
+   * Logos arrive on white mattes and are multiplied into whatever they sit
+   * on, so nothing between a logo and its surface may create a stacking
+   * context (no transform or opacity on their ancestors) unless that
+   * ancestor carries its own background.
    * ==================================================================== */
 
-  .pf-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-  }
-
-  .pf-slot {
-    transition:
-      opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-      filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .pf-grid:has(.pf-card:hover) .pf-slot:not(:hover) {
-    opacity: 0.55;
-    filter: saturate(0.4);
-  }
-
-  .pf-card {
+  /* ---- Hero: the team photograph, blurred, behind the statement ---- */
+  .pt-hero {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    /* Extra room at the bottom: the deck's section curves up over it. */
+    padding-block: calc(var(--nav-height) + 3rem) 6rem;
+  }
+
+  /* A photograph blurred into atmosphere behind a statement. Shared by the
+     Partners hero and the Updates cover; the section that holds it needs
+     `position: relative`, `isolation: isolate` and `overflow: hidden`.
+     Pulled past the edges first, or the blur would fade them to the
+     background colour. */
+  .blur-hero-photo {
+    position: absolute;
+    inset: -3rem;
+    z-index: -2;
+    filter: blur(14px);
+    transform: scale(1.06);
+  }
+
+  .blur-hero-veil {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      rgb(var(--lisat-midnight) / 0.6) 0%,
+      rgb(var(--lisat-midnight) / 0.72) 100%
+    );
+  }
+
+  /* On the dark hero the blue line runs lighter, so it carries. */
+  .pt-hero .ed-title-blue {
+    background: linear-gradient(
+      90deg,
+      rgb(var(--lisat-blue-soft)) 0%,
+      rgb(var(--lisat-ice)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  @media (min-width: 768px) {
+    .pt-hero {
+      padding-block: calc(var(--nav-height) + 4.5rem) 7.5rem;
+    }
+  }
+
+  /* ---- Section headings: statement left, a short line right ---- */
+  .pt-head {
+    display: grid;
     gap: 1.5rem;
-    height: 100%;
-    padding: 1.75rem;
-    border: 1px solid var(--rule);
-    border-radius: 2.25rem;
-    background-color: rgb(var(--surface-raised));
-    transition:
-      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .pf-card:hover {
-    transform: translateY(-4px);
-    box-shadow:
-      0 2px 4px rgb(20 32 51 / 0.05),
-      0 24px 56px -20px rgb(20 32 51 / 0.18);
-  }
-
-  /* A partner without a photograph becomes a composition of its mark. */
-  .pf-card--mark {
-    background:
-      radial-gradient(120% 90% at 100% 100%, rgb(var(--lisat-ice)), transparent 65%),
-      rgb(var(--surface-raised));
-  }
-
-  .pf-top {
-    display: flex;
-  }
-
-  .pf-badge {
-    padding: 0.5rem 0.875rem;
-    border: 1px solid rgb(var(--accent) / 0.35);
-    border-radius: 999px;
-    color: rgb(var(--accent));
-  }
-
-  .pf-logo {
-    display: flex;
-    align-items: center;
-    min-height: 5rem;
-  }
-
-  .pf-logo-img {
-    width: auto;
-    max-width: min(100%, 20rem);
-    max-height: 5.5rem;
-    object-fit: contain;
-    mix-blend-mode: multiply;
-    transform-origin: left center;
-    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .pf-card--mark .pf-logo {
-    flex: 1;
-    justify-content: center;
-    min-height: 12rem;
-  }
-
-  .pf-card--mark .pf-logo-img {
-    max-width: min(80%, 24rem);
-    max-height: 9rem;
-    transform-origin: center;
-  }
-
-  .pf-card:hover .pf-logo-img {
-    transform: scale(1.04);
-  }
-
-  .pf-photo {
-    position: relative;
-    flex: 1;
-    min-height: 13rem;
-    overflow: hidden;
-    border-radius: 1.5rem;
-  }
-
-  .pf-photo img {
-    transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .pf-card:hover .pf-photo img {
-    transform: scale(1.04);
-  }
-
-  .pf-foot {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 1rem 2rem;
-  }
-
-  .pf-line {
-    max-width: 32rem;
-    font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
-    line-height: 1.5;
-    letter-spacing: -0.01em;
+  .ed-title {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(2.125rem, 4.3vw, 3.75rem);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
     color: rgb(var(--fg));
   }
 
-  .pf-visit {
+  /* The second line in LISAT blue, lightening across the words. */
+  .ed-title-blue {
+    background: linear-gradient(
+      90deg,
+      rgb(var(--lisat-blue)) 0%,
+      rgb(var(--lisat-blue-soft)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-bottom: 0.06em;
+  }
+
+  .pt-intro {
+    max-width: 30rem;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: rgb(var(--fg-muted));
+  }
+
+  @media (min-width: 1024px) {
+    /* The statement takes the width its two lines need; the short line
+       beside it has what is left. */
+    .pt-head {
+      grid-template-columns: auto minmax(16rem, 26rem);
+      justify-content: space-between;
+      column-gap: 3rem;
+      align-items: start;
+    }
+
+    .pt-head .ed-title > span {
+      white-space: nowrap;
+    }
+
+    .pt-intro {
+      padding-top: 2.5rem;
+    }
+  }
+
+  /* ---- The key partner deck ---- */
+  .pd {
+    position: relative;
+  }
+
+  /* A quiet band across the page behind the lower half of the cards. */
+  .pd::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 34%;
+    height: 36%;
+    background-color: rgb(var(--lisat-cloud));
+  }
+
+  .pd-viewport {
+    position: relative;
+    overflow: hidden;
+    /* Room around the front card for its glow, which the clip would cut. */
+    padding-block: 2.5rem 3.5rem;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+
+  .pd-track {
+    display: flex;
+    align-items: center;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  /* The overlap: each card tucks under its neighbour. */
+  .pd-slide {
+    position: relative;
+    flex: 0 0 auto;
+    width: 70vw;
+    max-width: 18rem;
+    margin-left: -1.25rem;
+  }
+
+  .pd-slide:first-child {
+    margin-left: 0;
+  }
+
+  .pd-card {
+    --s: 0.8;
+    --o: 0.6;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    aspect-ratio: 5 / 6;
+    padding: 2.5rem 1.25rem 1.5rem;
+    border: 1px solid rgb(20 32 51 / 0.06);
+    border-radius: 1.75rem;
+    background-color: rgb(var(--lisat-white));
+    cursor: pointer;
+    opacity: var(--o);
+    transform: scale(var(--s));
+    box-shadow:
+      0 1px 2px rgb(20 32 51 / 0.04),
+      0 14px 34px -18px rgb(20 32 51 / 0.18);
+    transition:
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.6s ease,
+      box-shadow 0.6s ease,
+      border-color 0.6s ease;
+  }
+
+  /* Size follows distance from the card in front. */
+  .pd-slide[data-d='1'] .pd-card {
+    --s: 0.92;
+    --o: 1;
+  }
+
+  .pd-slide[data-d='2'] .pd-card {
+    --s: 0.85;
+    --o: 0.9;
+  }
+
+  /* The card in front: ice, a blue edge, and blue light around it. */
+  .pd-slide[data-d='0'] .pd-card {
+    --s: 1;
+    --o: 1;
+    border-color: rgb(var(--lisat-blue-soft) / 0.7);
+    background: linear-gradient(
+      180deg,
+      rgb(var(--lisat-white)) 0%,
+      rgb(var(--lisat-ice)) 100%
+    );
+    box-shadow:
+      0 0 0 4px rgb(var(--lisat-blue-soft) / 0.12),
+      0 26px 70px -20px rgb(var(--lisat-blue) / 0.55);
+  }
+
+  /* The main partner stands apart wherever it sits in the deck: a LISAT
+     blue edge, a faint ice ground, its level as a filled badge, and one
+     step more scale than any other card at the same distance. */
+  .pd-slide .pd-card--lead {
+    border: 2px solid rgb(var(--lisat-blue));
+    background: linear-gradient(
+      180deg,
+      rgb(var(--lisat-white)) 0%,
+      rgb(var(--lisat-ice)) 100%
+    );
+  }
+
+  .pd-slide[data-d='0'] .pd-card--lead {
+    --s: 1.06;
+    border-color: rgb(var(--lisat-blue));
+    box-shadow:
+      0 0 0 6px rgb(var(--lisat-blue) / 0.12),
+      0 30px 80px -20px rgb(var(--lisat-blue) / 0.6);
+  }
+
+  .pd-slide[data-d='1'] .pd-card--lead {
+    --s: 0.97;
+  }
+
+  .pd-slide[data-d='2'] .pd-card--lead {
+    --s: 0.9;
+  }
+
+  .pd-slide[data-d='3'] .pd-card--lead {
+    --s: 0.86;
+  }
+
+  .pd-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    background-color: rgb(var(--lisat-blue-deep));
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgb(var(--lisat-white));
+  }
+
+  .pd-card:focus-visible {
+    outline-offset: 4px;
+  }
+
+  .pd-num {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.9375rem;
+    letter-spacing: 0.06em;
+    color: rgb(var(--accent));
+  }
+
+  .pd-num::after {
+    content: '';
+    width: 4rem;
+    height: 1px;
+    background-color: rgb(var(--lisat-blue-soft) / 0.5);
+  }
+
+  .pd-logo-wrap {
+    display: grid;
+    flex: 1;
+    width: 100%;
+    place-items: center;
+  }
+
+  .pd-logo {
+    width: auto;
+    max-width: 78%;
+    max-height: 6rem;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  .pd-tier {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgb(var(--fg-muted));
+  }
+
+  .pd-go {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-top: 1rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    color: rgb(var(--fg));
+    transition:
+      border-color 0.4s ease,
+      color 0.4s ease,
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .pd-go--none {
+    visibility: hidden;
+  }
+
+  .pd-slide[data-d='0'] .pd-go {
+    width: 3rem;
+    height: 3rem;
+    border-color: rgb(var(--lisat-blue));
+    color: rgb(var(--lisat-blue));
+  }
+
+  .pd-slide[data-d='0'] .pd-card:hover .pd-go {
+    transform: translateX(3px);
+  }
+
+  .pd-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+
+  .pd-arrow {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid rgb(var(--lisat-blue-soft) / 0.8);
+    border-radius: 999px;
+    color: rgb(var(--lisat-blue));
+    transition:
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .pd-arrow:hover:not(:disabled) {
+    border-color: rgb(var(--lisat-blue));
+    background-color: rgb(var(--lisat-ice));
+  }
+
+  .pd-arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .pd-all {
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: rgb(var(--accent));
     transition: color 0.3s ease;
   }
 
-  .pf-visit:hover {
+  .pd-all:hover {
     color: rgb(var(--fg));
   }
 
   @media (min-width: 768px) {
-    .pf-card {
-      padding: 2.5rem;
-    }
-
-    .pf-photo {
-      min-height: 18rem;
-      border-radius: 2rem;
-    }
-
-    .pf-logo-img {
-      max-height: 6.5rem;
-    }
-
-    .pf-card--mark .pf-logo-img {
-      max-height: 11rem;
+    .pd-slide {
+      width: 18rem;
+      margin-left: -2.75rem;
     }
   }
 
-  @media (min-width: 1024px) {
-    .pf-grid {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
-
-    .pf-slot--wide {
-      grid-column: span 7;
-    }
-
-    .pf-slot--narrow {
-      grid-column: span 5;
-    }
-
-    .pf-slot--full {
-      grid-column: 1 / -1;
-    }
-
-    .pf-card {
-      min-height: 36rem;
-      border-radius: 3rem;
-    }
-  }
-
-  /* ---- Major: a staggered row ---- */
-  .pm-grid {
+  /* ---- Proof of scale: one row, thin rules between ---- */
+  .pt-stats {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-    align-items: start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 3rem;
+    border-block: 1px solid var(--rule);
   }
 
-  .pm-slot {
-    height: 100%;
-  }
-
-  .pm-tile {
-    position: relative;
+  .pt-stat {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    padding: 1.5rem;
-    border: 1px solid var(--rule);
-    border-radius: 1.75rem;
-    background-color: rgb(var(--surface-raised));
-    transition:
-      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  a.pm-tile:hover {
-    transform: translateY(-4px);
-    box-shadow:
-      0 2px 4px rgb(20 32 51 / 0.05),
-      0 18px 48px -16px rgb(20 32 51 / 0.14);
-  }
-
-  .pm-grid:has(.pm-tile:hover) .pm-tile:not(:hover) {
-    opacity: 0.5;
-  }
-
-  .pm-logo {
-    display: flex;
     align-items: center;
-    height: 4.5rem;
-    margin-bottom: 1.25rem;
+    gap: 0.75rem;
+    padding: 1.75rem 0.75rem;
+    text-align: center;
   }
 
-  .pm-logo-img {
-    width: auto;
-    max-width: 75%;
-    max-height: 3.25rem;
-    object-fit: contain;
-    mix-blend-mode: multiply;
+  /* Rules between the figures, not around them. */
+  .pt-stat:nth-child(odd) {
+    border-right: 1px solid var(--rule);
   }
 
-  .pm-name {
+  .pt-stat:nth-child(n + 3) {
+    border-top: 1px solid var(--rule);
+  }
+
+  .pt-stat-num {
     font-family: var(--font-display), system-ui, sans-serif;
-    font-size: 1.0625rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
+    font-size: clamp(2.75rem, 5.4vw, 4rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
     color: rgb(var(--fg));
   }
 
-  .pm-tier {
-    margin-top: 0.5rem;
-    color: rgb(var(--accent));
-  }
-
-  .pm-line {
-    margin-top: 0.875rem;
-    font-size: 0.875rem;
-    line-height: 1.55;
+  .pt-stat-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: rgb(var(--fg-muted));
   }
 
-  .pm-arrow {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    color: rgb(var(--fg-faint));
-    transition:
-      color 0.3s ease,
-      transform 0.3s ease;
-  }
-
-  a.pm-tile:hover .pm-arrow {
-    color: rgb(var(--accent));
-    transform: translate(2px, -2px);
-  }
-
-  @media (min-width: 640px) {
-    .pm-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
   @media (min-width: 1024px) {
-    .pm-grid {
+    .pt-stats {
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1.5rem;
+      margin-top: 3.5rem;
     }
 
-    /* The stagger: every second tile steps down, so the row reads as a
-       composition rather than a table. */
-    .pm-slot:nth-child(even) {
-      margin-top: 3rem;
+    .pt-stat {
+      padding-block: 2rem;
     }
 
-    .pm-tile {
-      padding: 1.75rem;
+    .pt-stat:nth-child(odd) {
+      border-right: 0;
+    }
+
+    .pt-stat:nth-child(n + 3) {
+      border-top: 0;
+    }
+
+    .pt-stat + .pt-stat {
+      border-left: 1px solid var(--rule);
+    }
+  }
+
+  /* ---- The network: one open field ---- */
+  .nw-caption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 5.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .nw-caption-inner {
+    animation: nw-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes nw-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  .nw-caption-name {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: rgb(var(--brand));
+  }
+
+  .nw-caption-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .nw-caption-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    color: rgb(var(--accent));
+    transition: color 0.3s ease;
+  }
+
+  .nw-caption-link:hover {
+    color: rgb(var(--fg));
+  }
+
+  .nw-caption-hint {
+    font-size: 0.875rem;
+    color: rgb(var(--fg-faint));
+  }
+
+  .nw-field {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1.75rem, 4vw, 3.25rem) clamp(1.75rem, 5vw, 4.5rem);
+    padding-block: 1rem 2rem;
+  }
+
+  /* Offset with `top`, not a transform: a transform here would isolate the
+     multiplied logo and bring its white matte back. */
+  .nw-item {
+    position: relative;
+  }
+
+  .nw-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    cursor: pointer;
+  }
+
+  .nw-item--standard .nw-mark {
+    width: 6.5rem;
+    height: 2.75rem;
+  }
+
+  .nw-item--major .nw-mark {
+    width: 8.5rem;
+    height: 3.5rem;
+  }
+
+  .nw-item--featured .nw-mark {
+    width: 11rem;
+    height: 4.5rem;
+  }
+
+  .nw-logo {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition:
+      opacity 0.4s ease,
+      filter 0.4s ease,
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nw-field[data-active] .nw-item:not([data-on]) .nw-logo {
+    opacity: 0.18;
+  }
+
+  .nw-item[data-on] .nw-logo {
+    filter: none;
+    opacity: 1;
+    transform: scale(1.08);
+  }
+
+  @media (min-width: 768px) {
+    .nw-caption {
+      margin-bottom: 3rem;
+    }
+
+    .nw-item {
+      top: var(--dy, 0);
+    }
+
+    .nw-item--standard .nw-mark {
+      width: 8.5rem;
+      height: 3.25rem;
+    }
+
+    .nw-item--major .nw-mark {
+      width: 11rem;
+      height: 4.25rem;
+    }
+
+    .nw-item--featured .nw-mark {
+      width: 14rem;
+      height: 5.5rem;
+    }
+  }
+
+  /* ---- The close: one compact blue band ---- */
+  .pt-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.75rem;
+    padding: 2.5rem 1.75rem;
+    border-radius: 2rem;
+    background-color: rgb(var(--lisat-blue-deep));
+    color: rgb(var(--lisat-white));
+  }
+
+  .pt-cta-title {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(2rem, 4.4vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .pt-cta-line {
+    margin-top: 0.75rem;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    color: rgb(var(--lisat-white) / 0.88);
+  }
+
+  /* White on the blue band: the default fill is that same blue. */
+  .pt-cta .pt-cta-button {
+    flex-shrink: 0;
+    background-color: rgb(var(--lisat-white));
+    color: rgb(var(--lisat-blue-deep));
+  }
+
+  .pt-cta .pt-cta-button:hover {
+    background-color: rgb(var(--lisat-ice));
+  }
+
+  @media (min-width: 768px) {
+    .pt-cta {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3.5rem 4rem;
+      border-radius: 2.5rem;
     }
   }
 
@@ -3078,6 +4006,24 @@
 
   .ar-back svg {
     transition: transform 0.3s ease;
+  }
+
+  /* On the Updates pages the type matches the rest of the site's headings
+     and text: headlines in Montserrat semibold, and the small labels (dates,
+     categories, filters, counts) in Inter, in ordinary case, instead of the
+     monospaced annotation capitals. */
+  .upd :is(.news-title, .ar-title) {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .upd :is(.eyebrow, .font-mono, .ag-count) {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
   }
 
   .ar-title {

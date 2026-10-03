@@ -116,7 +116,7 @@ export default async function TeamPage() {
             <p className="eyebrow text-accent">About {site.name}</p>
             <p className="tm-about mt-7">
               {site.name} is a student-led team at {site.institution}, building{' '}
-              {mission.name} — a 1U CubeSat that collects maritime AIS signals
+              {mission.name}, a 1U CubeSat that collects maritime AIS signals
               from orbit. Engineers, designers and managers across{' '}
               {departmentsRepresented} departments, designing and building a
               real spacecraft while they study.

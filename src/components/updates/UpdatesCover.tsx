@@ -49,17 +49,22 @@ export function UpdatesCover() {
   return (
     <section
       {...tilt.handlers}
-      className="tone-void relative isolate flex min-h-[64svh] flex-col justify-center overflow-hidden pt-[var(--nav-height)]"
+      className="tone-void relative isolate flex min-h-[64svh] flex-col justify-center overflow-hidden pb-16 pt-[var(--nav-height)] md:pb-20"
     >
-      {/* Ambient light, layered rather than a single flat wash. */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[46rem] w-[46rem] -translate-x-1/2 -translate-y-1/2 rounded-control bg-[radial-gradient(closest-side,rgb(var(--glow)/0.16),transparent)] blur-3xl"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-40 bottom-0 h-[30rem] w-[30rem] rounded-control bg-[radial-gradient(closest-side,rgb(var(--glow)/0.10),transparent)] blur-3xl"
-      />
+      {/* A LISAT presentation, blurred into atmosphere behind the cover, as
+          on the Partners hero. The extra bottom padding is the room the next
+          section's curve rises into. */}
+      <div className="blur-hero-photo" aria-hidden="true">
+        <Image
+          src="/images/updates/jornadasdomar-05.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[50%_35%]"
+        />
+      </div>
+      <div className="blur-hero-veil" aria-hidden="true" />
 
       {/* The cover itself */}
       <div className="relative mx-auto flex w-full max-w-content items-center gutter">
@@ -176,16 +181,9 @@ export function UpdatesCover() {
       </div>
 
       {/* Foot of the cover. Deliberately sparse. */}
-      <div className="relative mx-auto mt-8 flex w-full max-w-content flex-wrap items-end justify-between gap-6 gutter pb-4 md:mt-10 md:pb-6">
+      <div className="relative mx-auto mt-8 w-full max-w-content gutter pb-4 md:mt-10 md:pb-6">
         <p className="max-w-sm text-[0.9375rem] leading-relaxed text-fg-muted">
           Follow the people, milestones and moments behind {mission.name}.
-        </p>
-        <p className="eyebrow text-fg-faint">
-          {mission.name}
-          <span aria-hidden="true" className="mx-2 opacity-40">
-            /
-          </span>
-          Mission journal
         </p>
       </div>
     </section>

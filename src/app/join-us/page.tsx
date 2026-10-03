@@ -116,7 +116,8 @@ export default function JoinUsPage() {
 
             <div className="lg:col-span-4 lg:pb-3">
               <p className="max-w-sm text-lead text-fg-muted">
-                Engineering, operations, design, partnerships — {mission.name}{' '}
+                From engineering and operations to design and partnerships,{' '}
+                {mission.name}{' '}
                 is designed, built and tested by students.
               </p>
               <ButtonLink href="#apply" arrow className="mt-7">

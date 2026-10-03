@@ -33,7 +33,8 @@ export const partners: Partner[] = [
     tier: 'main',
     logo: '/images/partners/meo.png',
     url: 'https://www.meo.pt',
-    contribution: 'Main partner. Hosted the team at its Satellite Operations Center.',
+    contribution: 'Hosted the team at its Satellite Operations Center.',
+    story: '/updates/meo-satellite-operations-center',
     featuredImage: {
       src: '/images/updates/altice-01.jpg',
       alt: 'The LISAT team at MEO’s Satellite Operations Center, in front of a ground-station antenna',
@@ -48,6 +49,11 @@ export const partners: Partner[] = [
     url: 'https://www.thalesgroup.com/',
     contribution:
       'Guidance on communications, satellite operations and systems engineering.',
+    story: '/updates/thales-portugal-visit',
+    featuredImage: {
+      src: '/images/updates/thales-06.jpg',
+      alt: 'The LISAT team with Thales Portugal staff during the visit to its offices in Paço de Arcos',
+    },
   },
   {
     id: 'marinha-portuguesa',
@@ -57,6 +63,11 @@ export const partners: Partner[] = [
     url: 'https://www.marinha.pt',
     contribution:
       'Operational context for maritime surveillance of the EEZ, with CINAV-Lab.',
+    story: '/updates/cinav-lab-inauguration',
+    featuredImage: {
+      src: '/images/updates/cinav-01.jpg',
+      alt: 'LISAT members at the inauguration of CINAV-Lab, the Portuguese Navy’s research laboratory',
+    },
   },
   {
     id: 'oeiras-valley',
@@ -76,7 +87,7 @@ export const partners: Partner[] = [
 
   {
     id: 'jta',
-    name: 'JTA — The Data Scientists',
+    name: 'JTA: The Data Scientists',
     tier: 'silver',
     logo: '/images/partners/jta.png',
     contribution: 'Data science and software development support.',
@@ -155,7 +166,7 @@ export const partners: Partner[] = [
   },
   {
     id: 'ordem-engenheiros',
-    name: 'Ordem dos Engenheiros — Região Sul',
+    name: 'Ordem dos Engenheiros, Região Sul',
     tier: 'technical',
     logo: '/images/partners/ordem-engenheiros.png',
   },
@@ -336,23 +347,3 @@ export function partnersByTier(tier: PartnerTier): Partner[] {
 export const activeTiers = partnerTiers.filter(
   (t) => partners.some((p) => p.tier === t.id),
 )
-
-/** A short, high-recognition selection for the homepage strip. */
-export const featuredPartnerIds = [
-  'meo',
-  'thales',
-  'marinha-portuguesa',
-  'instituto-telecomunicacoes',
-  'oeiras-valley',
-  'instituto-superior-tecnico',
-  'nanosatlab',
-  'jta',
-  'althima',
-  'aubay',
-  'xpand-it',
-  'ipdj',
-]
-
-export const featuredPartners = featuredPartnerIds
-  .map((id) => partners.find((p) => p.id === id))
-  .filter((p): p is Partner => Boolean(p))

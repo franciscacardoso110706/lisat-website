@@ -22,18 +22,13 @@ export function LatestUpdates({ updates }: { updates: Update[] }) {
   if (updates.length === 0) return null
 
   return (
-    <Section tone="paper" spacing="none" id="latest" className="py-16 md:py-20">
+    <Section tone="paper" join="curve" spacing="none" id="latest" className="py-16 md:py-20">
       <Container wide>
-        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <h2 className="text-display-md">
-            Our latest
-            <br />
-            updates.
-          </h2>
-          <p className="max-w-xs text-[0.9375rem] leading-relaxed text-fg-muted md:pb-2 md:text-right">
-            Follow the latest milestones, events and stories from LISAT.
-          </p>
-        </div>
+        <h2 className="text-display-md">
+          Our latest
+          <br />
+          updates.
+        </h2>
 
         <ul className="mt-10 grid gap-x-6 gap-y-12 sm:grid-cols-2 md:mt-14 md:gap-x-8 xl:grid-cols-4">
           {updates.map((update, i) => (
@@ -63,7 +58,7 @@ export function LatestUpdates({ updates }: { updates: Update[] }) {
                   />
                 </div>
 
-                <h3 className="mt-6 text-[1.0625rem] font-medium leading-snug tracking-snug text-fg transition-colors duration-300 group-hover:text-accent md:text-lg">
+                <h3 className="news-title mt-6 text-[1.0625rem] font-medium leading-snug tracking-snug text-fg transition-colors duration-300 group-hover:text-accent md:text-lg">
                   {update.title}
                 </h3>
 

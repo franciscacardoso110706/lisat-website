@@ -20,7 +20,7 @@ export const departments: Department[] = [
     abbr: 'ADCS',
     tagline: 'Sensing, estimation and control',
     summary:
-      "This department makes sure the satellite knows where it is and where it's going — from precise orientation to trajectory planning, we simulate and control every move.",
+      "This department makes sure the satellite knows where it is and where it's going. From precise orientation to trajectory planning, we simulate and control every move.",
     description: [
       'The department is built on two pillars: attitude control and orbital mechanics.',
       "In attitude control, the mission is to orient and stabilise the satellite using mechanical systems, aligning its sensors and antennas with the Earth so data can be received and transmitted in real time.",
@@ -69,7 +69,7 @@ export const departments: Department[] = [
     abbr: 'COMMS',
     tagline: 'RF link, antennas and ground segment',
     summary:
-      'Talking to space — and making sure it talks back. Our Communications team builds and tests the systems that transmit, receive and keep the mission in sync.',
+      'Talking to space, and making sure it talks back. Our Communications team builds and tests the systems that transmit, receive and keep the mission in sync.',
     description: [
       'The Communications Systems department ensures that the CubeSat correctly transmits and receives the information the mission depends on.',
       'The department is divided into two main areas: antenna design and RF systems.',
@@ -94,7 +94,7 @@ export const departments: Department[] = [
     summary:
       'This is the heart of the mission. From design to integration, our Hardware team makes sure the satellite delivers the data and results that truly matter.',
     description: [
-      "The Hardware department designs, develops and integrates the satellite's primary scientific and technical instruments — the parts that make the mission objectives achievable.",
+      "The Hardware department designs, develops and integrates the satellite's primary scientific and technical instruments: the parts that make the mission objectives achievable.",
       'Responsibilities include defining goals, writing requirements, selecting components and working with suppliers. The department builds prototypes, integrates the payload and runs rigorous tests to ensure it works alongside the rest of the satellite.',
       'The team also coordinates with external partners, maintains documentation and provides operational support during the mission, troubleshooting to optimise payload performance.',
     ],
@@ -116,7 +116,7 @@ export const departments: Department[] = [
     abbr: 'PS',
     tagline: 'Generation, storage and distribution',
     summary:
-      "Powering every move, every system, every second. Our team designs, tests and manages the satellite's entire energy flow — from solar panels to battery optimisation.",
+      "Powering every move, every system, every second. Our team designs, tests and manages the satellite's entire energy flow, from solar panels to battery optimisation.",
     description: [
       "The Power Systems department designs and develops the satellite's power generation, storage and distribution systems, ensuring a reliable supply throughout the mission.",
       'The team selects solar panels, batteries and power-management components, integrates them with the satellite, and performs functional, thermal and load tests.',
@@ -140,7 +140,7 @@ export const departments: Department[] = [
     abbr: 'STC',
     tagline: 'Mechanical design, assembly and thermal',
     summary:
-      'From geometric centres to thermal extremes, this team makes sure the satellite holds together — and keeps cool.',
+      'From geometric centres to thermal extremes, this team makes sure the satellite holds together and keeps cool.',
     description: [
       "The department's main mission is to guarantee the satellite's structural integrity: studying geometric centres, centres of mass and material behaviour.",
       'It also designs and tests ventilation and energy-dispersion systems to manage the extreme temperatures the spacecraft will face in orbit.',

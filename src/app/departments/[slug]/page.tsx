@@ -31,7 +31,7 @@ export async function generateMetadata({
     description: dept.summary,
     alternates: { canonical: `/departments/${dept.slug}` },
     openGraph: {
-      title: `${dept.name} — ${mission.name}`,
+      title: `${dept.name} · ${mission.name}`,
       description: dept.summary,
       url: `/departments/${dept.slug}`,
     },

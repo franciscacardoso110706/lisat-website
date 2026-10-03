@@ -56,7 +56,7 @@ export function UpdateCard({
 
           <h3
             className={clsx(
-              'mt-3 leading-snug tracking-snug transition-colors group-hover:text-accent',
+              'news-title mt-3 leading-snug tracking-snug transition-colors group-hover:text-accent',
               isFeature
                 ? 'text-2xl md:text-[2rem]'
                 : 'text-xl md:text-[1.375rem]',

@@ -24,6 +24,7 @@ const PARTNERS_QUERY = groq`
     order,
     website,
     description,
+    story,
     logo,
     featuredImage,
     "featuredImageAlt": featuredImage.alt,
@@ -39,6 +40,7 @@ interface RawPartner {
   order?: number
   website?: string
   description?: string
+  story?: string
   logo?: SanityImage
   featuredImage?: SanityImage
   featuredImageAlt?: string
@@ -55,6 +57,7 @@ export interface PartnerPatch {
   order?: number
   url?: string
   contribution?: string
+  story?: string
   logo?: string
   featuredImage?: { src: string; alt: string }
 }
@@ -88,6 +91,7 @@ function toPatch(raw: RawPartner): PartnerPatch {
     order: typeof raw.order === 'number' ? raw.order : undefined,
     url: raw.website || undefined,
     contribution: raw.description || undefined,
+    story: raw.story || undefined,
     logo: logo ?? undefined,
     featuredImage: photo
       ? { src: photo, alt: raw.featuredImageAlt || raw.name || '' }

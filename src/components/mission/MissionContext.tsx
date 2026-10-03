@@ -33,7 +33,7 @@ export function MissionContext() {
                 src="/images/updates/altice-03.jpg"
                 alt="A satellite ground station antenna against a clear sky"
                 ratio="landscape"
-                annotation="FIG. 02 — GROUND SEGMENT"
+                annotation="FIG. 02 / GROUND SEGMENT"
                 sizes="(min-width: 1024px) 42vw, 100vw"
               />
             </Reveal>

@@ -1,14 +1,13 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Container, Section } from '@/components/ui/Section'
 import { SectionIndex } from '@/components/ui/Technical'
-import { RevealLines } from '@/components/ui/RevealLines'
+import { Reveal } from '@/components/ui/Reveal'
+import { Counter } from '@/components/ui/Counter'
 import { ButtonLink } from '@/components/ui/Button'
-import { PartnerMarquee } from '@/components/partners/PartnerMarquee'
-import {
-  FeaturedPartners,
-  MajorPartners,
-} from '@/components/partners/PartnerShowcase'
-import { partnerPriority, partnerTiers } from '@/data/partners'
+import { PartnerDeck } from '@/components/partners/PartnerDeck'
+import { PartnerNetwork } from '@/components/partners/PartnerNetwork'
+import { partnerPriority } from '@/data/partners'
 import { getPartners } from '@/lib/partner-source'
 import { contact } from '@/data/site'
 import { mission } from '@/data/mission'
@@ -28,134 +27,135 @@ export const revalidate = 60
 /**
  * Partners.
  *
- * An ecosystem with a centre. The organisations closest to the mission get
- * room of their own, the next ring gets a tile with its contribution written
- * out, and everyone else moves past in the stream — so how much of the page a
- * partner occupies says how much of the mission it carries.
+ *   the key partners: a headline, then a deck of overlapping logo cards
+ *   with the lead partner in front
+ *   → proof of scale, one row of large numbers
+ *   → the whole network, every partner on one open field of logos
+ *   → one compact call to partner
  *
- * Who goes where is data, not layout: `partnerPriority` reads each partner's
- * official tier, unless the partner (in `src/data/partners.ts` or in Sanity
- * Studio) says otherwise.
+ * Everything is data. `partnerPriority` decides who is in the deck (in order
+ * of importance, so the first starts in front) and the numbers are counted
+ * from the same list. Nothing on this page names a partner.
  */
 export default async function PartnersPage() {
   const partners = await getPartners()
 
-  const featured = partners.filter((p) => partnerPriority(p) === 'featured')
-  const major = partners.filter((p) => partnerPriority(p) === 'major')
-  const standard = partners.filter((p) => partnerPriority(p) === 'standard')
+  // The deck: everyone above the logo stream, already in order of importance.
+  const key = partners.filter((p) => partnerPriority(p) !== 'standard')
+
+  // Proof of scale, counted rather than typed. A figure that comes out as
+  // zero is left out instead of shown.
+  const stats = [
+    { value: partners.length, label: 'Partner organisations' },
+    { value: key.length, label: 'Key partners' },
+    { value: partners.filter((p) => p.tier === 'technical').length, label: 'Technical partners' },
+    { value: partners.filter((p) => p.tier === 'institutional').length, label: 'Institutional partners' },
+  ].filter((s) => s.value > 0)
 
   return (
     <>
-      {/* ── Intro and the featured partners, on one surface ──────────── */}
-      <Section tone="paper" spacing="none" className="pb-20 pt-[var(--nav-height)] md:pb-28">
-        <Container wide>
-          <div className="grid items-end gap-10 pb-14 pt-16 md:pb-20 md:pt-24 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <SectionIndex index="05" label="Partners" />
-              <RevealLines
-                as="h1"
-                className="mt-9 text-display-lg"
-                lines={[
-                  'A mission',
-                  { text: 'built together.', className: 'text-brand' },
-                ]}
-              />
-            </div>
+      {/* ── Hero: the team, blurred, with the statement in front ────── */}
+      <section className="pt-hero tone-void">
+        <div className="blur-hero-photo" aria-hidden="true">
+          <Image
+            src="/images/updates/smallsat-06.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[50%_40%]"
+          />
+        </div>
+        <div className="blur-hero-veil" aria-hidden="true" />
 
-            <div className="lg:col-span-4 lg:col-start-9 lg:pb-3">
-              <p className="text-lead text-fg-muted">
-                The companies, institutions and laboratories helping turn{' '}
-                {mission.name} into reality.
-              </p>
-              <p className="eyebrow tabular mt-6 text-fg-faint">
-                {partners.length} organisations
-              </p>
+        <Container wide className="relative">
+          <div className="pt-head">
+            <div>
+              <SectionIndex index="05" label="Partners" className="enter-fade" />
+              <h1 className="ed-title mt-5">
+                <span className="enter-fade block" style={{ animationDelay: '80ms' }}>
+                  The partners
+                </span>
+                <span className="ed-title-blue enter-fade block" style={{ animationDelay: '160ms' }}>
+                  behind the mission.
+                </span>
+              </h1>
             </div>
+            <p className="pt-intro enter-fade" style={{ animationDelay: '260ms' }}>
+              {mission.name} is made possible by a network of organisations
+              that share our vision and support our journey from concept to
+              space.
+            </p>
           </div>
+        </Container>
+      </section>
 
-          <FeaturedPartners partners={featured} />
+      {/* ── The key partners ─────────────────────────────────────────── */}
+      <Section tone="paper" join="curve" spacing="none" className="pb-10 pt-8 md:pb-14 md:pt-12">
+        {key.length ? (
+          // Full-bleed, so the outer cards can run off the page.
+          <div className="mt-10 md:mt-14">
+            <PartnerDeck partners={key} allHref="#network" />
+          </div>
+        ) : null}
+
+        {/* ── Proof of scale ───────────────────────────────────────── */}
+        <Container wide>
+          <ul className="pt-stats">
+            {stats.map((s, i) => (
+              <Reveal as="li" key={s.label} delay={i * 0.06} className="pt-stat">
+                <span className="pt-stat-num tabular">
+                  <Counter value={s.value} />
+                </span>
+                <span className="pt-stat-label">{s.label}</span>
+              </Reveal>
+            ))}
+          </ul>
         </Container>
       </Section>
 
-      {/* ── Major partners ───────────────────────────────────────────── */}
-      {major.length ? (
-        <Section tone="cloud" join="soft" spacing="none" className="pb-24 pt-20 md:pb-32 md:pt-28">
-          <Container wide>
-            <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
-              <h2 className="text-display-sm lg:col-span-6">
-                Expertise, tools and operational context.
+      {/* ── The network ──────────────────────────────────────────────── */}
+      <Section
+        tone="paper"
+        spacing="none"
+        id="network"
+        className="scroll-mt-[var(--nav-height)] pb-24 pt-10 md:pb-32 md:pt-14"
+      >
+        <Container wide>
+          <div className="pt-head">
+            <div>
+              <SectionIndex index="02" label="Our network" />
+              <h2 className="ed-title mt-5">
+                <span className="block">One mission.</span>
+                <span className="ed-title-blue block">Many contributors.</span>
               </h2>
-              <p className="text-lead text-fg-muted lg:col-span-5 lg:col-start-8">
-                Each one contributes something specific to the work on{' '}
-                {mission.name}.
-              </p>
             </div>
-
-            <div className="mt-12 md:mt-16">
-              <MajorPartners partners={major} />
-            </div>
-          </Container>
-        </Section>
-      ) : null}
-
-      {/* ── The wider ecosystem ──────────────────────────────────────── */}
-      {/* Warm white, deliberately: the partner logos arrive on white mattes,
-          and on any other rung of the light ladder those mattes show as
-          rectangles behind the marks. `mix-blend-multiply` would normally
-          dissolve them, but the row carries an opacity of its own, which
-          isolates the blend and leaves the white standing. */}
-      {standard.length ? (
-        <Section tone="paper" join="soft" spacing="none" className="pb-24 pt-20 md:pb-32 md:pt-28">
-          <Container wide>
-            <h2 className="max-w-[22ch] text-display-sm">
-              And the wider ecosystem around the mission.
-            </h2>
-          </Container>
-
-          {/* Full-bleed: the stream should run off both edges of the page. */}
-          <div className="mt-10 md:mt-14">
-            <PartnerMarquee partners={standard} tiers={partnerTiers} />
+            <p className="pt-intro">
+              LISAT brings together a diverse network of academic institutions,
+              companies and organisations that support our mission in
+              different ways.
+            </p>
           </div>
 
-          <Container wide>
-            <p className="eyebrow mt-10 text-fg-faint md:mt-12">
-              <span className="hidden md:inline">
-                Hover a partner to see the partnership
-              </span>
-              <span className="md:hidden">Tap a partner to see the partnership</span>
-            </p>
-          </Container>
-        </Section>
-      ) : null}
+          <div className="mt-12 md:mt-16">
+            <PartnerNetwork partners={partners} />
+          </div>
+        </Container>
+      </Section>
 
-      {/* ── Close ────────────────────────────────────────────────────── */}
-      <Section tone="void" join="curve" spacing="loose" id="partner-with-us">
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-32 -top-24 h-[36rem] w-[36rem] rounded-control bg-[radial-gradient(closest-side,rgb(var(--glow)/0.16),transparent)] blur-3xl"
-        />
-        <Container wide className="relative">
-          <div className="grid gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <RevealLines
-                as="h2"
-                className="text-display-md"
-                lines={['Your logo could be', { text: 'part of the mission.', className: 'text-accent' }]}
-              />
-            </div>
-            <div className="lg:col-span-4 lg:col-start-9">
-              <p className="text-lead text-chalk-muted">
-                LISAT is open to new partnerships — components, software,
-                facilities, expert review or funding.
+      {/* ── Partner with us ──────────────────────────────────────────── */}
+      <Section tone="paper" spacing="none" id="partner-with-us" className="pb-24 md:pb-32">
+        <Container wide>
+          <div className="pt-cta">
+            <div>
+              <p className="pt-cta-title">Build with us.</p>
+              <p className="pt-cta-line">
+                Support the next generation of space talent in Portugal.
               </p>
-              <ButtonLink
-                href={contact.partnershipsMailto}
-                arrow
-                className="mt-8"
-              >
-                Become a partner
-              </ButtonLink>
             </div>
+            <ButtonLink href={contact.partnershipsMailto} arrow className="pt-cta-button">
+              Partner with LISAT
+            </ButtonLink>
           </div>
         </Container>
       </Section>

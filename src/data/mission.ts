@@ -19,9 +19,9 @@ export const mission = {
   subtitle: 'AIS from space',
   headline: 'Maritime awareness from space',
   summary:
-    'LISAT-01 is our first 1U CubeSat, fully developed by students at Instituto Superior Técnico. It collects AIS signals from ships to strengthen Portugal’s maritime domain awareness — and to prove that an academic team can design, build and operate a satellite.',
+    'LISAT-01 is our first 1U CubeSat, fully developed by students at Instituto Superior Técnico. It collects AIS signals from ships to strengthen Portugal’s maritime domain awareness, and to prove that an academic team can design, build and operate a satellite.',
   /** Current programme status, shown in the mission hero. */
-  status: 'Critical Design Review complete — awaiting Phase B decision',
+  status: 'Critical Design Review complete, awaiting Phase B decision',
   statusDate: '2025-12-24',
   /**
    * Short form of the same status, for the technical annotations in the
@@ -44,13 +44,13 @@ export const challenge = {
     'Portugal controls one of the largest maritime zones in Europe.',
     'Patrolling that area with ships and aircraft is expensive and cannot see everything, especially in remote waters far from the coast.',
     'Vast stretches of ocean go unwatched, and illegal activity and environmental incidents slip by unseen.',
-    'Decision-makers need frequent, reliable, actionable data. When data fails, response comes late — and costs more.',
+    'Decision-makers need frequent, reliable, actionable data. When data fails, response comes late, and costs more.',
   ],
 }
 
 export const impact = {
   title: 'Impact',
-  body: 'Better awareness of who is where, doing what. That supports safety, environmental protection and sovereignty — without the price tag of traditional surveillance programmes.',
+  body: 'Better awareness of who is where, doing what. That supports safety, environmental protection and sovereignty, without the price tag of traditional surveillance programmes.',
 }
 
 export const objectives: MissionObjective[] = [
@@ -117,7 +117,7 @@ export const pillars = [
     chapter: 'The spacecraft',
     annotation: '10 × 10 × 10 cm',
     title: '1U CubeSat platform',
-    body: 'Built and integrated by students — modular ADCS, power and communications inside a 10 × 10 × 10 cm bus, engineered for fast testing and operations.',
+    body: 'Built and integrated by students: modular ADCS, power and communications inside a 10 × 10 × 10 cm bus, engineered for fast testing and operations.',
     image: '/images/mission/render-cubesat.jpg',
     imageAlt: 'Render of a 1U CubeSat in low Earth orbit',
   },
@@ -238,7 +238,7 @@ export const phases: MissionPhase[] = [
   },
   {
     id: 'design',
-    name: 'Phases A/B — design',
+    name: 'Phases A/B: design',
     period: '2025',
     status: 'complete',
     description:

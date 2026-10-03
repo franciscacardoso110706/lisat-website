@@ -19,12 +19,12 @@ import { contact } from './site'
 export const recruitment = {
   status: 'closed' as RecruitmentStatus,
   /** Human-readable application window, e.g. "18 Feb – 6 Mar". */
-  window: '18 February – 6 March',
+  window: '18 February to 6 March',
   /** Set this to the application form when the status is 'open'. */
   applicationUrl: '',
   /** Fallback route used for 'closed' and 'interest'. */
   interestMailto: contact.joinMailto,
-  mode: 'Lisbon — hybrid, with async work',
+  mode: 'Hybrid in Lisbon, with async work',
   averageTimeline: '2–3 weeks',
   /** How many people joined in the most recent cycle. */
   lastIntake: 8,
@@ -43,7 +43,7 @@ export const statusCopy: Record<
   closed: {
     badge: 'Applications closed',
     title: 'Applications are closed for this cycle',
-    body: 'Selection is in progress. We usually open a new cycle each semester — send us a note and we will tell you when the next one starts.',
+    body: 'Selection is in progress. We usually open a new cycle each semester. Send us a note and we will tell you when the next one starts.',
     cta: 'Tell us you are interested',
   },
   interest: {
@@ -113,7 +113,7 @@ export const steps: RecruitmentStep[] = [
   {
     title: 'Application form',
     description:
-      'Fill out the form and pick the departments you would like to join — up to two or three.',
+      'Fill out the form and pick the departments you would like to join, up to two or three.',
   },
   {
     title: 'First technical task',
@@ -136,12 +136,12 @@ export const faqs: FaqItem[] = [
   {
     question: 'Do I need previous experience?',
     answer:
-      'No. Motivation and consistency matter more than what you already know — we onboard and train you.',
+      'No. Motivation and consistency matter more than what you already know. We onboard and train you.',
   },
   {
     question: 'How many hours per week does it take?',
     answer:
-      'It depends on the department and the time of year — exam periods are lighter. We agree expectations with you during onboarding.',
+      'It depends on the department and the time of year; exam periods are lighter. We agree expectations with you during onboarding.',
   },
   {
     question: 'Is it remote or on-site?',
@@ -156,7 +156,7 @@ export const faqs: FaqItem[] = [
   {
     question: 'Can I switch departments later?',
     answer:
-      'Sometimes, after onboarding — it depends on availability and what the project needs at that moment.',
+      'Sometimes, after onboarding. It depends on availability and what the project needs at that moment.',
   },
   {
     question: 'Do I have to study at Instituto Superior Técnico?',
@@ -169,7 +169,7 @@ export const faqs: FaqItem[] = [
 export const whatYouLearn = [
   {
     title: 'Real systems engineering',
-    body: 'Requirements, budgets, interfaces, reviews and documentation — the parts of engineering that courses rarely cover.',
+    body: 'Requirements, budgets, interfaces, reviews and documentation: the parts of engineering that courses rarely cover.',
   },
   {
     title: 'Hardware you can touch',

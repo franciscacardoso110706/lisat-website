@@ -147,7 +147,7 @@ export function Navbar() {
           <Link
             href="/"
             className="group flex shrink-0 items-center gap-3"
-            aria-label={`${site.name} — home`}
+            aria-label={`${site.name} home`}
           >
             {/* The brand mark is a single blue, which only reaches about 4.3:1
                 on dark photography. A monochrome light version is used there —

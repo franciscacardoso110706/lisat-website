@@ -8,7 +8,7 @@ import { board } from '@/data/team'
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: `Get in touch with LISAT — partnerships, press and recruitment. ${contact.email}, ${site.institution}, ${site.city}.`,
+  description: `Get in touch with LISAT about partnerships, press and recruitment. ${contact.email}, ${site.institution}, ${site.city}.`,
   alternates: { canonical: '/contact' },
 }
 
@@ -56,7 +56,7 @@ export default function ContactPage() {
           </h1>
           <p className="mt-8 max-w-2xl text-base leading-relaxed text-fg-muted md:text-lg">
             Everything reaches the same inbox, and a member of the relevant
-            department answers. Pick whichever route fits — it just helps us route
+            department answers. Pick whichever route fits; it just helps us route
             it faster.
           </p>
 

@@ -1,16 +1,14 @@
-import type { NavItem, SocialLink, Stat } from '@/lib/types'
+import type { NavItem, SocialLink } from '@/lib/types'
 
 /**
- * Site-wide settings: identity, navigation, contact details and the headline
- * numbers shown on the homepage.
+ * Site-wide settings: identity, navigation, contact details and press.
  *
- * All values below were taken from lisat.space. Update `stats` whenever the
- * team grows — the homepage counters read straight from here.
+ * All values below were taken from lisat.space.
  */
 
 export const site = {
   name: 'LISAT',
-  fullName: "LISAT — Lisbon's New Satellite",
+  fullName: "LISAT (Lisbon's New Satellite)",
   tagline: "Lisbon's New Satellite",
   /** Change this to the production domain before launch. */
   url: 'https://www.lisat.space',
@@ -41,7 +39,7 @@ export const contact = {
   phone: '+351 926 847 850',
   phoneHref: 'tel:+351926847850',
   address: 'Av. Prof. Dr. Cavaco Silva, 2744-016 Porto Salvo',
-  addressNote: 'Taguspark — Instituto Superior Técnico',
+  addressNote: 'Taguspark, Instituto Superior Técnico',
   mapUrl:
     'https://maps.google.com/?q=Av.+Prof.+Dr.+Cavaco+Silva,+2744-016+Porto+Salvo',
   /** Pre-filled mailto used by every "partner with us" call to action. */
@@ -51,12 +49,10 @@ export const contact = {
   joinMailto: 'mailto:geral@lisat.space?subject=Joining%20LISAT',
 } as const
 
+/** LISAT is on Instagram and LinkedIn only. */
 export const socials: SocialLink[] = [
   { label: 'Instagram', href: 'https://www.instagram.com/lisat.space' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/company/lisat-space' },
-  { label: 'YouTube', href: 'https://www.youtube.com/@lisat-space' },
-  { label: 'TikTok', href: 'https://www.tiktok.com/@lisat.space' },
-  { label: 'Facebook', href: 'https://www.facebook.com/people/LISAT/61560726797593' },
 ]
 
 /**
@@ -67,7 +63,7 @@ export const socials: SocialLink[] = [
  * near-black and sit invisibly on top of the photography. Add a route here if
  * you give it a dark opening section.
  */
-export const darkHeroRoutes = ['/', '/mission/lisat-01'] as const
+export const darkHeroRoutes = ['/', '/mission/lisat-01', '/partners'] as const
 
 /** Primary navigation. Order here is the order in the navbar. */
 export const mainNav: NavItem[] = [
@@ -95,17 +91,17 @@ export const mobileNav: NavItem[] = [
 /** Grouped links used by the footer. */
 export const footerNav: { title: string; items: NavItem[] }[] = [
   {
-    title: 'Mission',
+    title: 'Explore',
     items: [
-      { label: 'LISAT-01', href: '/mission/lisat-01' },
+      { label: 'Mission', href: '/mission/lisat-01' },
+      { label: 'Team', href: '/team' },
       { label: 'Departments', href: '/departments' },
-      { label: 'Updates', href: '/updates' },
     ],
   },
   {
-    title: 'Organisation',
+    title: 'Discover',
     items: [
-      { label: 'Team', href: '/team' },
+      { label: 'Updates', href: '/updates' },
       { label: 'Partners', href: '/partners' },
       { label: 'Join Us', href: '/join-us' },
     ],
@@ -118,17 +114,6 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
       { label: 'Press', href: '/contact#press' },
     ],
   },
-]
-
-/**
- * Headline figures shown on the homepage.
- * Source: the "Top stats from LISAT" section on lisat.space.
- */
-export const stats: Stat[] = [
-  { value: 39, label: 'Active members' },
-  { value: 8, label: 'Departments' },
-  { value: 3, label: 'Faculties represented' },
-  { value: 20, suffix: '+', label: 'Partners & supporters' },
 ]
 
 /** Press coverage. Only entries we can link to a published article. */

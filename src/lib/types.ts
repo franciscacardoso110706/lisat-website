@@ -145,8 +145,10 @@ export interface Partner {
   priority?: PartnerPriority
   /** Lower comes first within the same priority and tier. */
   order?: number
-  /** A real photograph of the partnership, shown with featured partners. */
+  /** A real photograph of the partnership. Never a stock image. */
   featuredImage?: { src: string; alt: string }
+  /** A story about this partnership on the Updates page, e.g. "/updates/thales-portugal-visit". */
+  story?: string
   /** Where this record came from. Only set for CMS partners. */
   source?: 'sanity'
 }
@@ -276,10 +278,4 @@ export interface NavItem {
 export interface SocialLink {
   label: string
   href: string
-}
-
-export interface Stat {
-  value: number
-  suffix?: string
-  label: string
 }

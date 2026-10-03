@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: mission.summary,
   alternates: { canonical: '/mission/lisat-01' },
   openGraph: {
-    title: `${mission.name} — ${mission.headline}`,
+    title: `${mission.name} · ${mission.headline}`,
     description: mission.summary,
     url: '/mission/lisat-01',
   },

@@ -120,7 +120,7 @@ function FeaturePanel({ update }: { update: Update }) {
             <Meta update={update} />
           </div>
 
-          <h2 className="text-[clamp(1.75rem,3vw,2.75rem)] font-semibold leading-[1.02] tracking-tightest text-fg transition-colors duration-300 group-hover:text-accent">
+          <h2 className="news-title text-[clamp(1.75rem,3vw,2.75rem)] font-semibold leading-[1.02] tracking-tightest text-fg transition-colors duration-300 group-hover:text-accent">
             {update.title}
           </h2>
 
@@ -163,7 +163,7 @@ function Tile({ update, index }: { update: Update; index: number }) {
         <div className="flex flex-1 flex-col gap-4 p-6 md:p-7">
           <Meta update={update} />
 
-          <h3 className="text-title font-medium text-fg transition-colors duration-300 group-hover:text-accent">
+          <h3 className="news-title text-title font-medium text-fg transition-colors duration-300 group-hover:text-accent">
             {update.title}
           </h3>
 

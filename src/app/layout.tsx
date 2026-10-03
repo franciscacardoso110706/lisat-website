@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from 'next'
-import { Anton, IBM_Plex_Mono, Inter, Montserrat } from 'next/font/google'
+import {
+  Anton,
+  IBM_Plex_Mono,
+  Inter,
+  Montserrat,
+} from 'next/font/google'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { SiteChrome } from '@/components/layout/SiteChrome'
@@ -47,12 +52,12 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  /* The tab reads "LISAT" and nothing more. Inner pages still say where you
-     are ("Team — LISAT"), which is what makes a row of tabs or a history list
-     usable. The tagline lives on in the share cards below. */
+  /* The homepage tab reads "LISAT"; every other page shows its own title and
+     nothing after it ("Team", not "Team · LISAT"). The tagline lives on in
+     the share cards below. */
   title: {
     default: site.name,
-    template: `%s — ${site.name}`,
+    template: '%s',
   },
   description: site.description,
   applicationName: site.name,
@@ -74,12 +79,12 @@ export const metadata: Metadata = {
     locale: 'en_GB',
     url: site.url,
     siteName: site.name,
-    title: `${site.name} — ${site.tagline}`,
+    title: `${site.name} · ${site.tagline}`,
     description: site.description,
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${site.name} — ${site.tagline}`,
+    title: `${site.name} · ${site.tagline}`,
     description: site.description,
   },
   robots: {

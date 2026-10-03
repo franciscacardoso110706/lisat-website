@@ -137,7 +137,7 @@ export function Plate({
         <>
           <span className="tabular text-accent">{figure}</span>
           <span aria-hidden="true" className="opacity-40">
-            —
+            /
           </span>
         </>
       ) : null}

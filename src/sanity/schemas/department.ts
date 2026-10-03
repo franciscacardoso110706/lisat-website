@@ -20,7 +20,7 @@ export const department = defineType({
       title: 'Name',
       type: 'string',
       description:
-        'The full name, as it should read on the website — for example "Attitude Determination & Control System".',
+        'The full name, as it should read on the website, for example "Attitude Determination & Control System".',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -28,7 +28,7 @@ export const department = defineType({
       title: 'Short name',
       type: 'string',
       description:
-        'The short form shown on team cards and filter buttons — for example "ADCS". Leave it empty to use the full name.',
+        'The short form shown on team cards and filter buttons, for example "ADCS". Leave it empty to use the full name.',
     }),
     defineField({
       name: 'slug',

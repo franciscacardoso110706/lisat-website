@@ -29,7 +29,7 @@ export const updates: Update[] = [
       'LISAT attended SmallSat Europe 2026 in Amsterdam, the largest small satellite conference in Europe.',
       'Over three days, our team had the opportunity to learn more about the space industry, its challenges, and its enormous growth potential.',
       'It was an inspiring moment for LISAT: we met outstanding professionals from across the sector, presented our team and our project, and exchanged ideas on how space technology can help address real-world challenges.',
-      'More than just attending an international event, this experience represented an important step forward for our team. It started with an ambitious idea — bringing LISAT to Europe’s largest small satellite conference — and became a collective achievement built through teamwork, persistence, and belief in what we are building.',
+      'More than just attending an international event, this experience represented an important step forward for our team. It started with an ambitious idea, bringing LISAT to Europe’s largest small satellite conference, and became a collective achievement built through teamwork, persistence, and belief in what we are building.',
       'We would like to sincerely thank Raj Khehar, Event Director of SmallSat Europe, for welcoming LISAT and for helping create such a valuable space for connection, learning, and collaboration within the European space ecosystem.',
       'This achievement was also made possible by the support of our partners Xpand IT, Instituto Superior Técnico, and Santander Portugal. Thank you for believing in our mission and helping us take another important step forward.',
       '“The journey is just beginning, but one thing is becoming increasingly clear: we are building Lisbon’s next satellite.”',
@@ -62,7 +62,8 @@ export const updates: Update[] = [
       'LISAT took part in the Science Fair, alongside other departments and institutes at IST. Throughout the day, our team presented the LISAT project, explained the mission behind our nanosatellite, and shared how students from different engineering fields are contributing to Portuguese innovation in space.',
       'The event was also an opportunity to connect with future university students and show how space projects can bring together communication systems, electronics, software, structures, operations, and teamwork in a real engineering challenge.',
       '“The perfect place to spark the interest of a new generation in space.”',
-      '— João Souto, Head of Communication Systems We would like to thank Instituto Superior Técnico for organizing this initiative and everyone who visited our stand. Days like this remind us why LISAT exists: to bring curious students closer to space engineering and to help build the future of the Portuguese space sector.',
+      '— João Souto, Head of Communication Systems',
+      'We would like to thank Instituto Superior Técnico for organizing this initiative and everyone who visited our stand. Days like this remind us why LISAT exists: to bring curious students closer to space engineering and to help build the future of the Portuguese space sector.',
     ],
   },
   {
@@ -113,7 +114,7 @@ export const updates: Update[] = [
   },
   {
     slug: 'critical-design-review',
-    title: 'Critical Design Review — Cubesat Portugal',
+    title: 'Critical Design Review: CubeSat Portugal',
     date: '2025-12-24',
     category: 'mission',
     excerpt:
@@ -163,7 +164,7 @@ export const updates: Update[] = [
       'Beyond the technical overview, the meeting was also an opportunity to connect new and existing members, align expectations, and clarify responsibilities for the coming months.',
       'We discussed our roadmap, upcoming deliverables and how collaboration between teams will be key to keeping LISAT progressing at a steady pace.',
       'This recruitment round confirmed that there is strong interest and talent around space projects and student-led initiatives.',
-      'To everyone who applied, thank you for your time, energy and enthusiasm — and a special welcome to the eight new members who are now officially part of the LISAT journey.',
+      'To everyone who applied, thank you for your time, energy and enthusiasm, and a special welcome to the eight new members who are now officially part of the LISAT journey.',
     ],
   },
   {
@@ -241,7 +242,7 @@ export const updates: Update[] = [
   },
   {
     slug: 'career-fairs-second-edition',
-    title: 'LISAT on Tour — Career Fairs (2nd Edition)',
+    title: 'LISAT on Tour: Career Fairs (2nd Edition)',
     date: '2025-09-04',
     category: 'events',
     excerpt:
@@ -251,11 +252,12 @@ export const updates: Update[] = [
     readingMinutes: 5,
     cover: {
       src: '/images/updates/careerfairs2-01.jpg',
-      alt: 'LISAT on Tour - Career Fairs',
+      alt: 'LISAT on Tour: Career Fairs',
     },
     body: [
       'Over the past months, we have collaborated with some of the most renowned business fairs associated with Instituto Superior Técnico and the Técnico Innovation Center, such as:',
-      'PIC Mechanical Engineering — 27/06 PIC Aerospace Enginnering — 01/07 Welcome Week— 01/09 We also had the chance to participate in the Azeitão Space Party on 28/06, expanding our presence beyond the Técnico community.',
+      'PIC Mechanical Engineering (27/06), PIC Aerospace Engineering (01/07) and Welcome Week (01/09).',
+      'We also had the chance to participate in the Azeitão Space Party on 28/06, expanding our presence beyond the Técnico community.',
       'With each fair, LISAT had the chance to showcase our project, connect with students and companies, and attract new members excited about space and satellite technology.',
     ],
     gallery: [
@@ -293,7 +295,7 @@ export const updates: Update[] = [
   },
   {
     slug: 'career-fairs-first-edition',
-    title: 'LISAT on Tour — Career Fairs (1st Edition)',
+    title: 'LISAT on Tour: Career Fairs (1st Edition)',
     date: '2025-05-18',
     category: 'events',
     excerpt:
@@ -307,7 +309,8 @@ export const updates: Update[] = [
     },
     body: [
       'Over the past months, we have collaborated with some of the most renowned business fairs associated with Instituto Superior Técnico and the Técnico Innovation Center, such as:',
-      'Semana Aeroespacial — 19/02 MecanIST — 27/02 JobShop — 29/04 JEEC — 07/05 With each fair, LISAT had the chance to showcase our project, connect with students and companies, and attract new members excited about space and satellite technology.',
+      'Semana Aeroespacial (19/02), MecanIST (27/02), JobShop (29/04) and JEEC (07/05).',
+      'With each fair, LISAT had the chance to showcase our project, connect with students and companies, and attract new members excited about space and satellite technology.',
     ],
     gallery: [
       { src: '/images/updates/careerfairs1-02.jpg', alt: 'Semana Aeroespacial fair' },
@@ -315,13 +318,13 @@ export const updates: Update[] = [
   },
   {
     slug: 'lisat-on-tour',
-    title: 'LISAT on Tour — Recap',
+    title: 'LISAT on Tour: Recap',
     date: '2025-05-17',
     category: 'events',
     excerpt:
-      'From conferences to industry visits, LISAT has been sharing our passion for space and satellite technology — meeting leaders, showcasing our work, and strengthening the community that supports…',
+      'From conferences to industry visits, LISAT has been sharing our passion for space and satellite technology: meeting leaders, showcasing our work, and strengthening the community that supports…',
     lead:
-      'From conferences to industry visits, LISAT has been sharing our passion for space and satellite technology — meeting leaders, showcasing our work, and strengthening the community that supports student-led innovation.',
+      'From conferences to industry visits, LISAT has been sharing our passion for space and satellite technology: meeting leaders, showcasing our work, and strengthening the community that supports student-led innovation.',
     readingMinutes: 3,
     cover: {
       src: '/images/updates/events-01.jpg',
@@ -329,39 +332,39 @@ export const updates: Update[] = [
     },
     body: [
       'LISAT has been on an exciting journey, sharing our passion for space exploration and satellite technology. Here’s a recap of the events where we\'ve had the opportunity to present our project and connect with the space community:',
-      'Inauguration of CINAV-Lab — 07/11 This event provided our team with the opportunity to engage with the Minister of Defence Nuno Melo and Admiral Henrique Gouveia e Melo, further solidifying our collaboration with the Portuguese Navy.',
-      'Thales - 18/11 & 19/02 Both visits aimed to showcase and update our work, learn from leading experts in the field, and consolidate our partnership.',
-      'Centro Operacional de Satélites do Continente (MEO) - 10/12 A memorable experience, offering a firsthand look at real-world antennas and the operations behind critical communications.',
+      'Inauguration of CINAV-Lab (07/11). This event provided our team with the opportunity to engage with the Minister of Defence Nuno Melo and Admiral Henrique Gouveia e Melo, further solidifying our collaboration with the Portuguese Navy.',
+      'Thales (18/11 and 19/02). Both visits aimed to showcase and update our work, learn from leading experts in the field, and consolidate our partnership.',
+      'Centro Operacional de Satélites do Continente, MEO (10/12). A memorable experience, offering a firsthand look at real-world antennas and the operations behind critical communications.',
       'P3A Programme Awards - 25/02 Receiving this award energized our team and reaffirmed our commitment to innovation and excellence.',
       'Ariane 6 Launch Event - 09/07 ISTSat-1, Portugal’s first university-built nanosatellite, was launched aboard Ariane 6, with the event celebrated live at Taguspark. The crowd - including the LISAT team - watched the countdown from French Guiana and applauded as the rocket reached orbital altitude. The ceremony highlighted Técnico’s ability to transform ambitious ideas into reality.',
       'With each event, the LISAT project grows stronger and more inspired. Stay tuned as we continue to push the boundaries of student-led satellite development!',
     ],
     gallery: [
-      { src: '/images/updates/events-02.jpg', alt: 'LISAT on tour — moments with partners' },
+      { src: '/images/updates/events-02.jpg', alt: 'LISAT on tour, moments with partners' },
     ],
   },
   {
     slug: 'tecnico-holiday-programme-easter',
-    title: 'Técnico Holiday Programme — Easter',
+    title: 'Técnico Holiday Programme: Easter',
     date: '2025-04-12',
     category: 'team',
     excerpt:
-      'On April 12th, 2025, we wrapped up a week-long edition of the Técnico Holiday Programme – Easter (April 7–11), where high-school students visited Técnico and explored hands-on activities led by…',
+      'On April 12th, 2025, we wrapped up a week-long edition of the Técnico Holiday Programme (Easter, April 7–11), where high-school students visited Técnico and explored hands-on activities led by…',
     lead:
-      'On April 12th, 2025, we wrapped up a week-long edition of the Técnico Holiday Programme – Easter (April 7–11), where high-school students visited Técnico and explored hands-on activities led by different student groups. Our workshop, Space Design, challenged teams to plan a complete lunar rescue mission — from objectives to execution.',
+      'On April 12th, 2025, we wrapped up a week-long edition of the Técnico Holiday Programme (Easter, April 7–11), where high-school students visited Técnico and explored hands-on activities led by different student groups. Our workshop, Space Design, challenged teams to plan a complete lunar rescue mission, from objectives to execution.',
     readingMinutes: 2,
     cover: {
       src: '/images/updates/easter-01.jpg',
       alt: 'Técnico Holiday Easter Programme - Easter',
     },
     body: [
-      'During the week of April 7–11, several high-school students visited Técnico for the Técnico Holiday Programme – Easter, joining a variety of activities organized by student groups across the school.',
-      'Our workshop, Space Design, proposed a space rescue mission to save a team of astronauts stranded on the Moon. Each team had to plan the full mission — defining objectives, constraints, sequence of maneuvers, and key risks — before presenting their plan.',
+      'During the week of April 7–11, several high-school students visited Técnico for the Técnico Holiday Programme (Easter), joining a variety of activities organized by student groups across the school.',
+      'Our workshop, Space Design, proposed a space rescue mission to save a team of astronauts stranded on the Moon. Each team had to plan the full mission (objectives, constraints, sequence of maneuvers and key risks) before presenting their plan.',
       'This was the first time our team took part in this programme. It helped us explore new skills as a team while promoting our work and activities, so that future Técnico students may be inspired to join us.',
     ],
     gallery: [
       { src: '/images/updates/easter-02.jpg', alt: 'Mission boards and outputs from the workshop' },
-      { src: '/images/updates/easter-03.jpg', alt: 'Teams planning a lunar rescue mission – working tables' },
+      { src: '/images/updates/easter-03.jpg', alt: 'Teams planning a lunar rescue mission at the working tables' },
     ],
   },
   {
@@ -384,7 +387,7 @@ export const updates: Update[] = [
       'Our thanks to the Naval Academy for the opportunity of presenting our project. This occasion not only allowed us to showcase our work, but also to engage with an esteemed institution whose expertise and tradition we deeply respect. We look forward to the possibility of strengthening ties in the future.',
     ],
     gallery: [
-      { src: '/images/updates/navalacademy-02.jpg', alt: 'CINAV – Naval School conference' },
+      { src: '/images/updates/navalacademy-02.jpg', alt: 'CINAV Naval School conference' },
     ],
   },
   {
@@ -399,7 +402,7 @@ export const updates: Update[] = [
     readingMinutes: 3,
     cover: {
       src: '/images/updates/recruitment-01.jpg',
-      alt: 'Recruitment – general meeting with candidates',
+      alt: 'Recruitment: general meeting with candidates',
     },
     body: [
       'Our 2025 intake reached a new milestone with 110 applications, bringing together candidates from several fields and Universities across Portugal.',
@@ -409,7 +412,7 @@ export const updates: Update[] = [
       '— Maria Maia',
     ],
     gallery: [
-      { src: '/images/updates/recruitment-02.jpg', alt: 'Recruitment – interview round' },
+      { src: '/images/updates/recruitment-02.jpg', alt: 'Recruitment: interview round' },
     ],
   },
   {
@@ -418,9 +421,9 @@ export const updates: Update[] = [
     date: '2025-02-04',
     category: 'team',
     excerpt:
-      'Our knowledge in satellite development extends beyond our own team—it’s also a valuable resource for others tackling challenges in this field. The CanSat Portugal Competition, organized by Ciência…',
+      'Our knowledge in satellite development extends beyond our own team; it’s also a valuable resource for others tackling challenges in this field. The CanSat Portugal Competition, organized by Ciência…',
     lead:
-      'Our knowledge in satellite development extends beyond our own team—it’s also a valuable resource for others tackling challenges in this field. The CanSat Portugal Competition, organized by Ciência Viva in collaboration with ESERO Portugal, brings together teams of high school students from across the country to design and develop mini-satellites of the size of a soda can. The challenge lies in integrating essential systems, such as power, sensors, and communication, into this incredibly small space.',
+      'Our knowledge in satellite development extends beyond our own team; it’s also a valuable resource for others tackling challenges in this field. The CanSat Portugal Competition, organized by Ciência Viva in collaboration with ESERO Portugal, brings together teams of high school students from across the country to design and develop mini-satellites of the size of a soda can. The challenge lies in integrating essential systems, such as power, sensors, and communication, into this incredibly small space.',
     readingMinutes: 5,
     cover: {
       src: '/images/updates/cansat-01.jpg',
@@ -429,7 +432,7 @@ export const updates: Update[] = [
     body: [
       'For the 12th edition of the competition, we have had the pleasure of mentoring two outstanding teams:',
       '• IRSAT from Escola Secundária José Saramago, Mafra, which is exploring the development of a low-cost inertial navigation system. Their system is designed to function autonomously in environments lacking GPS signals, such as the surface of Mars, showcasing its potential for space exploration.',
-      '• Xanthoria CanSat from Colégio Ribadouro, Porto, which is creating an innovative protective coating for their CanSat. Their solution uses lichens—symbiotic organisms formed by the relationship between fungi and algae—to shield sensitive electronic components from harmful UV radiation.',
+      '• Xanthoria CanSat from Colégio Ribadouro, Porto, which is creating an innovative protective coating for their CanSat. Their solution uses lichens (symbiotic organisms formed by the relationship between fungi and algae) to shield sensitive electronic components from harmful UV radiation.',
       'We are thrilled to announce that both teams have successfully advanced to the final stage of the competition, and we will continue to provide our full support as they work to achieve their goals. We extend our warmest congratulations to IRSAT and Xanthoria for their dedication and innovation.',
     ],
   },
@@ -441,22 +444,22 @@ export const updates: Update[] = [
     excerpt:
       'On December 10th, our team visited Altice’s Centro Operacional de Satélites do Continente. We had a behind-the-scenes look at the antennas and ground infrastructure that keep critical…',
     lead:
-      'On December 10th, our team visited Altice’s Centro Operacional de Satélites do Continente. We had a behind-the-scenes look at the antennas and ground infrastructure that keep critical communications running every day — a visit that deepened our technical understanding and opened doors for future collaboration.',
+      'On December 10th, our team visited Altice’s Centro Operacional de Satélites do Continente. We had a behind-the-scenes look at the antennas and ground infrastructure that keep critical communications running every day, a visit that deepened our technical understanding and opened doors for future collaboration.',
     readingMinutes: 3,
     cover: {
       src: '/images/updates/altice-01.jpg',
       alt: 'MEO Satellite Operations Center',
     },
     body: [
-      'We had the opportunity to learn, on site, how Altice’s ground segment supports national and international communications — from robust antenna systems to real-time monitoring and operations workflows that keep services reliable at scale.',
+      'We had the opportunity to learn, on site, how Altice’s ground segment supports national and international communications, from robust antenna systems to real-time monitoring and operations workflows that keep services reliable at scale.',
       'This visit helped our team connect classroom and lab work with real infrastructure, clarifying technical topics across RF, ground stations, and operations. We left with a stronger understanding of the ecosystem and the standards that guide it.',
       'Our thanks to Altice for the warm welcome and the time dedicated to guiding us through the facility. We look forward to future collaboration opportunities that can create impact for students, partners, and the wider community.',
     ],
     gallery: [
-      { src: '/images/updates/altice-02.jpg', alt: 'Control room — operations' },
-      { src: '/images/updates/altice-03.jpg', alt: 'Antenna field — panoramic view' },
-      { src: '/images/updates/altice-04.jpg', alt: 'Ground antennas — detail' },
-      { src: '/images/updates/altice-05.jpg', alt: 'LISAT visit — team moment' },
+      { src: '/images/updates/altice-02.jpg', alt: 'Control room operations' },
+      { src: '/images/updates/altice-03.jpg', alt: 'Antenna field, panoramic view' },
+      { src: '/images/updates/altice-04.jpg', alt: 'Ground antennas, detail' },
+      { src: '/images/updates/altice-05.jpg', alt: 'LISAT visit, team moment' },
     ],
   },
   {
@@ -485,7 +488,7 @@ export const updates: Update[] = [
       { src: '/images/updates/thales-03.jpg', alt: 'Air traffic control simulator' },
       { src: '/images/updates/thales-04.jpg', alt: 'Tacticos system demonstration' },
       { src: '/images/updates/thales-05.jpg', alt: 'Briefing with Thales team' },
-      { src: '/images/updates/thales-06.jpg', alt: 'Thales Portugal — exterior of headquarters' },
+      { src: '/images/updates/thales-06.jpg', alt: 'Thales Portugal headquarters, exterior' },
     ],
   },
   {
