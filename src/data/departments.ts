@@ -41,7 +41,7 @@ export const departments: Department[] = [
   {
     slug: 'cdh',
     name: 'Command & Data Handling',
-    abbr: 'C&DH',
+    abbr: 'CDH',
     tagline: 'On-board software architecture and data',
     summary:
       'Our CDH team is the brain of the mission. From executing ground commands to managing data flow between subsystems, we keep the satellite autonomous and mission-ready at all times.',

@@ -5,7 +5,7 @@ import type { DepartmentSlug } from '@/lib/types'
  *
  * These are drawings, not icons: thin strokes in the current colour, each one
  * alluding to what the department actually works on — an orbit and body axes
- * for ADCS, a data bus for C&DH, radiating arcs for Communications, and so on.
+ * for ADCS, a data bus for CDH, radiating arcs for Communications, and so on.
  * They stay faint and sit behind the department's name, which remains the
  * dominant element on the card.
  *

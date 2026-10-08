@@ -8,16 +8,11 @@ import type {
 /**
  * Organisations supporting LISAT.
  *
- * Tiers for MEO, Thales, Marinha Portuguesa, Oeiras Valley, Instituto de
- * Telecomunicações, JTA, Althima, Altair, Mauser, Allkits, Aubay, GALP, Ordem
- * dos Engenheiros, NanoSatLab, Xpand IT, IST, AEIST and IPDJ come straight from
- * the partners page on lisat.space. ESSS is tagged silver on the strength of
- * its own announcement post.
- *
- * The remaining logos appeared in the homepage support strip without a stated
- * tier. Academic bodies are grouped as `institutional` and everything else as
- * `supporter` — change a `tier` value here if a relationship is formally
- * different.
+ * The list and the tiers were reviewed by the team in October 2026: JTA,
+ * ISEG, ISEL, Emetrês, iStartLab, Millebrindes, NCAB Group, Texugo3D and
+ * IDMEC are no longer partners; Thales and Aubay are bronze; Mauser, Xpand IT
+ * and IPDJ are silver; Marinha Portuguesa is institutional. Change a `tier`
+ * value here if a relationship changes again.
  *
  * `priority` only decides how large a partner is drawn on the Partners page;
  * it follows the tier unless set. Oeiras Valley is set to `featured` so it sits
@@ -44,7 +39,7 @@ export const partners: Partner[] = [
   {
     id: 'thales',
     name: 'Thales Portugal',
-    tier: 'gold',
+    tier: 'bronze',
     logo: '/images/partners/thales.png',
     url: 'https://www.thalesgroup.com/',
     contribution:
@@ -58,7 +53,7 @@ export const partners: Partner[] = [
   {
     id: 'marinha-portuguesa',
     name: 'Marinha Portuguesa',
-    tier: 'gold',
+    tier: 'institutional',
     logo: '/images/partners/marinha-portuguesa.png',
     url: 'https://www.marinha.pt',
     contribution:
@@ -86,13 +81,6 @@ export const partners: Partner[] = [
   },
 
   {
-    id: 'jta',
-    name: 'JTA: The Data Scientists',
-    tier: 'silver',
-    logo: '/images/partners/jta.png',
-    contribution: 'Data science and software development support.',
-  },
-  {
     id: 'althima',
     name: 'Althima',
     tier: 'silver',
@@ -119,7 +107,7 @@ export const partners: Partner[] = [
   {
     id: 'mauser',
     name: 'Mauser',
-    tier: 'bronze',
+    tier: 'silver',
     logo: '/images/partners/mauser.png',
     contribution: 'Electronic components and hardware for testing and prototyping.',
   },
@@ -134,14 +122,14 @@ export const partners: Partner[] = [
   {
     id: 'aubay',
     name: 'Aubay',
-    tier: 'technical',
+    tier: 'bronze',
     logo: '/images/partners/aubay.png',
     url: 'https://www.aubay.com',
   },
   {
     id: 'xpand-it',
     name: 'Xpand IT',
-    tier: 'technical',
+    tier: 'silver',
     logo: '/images/partners/xpand-it.svg',
     url: 'https://www.xpand-it.com/',
   },
@@ -185,67 +173,18 @@ export const partners: Partner[] = [
     logo: '/images/partners/aeist.png',
   },
   {
-    id: 'idmec',
-    name: 'IDMEC',
-    tier: 'institutional',
-    logo: '/images/partners/idmec.png',
-  },
-  {
     id: 'fcul',
     name: 'Faculdade de Ciências da Universidade de Lisboa',
     tier: 'institutional',
     logo: '/images/partners/fcul.png',
   },
   {
-    id: 'iseg',
-    name: 'ISEG',
-    tier: 'institutional',
-    logo: '/images/partners/iseg.png',
-  },
-  {
-    id: 'isel',
-    name: 'ISEL',
-    tier: 'institutional',
-    logo: '/images/partners/isel.png',
-  },
-  {
     id: 'ipdj',
     name: 'IPDJ',
-    tier: 'institutional',
+    tier: 'silver',
     logo: '/images/partners/ipdj.png',
   },
 
-  {
-    id: 'emetres',
-    name: 'Emetrês',
-    tier: 'supporter',
-    logo: '/images/partners/emetres.png',
-    contribution: '3D printing material for prototyping.',
-  },
-  {
-    id: 'ncab',
-    name: 'NCAB Group',
-    tier: 'supporter',
-    logo: '/images/partners/ncab.png',
-  },
-  {
-    id: 'texugo3d',
-    name: 'Texugo3D',
-    tier: 'supporter',
-    logo: '/images/partners/texugo3d.png',
-  },
-  {
-    id: 'millebrindes',
-    name: 'Millebrindes',
-    tier: 'supporter',
-    logo: '/images/partners/millebrindes.png',
-  },
-  {
-    id: 'istartlab',
-    name: 'iStartLab',
-    tier: 'supporter',
-    logo: '/images/partners/istartlab.png',
-  },
 ]
 
 /** Tier metadata, in the order tiers should be displayed. */
