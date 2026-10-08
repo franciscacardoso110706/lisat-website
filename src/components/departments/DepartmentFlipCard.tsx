@@ -6,7 +6,6 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion, useTransform, type MotionValue } from 'framer-motion'
 import { DepartmentGlyph } from './DepartmentGlyph'
 import { useTilt } from '@/lib/useTilt'
-import { membersOf } from '@/data/team'
 import { clsx } from '@/lib/utils'
 import type { Department } from '@/lib/types'
 
@@ -52,11 +51,13 @@ const LIFT = { type: 'spring', stiffness: 120, damping: 18, mass: 0.9 } as const
 export function DepartmentFlipCard({
   dept,
   index,
+  count,
 }: {
   dept: Department
   index: number
+  /** How many people are in it, counted on the server from the Team source. */
+  count: number
 }) {
-  const count = membersOf(dept.slug).length
   const reduced = useReducedMotion()
   const tilt = useTilt({ max: 7, lift: 10 })
   const [flipped, setFlipped] = useState(false)

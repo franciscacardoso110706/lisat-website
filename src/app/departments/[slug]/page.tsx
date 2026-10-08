@@ -9,9 +9,15 @@ import { CtaBand } from '@/components/ui/CtaBand'
 import { OrbitBackdrop } from '@/components/ui/OrbitBackdrop'
 import { MemberCard } from '@/components/team/MemberCard'
 import { departments, getDepartment } from '@/data/departments'
-import { membersOf } from '@/data/team'
+import { membersOfDepartment } from '@/lib/team-source'
 import { mission } from '@/data/mission'
 import { gates } from '@/data/recruitment'
+
+/**
+ * People come from Sanity, as on the Team page, so published edits (a new
+ * photograph, someone joining) appear within a minute without a redeploy.
+ */
+export const revalidate = 60
 
 export function generateStaticParams() {
   return departments.map((d) => ({ slug: d.slug }))
@@ -47,7 +53,7 @@ export default async function DepartmentPage({
   const dept = getDepartment(slug)
   if (!dept) notFound()
 
-  const members = membersOf(dept.slug)
+  const members = await membersOfDepartment(dept.slug)
   const leads = members.filter((m) => m.rank === 'lead')
   const rest = members.filter((m) => m.rank !== 'lead')
   const gate = gates.find((g) => g.department === dept.slug)

@@ -20,7 +20,14 @@ import type { Department } from '@/lib/types'
  * it. It is skipped entirely on coarse pointers, where there is no cursor to
  * follow.
  */
-export function DepartmentGrid({ departments }: { departments: Department[] }) {
+export function DepartmentGrid({
+  departments,
+  counts,
+}: {
+  departments: Department[]
+  /** Members per department slug, from the same source as the Team page. */
+  counts: Record<string, number>
+}) {
   const section = useRef<HTMLDivElement>(null)
   const [fine, setFine] = useState(false)
 
@@ -98,7 +105,12 @@ export function DepartmentGrid({ departments }: { departments: Department[] }) {
               so nothing here depends on their content to stay square. */}
           <ul className="mt-10 grid gap-10 md:mt-16 md:grid-cols-2 md:gap-12 xl:grid-cols-3 xl:gap-10">
             {departments.map((dept, i) => (
-              <DepartmentFlipCard key={dept.slug} dept={dept} index={i} />
+              <DepartmentFlipCard
+                key={dept.slug}
+                dept={dept}
+                index={i}
+                count={counts[dept.slug] ?? 0}
+              />
             ))}
           </ul>
 

@@ -266,6 +266,15 @@ const CMS_SLUG_TO_ROUTE: Record<string, DepartmentSlug> = {
   'marketing-and-sponsors': 'marketing-sponsors',
 }
 
+/**
+ * The short, code-side slug for a slug from either source: a Studio slug is
+ * translated, a code slug comes back unchanged. Used to match a person from
+ * Sanity to the department page they belong on.
+ */
+export function routeSlug(slug: DepartmentKey): string {
+  return CMS_SLUG_TO_ROUTE[slug] ?? slug
+}
+
 /** `/departments/…` for a slug from either source, or null if there is no page. */
 export function departmentRoute(slug: DepartmentKey): string | null {
   const mapped = CMS_SLUG_TO_ROUTE[slug] ?? (bySlug.has(slug) ? slug : null)

@@ -4,7 +4,8 @@ import { RevealLines } from '@/components/ui/RevealLines'
 import { SectionIndex } from '@/components/ui/Technical'
 import { CtaBand } from '@/components/ui/CtaBand'
 import { DepartmentGrid } from '@/components/departments/DepartmentGrid'
-import { departments } from '@/data/departments'
+import { departments, routeSlug } from '@/data/departments'
+import { getTeam } from '@/lib/team-source'
 import { mission } from '@/data/mission'
 
 export const metadata: Metadata = {
@@ -22,7 +23,19 @@ export const metadata: Metadata = {
  * between the two is the point: the page reads as the editorial LISAT site
  * until it hands over to the hardware.
  */
-export default function DepartmentsPage() {
+/** Member counts come from Sanity, as on the Team page. */
+export const revalidate = 60
+
+export default async function DepartmentsPage() {
+  // Counted here, on the server: the grid is a client component and the
+  // CMS client must never reach the browser.
+  const { members } = await getTeam()
+  const counts: Record<string, number> = {}
+  for (const m of members) {
+    const slug = routeSlug(m.department)
+    counts[slug] = (counts[slug] ?? 0) + 1
+  }
+
   return (
     <>
       {/* Introduction — kept to a heading and one sentence. */}
@@ -42,7 +55,7 @@ export default function DepartmentsPage() {
         </Container>
       </Section>
 
-      <DepartmentGrid departments={departments} />
+      <DepartmentGrid departments={departments} counts={counts} />
 
       <CtaBand
         eyebrow="Join us"

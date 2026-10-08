@@ -3,7 +3,7 @@ import 'server-only'
 import { fetchSanityDepartments, fetchSanityTeam } from '@/sanity/team'
 import { hasSanity } from '@/sanity/env'
 import { team as codeTeam } from '@/data/team'
-import { departments as codeDepartments } from '@/data/departments'
+import { departments as codeDepartments, routeSlug } from '@/data/departments'
 import type { DepartmentRef, TeamMember } from '@/lib/types'
 
 /**
@@ -129,6 +129,23 @@ export async function getTeam(): Promise<TeamData> {
     source: 'merge',
     sanityCount: sanityMembers.length,
   }
+}
+
+const rankOrder = { board: 0, lead: 1, member: 2, advisor: 3 } as const
+
+/**
+ * Everyone in one department, from the same source as the Team page — so a
+ * photograph published in the Studio appears on the department page too.
+ *
+ * People in Sanity carry the Studio's longer department slugs
+ * ("command-and-data-handling"); `routeSlug` maps them to the page's short
+ * one ("cdh"). Leaders first, then everyone else in the Studio's order.
+ */
+export async function membersOfDepartment(slug: string): Promise<TeamMember[]> {
+  const { members } = await getTeam()
+  return members
+    .filter((m) => routeSlug(m.department) === slug)
+    .sort((a, b) => rankOrder[a.rank] - rankOrder[b.rank])
 }
 
 /** The four groups the team page is built from, in its existing order. */
