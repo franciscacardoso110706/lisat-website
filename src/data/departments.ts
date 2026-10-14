@@ -275,6 +275,20 @@ export function routeSlug(slug: DepartmentKey): string {
   return CMS_SLUG_TO_ROUTE[slug] ?? slug
 }
 
+/**
+ * Every slug a department may carry in the Studio: its own short one, and
+ * the longer one the Studio documents were created with. Used to find a
+ * page's department document in Sanity.
+ */
+export function cmsSlugsFor(slug: string): string[] {
+  return [
+    slug,
+    ...Object.entries(CMS_SLUG_TO_ROUTE)
+      .filter(([, route]) => route === slug)
+      .map(([cms]) => cms),
+  ]
+}
+
 /** `/departments/…` for a slug from either source, or null if there is no page. */
 export function departmentRoute(slug: DepartmentKey): string | null {
   const mapped = CMS_SLUG_TO_ROUTE[slug] ?? (bySlug.has(slug) ? slug : null)

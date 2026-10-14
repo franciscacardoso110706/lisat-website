@@ -16,12 +16,15 @@ export function Reveal({
   children,
   delay = 0,
   className,
+  style: ownStyle,
   as = 'div',
 }: {
   children: ReactNode
   /** Seconds. Use small increments (0.04–0.1) to stagger a row. */
   delay?: number
   className?: string
+  /** Merged with the reveal delay, e.g. for grid spans set per element. */
+  style?: CSSProperties
   as?: Tag
 }) {
   const node = useRef<HTMLElement | null>(null)
@@ -54,6 +57,7 @@ export function Reveal({
   }
 
   const style = {
+    ...ownStyle,
     '--reveal-delay': `${Math.round(delay * 1000)}ms`,
   } as CSSProperties
 

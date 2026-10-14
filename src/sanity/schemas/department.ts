@@ -48,6 +48,44 @@ export const department = defineType({
         'One or two sentences describing what this department does. Optional.',
     }),
     defineField({
+      name: 'heroImage',
+      title: 'Cover photograph',
+      type: 'image',
+      description:
+        'The large photograph at the top of the department page. A wide photo of the department at work works best; avoid images with text on them. Optional: without one, a LISAT team photo is used.',
+      options: { hotspot: true },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Image description',
+          type: 'string',
+          description: 'Describes the photo for people using a screen reader.',
+        }),
+      ],
+    }),
+    defineField({
+      name: 'video',
+      title: 'Department video (file)',
+      type: 'file',
+      description:
+        'Upload the department video here (MP4 works everywhere). Shown on the department page. If you also fill in the link below, this file is used.',
+      options: { accept: 'video/*' },
+    }),
+    defineField({
+      name: 'videoUrl',
+      title: 'Department video (YouTube or Vimeo link)',
+      type: 'url',
+      description:
+        'Instead of uploading a file, paste the YouTube or Vimeo address of the video. Optional.',
+      validation: (rule) =>
+        rule.uri({ scheme: ['http', 'https'] }).custom((value) => {
+          if (!value) return true
+          return /youtube\.com|youtu\.be|vimeo\.com/.test(value)
+            ? true
+            : 'Use a YouTube or Vimeo link, or upload the file above.'
+        }),
+    }),
+    defineField({
       name: 'order',
       title: 'Order',
       type: 'number',

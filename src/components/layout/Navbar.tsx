@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ArrowRight, Menu, X } from 'lucide-react'
 import { LayoutGroup, motion, useReducedMotion } from 'framer-motion'
-import { darkHeroRoutes, headerCta, mainNav, site } from '@/data/site'
+import { headerCta, mainNav, opensDark, site } from '@/data/site'
 import { clsx } from '@/lib/utils'
 import { MobileMenu } from './MobileMenu'
 import { ScrollProgress } from './ScrollProgress'
@@ -95,7 +95,7 @@ export function Navbar() {
   const menuOpen = menu.open && menu.route === pathname
 
   const onDark = useDarkUnderHeader(
-    (darkHeroRoutes as readonly string[]).includes(pathname),
+    opensDark(pathname),
     pathname,
   )
 

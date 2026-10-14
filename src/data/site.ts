@@ -61,9 +61,17 @@ export const socials: SocialLink[] = [
  * The navbar is transparent until the page scrolls, so on these routes it has
  * to adopt the dark palette — otherwise its links resolve to the light theme's
  * near-black and sit invisibly on top of the photography. Add a route here if
- * you give it a dark opening section.
+ * you give it a dark opening section. An entry ending in "/" covers every page
+ * beneath it: '/departments/' is each department page, not the listing.
  */
-export const darkHeroRoutes = ['/', '/mission/lisat-01', '/partners'] as const
+export const darkHeroRoutes = ['/', '/mission/lisat-01', '/partners', '/departments/'] as const
+
+/** Whether a route opens on a dark hero, by the list above. */
+export function opensDark(pathname: string): boolean {
+  return (darkHeroRoutes as readonly string[]).some((r) =>
+    r !== '/' && r.endsWith('/') ? pathname.startsWith(r) : pathname === r,
+  )
+}
 
 /** Primary navigation. Order here is the order in the navbar. */
 export const mainNav: NavItem[] = [

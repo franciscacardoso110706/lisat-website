@@ -2281,6 +2281,805 @@
   }
 
   /* ======================================================================
+   * DEPARTMENT PAGE
+   *
+   * Aerospace in its photography and type, a product studio in its layout.
+   * A full-width cover with the name set large, then chapters on warm
+   * white and cloud: about and four counts, the video, the team, the
+   * department's part of the system, and the way in.
+   *
+   * One scale for the page: `.dp-title` for the name, `.dp-h2` for
+   * chapter headings, `.dp-lede` and body copy at 1rem–1.125rem, mono
+   * labels at 0.6875rem–0.75rem. Radii: 2rem for large surfaces, 1.5rem
+   * for tiles, 999px for controls.
+   * ==================================================================== */
+
+  /* ---- Cover ---- */
+  .dp-hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-height: 88svh;
+    overflow: hidden;
+    /* Extra room at the bottom: the next section curves up into it. */
+    padding-block: calc(var(--nav-height) + 1.5rem) 7rem;
+  }
+
+  .dp-hero > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dp-hero-photo {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    animation: hm-settle 2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Deep at the bottom left where the type sits; the photograph keeps its
+     light everywhere else. */
+  .dp-hero-veil {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to top, rgb(var(--lisat-midnight) / 0.95) 0%, rgb(var(--lisat-midnight) / 0.55) 42%, rgb(var(--lisat-midnight) / 0.2) 75%, rgb(var(--lisat-midnight) / 0.45) 100%),
+      linear-gradient(90deg, rgb(var(--lisat-midnight) / 0.6) 0%, transparent 60%);
+  }
+
+  .dp-back {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.95rem;
+    border: 1px solid rgb(var(--lisat-white) / 0.22);
+    border-radius: 999px;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    color: rgb(var(--lisat-white) / 0.9);
+    transition:
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .dp-back:hover {
+    border-color: rgb(var(--lisat-white) / 0.6);
+    background-color: rgb(var(--lisat-white) / 0.06);
+  }
+
+  .dp-hero-text {
+    margin-top: auto;
+    padding-top: 4rem;
+    max-width: 62rem;
+  }
+
+  .dp-hero-id {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgb(var(--lisat-blue-soft));
+  }
+
+  .dp-hero-id::after {
+    content: '';
+    width: 3rem;
+    height: 1px;
+    background-color: rgb(var(--lisat-blue-soft) / 0.6);
+  }
+
+  .dp-title {
+    margin-top: 1.25rem;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(2.75rem, 7.2vw, 6.5rem);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+    color: rgb(var(--lisat-white));
+  }
+
+  .dp-tagline {
+    max-width: 36rem;
+    margin-top: 1.5rem;
+    font-size: clamp(1rem, 1.3vw, 1.1875rem);
+    line-height: 1.55;
+    color: rgb(var(--lisat-white) / 0.86);
+  }
+
+  .dp-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .dp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    border-radius: 999px;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .dp-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .dp-btn--primary {
+    padding: 0.375rem 1.5rem 0.375rem 0.375rem;
+    background-color: rgb(var(--lisat-white));
+    color: rgb(var(--lisat-navy));
+  }
+
+  .dp-btn--primary:hover {
+    background-color: rgb(var(--lisat-ice));
+  }
+
+  .dp-btn-icon {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    background-color: rgb(var(--lisat-blue-deep));
+    color: rgb(var(--lisat-white));
+  }
+
+  .dp-btn--ghost {
+    padding: 0 1.5rem;
+    border: 1px solid rgb(var(--lisat-white) / 0.4);
+    color: rgb(var(--lisat-white));
+  }
+
+  .dp-btn--ghost:hover {
+    border-color: rgb(var(--lisat-white));
+    background-color: rgb(var(--lisat-white) / 0.08);
+  }
+
+  @media (min-width: 768px) {
+    .dp-hero {
+      padding-block: calc(var(--nav-height) + 2rem) 8.5rem;
+    }
+  }
+
+  /* ---- Shared ---- */
+  .ed-title.dp-h2 {
+    font-size: clamp(1.875rem, 3.4vw, 2.875rem);
+  }
+
+  .dp-lede {
+    max-width: 26rem;
+    margin-top: 1.25rem;
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
+    line-height: 1.6;
+    color: rgb(var(--fg-muted));
+  }
+
+  .dp-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+  }
+
+  .dp-head-note {
+    max-width: 22rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: rgb(var(--fg-muted));
+  }
+
+  .dp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+  }
+
+  .dp-tags li {
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    color: rgb(var(--fg-muted));
+  }
+
+  /* ---- About ---- */
+  .dp-about {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .dp-counts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1.5rem;
+    align-content: start;
+  }
+
+  .dp-count {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .dp-count-num {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(2.5rem, 4.6vw, 3.75rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: rgb(var(--fg));
+  }
+
+  .dp-count-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgb(var(--fg-muted));
+  }
+
+  @media (min-width: 1024px) {
+    .dp-about {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      column-gap: 4rem;
+      align-items: start;
+    }
+  }
+
+  /* ---- Video: words on one side, the frame on the other ---- */
+  .dp-video-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .dp-video-grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      column-gap: 3rem;
+      align-items: end;
+    }
+
+    .dp-video-text {
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  .dv {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    border-radius: 1.5rem;
+    background-color: rgb(var(--lisat-midnight));
+  }
+
+  .dv-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
+  }
+
+  .dv-poster {
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dv--poster:hover .dv-poster {
+    transform: scale(1.03);
+  }
+
+  .dv--empty .dv-poster {
+    filter: blur(6px) saturate(0.7);
+    transform: scale(1.06);
+  }
+
+  .dv-shade {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(60% 70% at 50% 50%, rgb(var(--lisat-midnight) / 0.35), rgb(var(--lisat-midnight) / 0.65));
+  }
+
+  .dv--empty .dv-shade {
+    background: rgb(var(--lisat-midnight) / 0.62);
+  }
+
+  /* The play control: a solid disc with a slow ring that widens on hover. */
+  .dv-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 999px;
+    background-color: rgb(var(--lisat-white));
+    color: rgb(var(--lisat-blue-deep));
+    transform: translate(-50%, -50%);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+
+  .dv-play:hover {
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+
+  .dv-play:focus-visible {
+    outline: 2px solid rgb(var(--lisat-white));
+    outline-offset: 6px;
+  }
+
+  .dv-play-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-left: 0.2rem;
+    fill: currentColor;
+  }
+
+  .dv-play-ring {
+    position: absolute;
+    inset: -0.75rem;
+    border: 1px solid rgb(var(--lisat-white) / 0.45);
+    border-radius: 999px;
+    transition:
+      inset 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.5s ease;
+  }
+
+  .dv-play:hover .dv-play-ring {
+    inset: -1.25rem;
+    border-color: rgb(var(--lisat-white) / 0.25);
+  }
+
+  .dv-soon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+
+  .dv-play--idle {
+    position: static;
+    width: 4.5rem;
+    height: 4.5rem;
+    border: 1px solid rgb(var(--lisat-white) / 0.5);
+    background-color: rgb(var(--lisat-white) / 0.08);
+    color: rgb(var(--lisat-white) / 0.85);
+    transform: none;
+    cursor: default;
+  }
+
+  .dv-play--idle:hover {
+    transform: none;
+  }
+
+  .dv-soon p {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgb(var(--lisat-white) / 0.85);
+  }
+
+  @media (min-width: 768px) {
+    .dv {
+      border-radius: 2rem;
+    }
+  }
+
+  /* ---- Team: an even grid of portraits ---- */
+  .dp-people {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .dp-person {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dp-person-photo {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    border-radius: 1.25rem;
+    background-color: rgb(var(--lisat-ice));
+  }
+
+  .dp-person-img {
+    object-fit: cover;
+    object-position: 50% 20%;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dp-person-mono {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: rgb(var(--lisat-blue) / 0.55);
+  }
+
+  /* Studies rise over the photograph on hover. */
+  .dp-person-reveal {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    padding: 2.5rem 1rem 1rem;
+    background: linear-gradient(to top, rgb(var(--lisat-midnight) / 0.85), transparent);
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(var(--lisat-white));
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.4s ease,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dp-person-name {
+    margin-top: 0.9rem;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: rgb(var(--fg));
+    transition: color 0.3s ease;
+  }
+
+  .dp-person-role {
+    margin-top: 0.2rem;
+    font-size: 0.8125rem;
+    color: rgb(var(--accent));
+  }
+
+  /* On screens with hover the studies live in the reveal; elsewhere, here. */
+  .dp-person-studies {
+    margin-top: 0.2rem;
+    font-size: 0.75rem;
+    color: rgb(var(--fg-faint));
+  }
+
+  @media (hover: hover) {
+    .dp-person-studies {
+      display: none;
+    }
+
+    .dp-person:hover .dp-person-img {
+      transform: scale(1.05);
+    }
+
+    .dp-person:hover .dp-person-reveal {
+      opacity: 1;
+      transform: none;
+    }
+
+    a.dp-person:hover .dp-person-name {
+      color: rgb(var(--accent));
+    }
+  }
+
+  @media (hover: none) {
+    .dp-person-reveal {
+      display: none;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .dp-people {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem 1.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dp-people {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 2.5rem 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .dp-person-name {
+      font-size: 1.0625rem;
+    }
+  }
+
+  /* ---- Its part of the system ---- */
+  .dp-sys-hero {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .dp-sys-media {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: 1.5rem;
+    background-color: rgb(var(--lisat-midnight));
+  }
+
+  /* The LISAT-01 render is drawn on white: give it a white ground and let it
+     sit whole rather than cropped. */
+  .dp-sys-media--light {
+    background-color: rgb(var(--lisat-white));
+    border: 1px solid var(--rule);
+  }
+
+  .dp-sys-img {
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dp-sys-img--contain {
+    object-fit: contain;
+    padding: 1.5rem;
+  }
+
+  .dp-sys-media:hover .dp-sys-img {
+    transform: scale(1.03);
+  }
+
+  .dp-sys-caption {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    background-color: rgb(var(--lisat-midnight) / 0.7);
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(var(--lisat-white));
+  }
+
+  .dp-sys-copy {
+    max-width: 34rem;
+    margin-top: 1.5rem;
+  }
+
+  .dp-sys-copy p {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgb(var(--fg-muted));
+  }
+
+  .dp-sys-copy p + p {
+    margin-top: 1rem;
+  }
+
+  /* The bento: the verified role as its anchor, the first responsibility
+     wide, the rest as tiles. The last tile is given a span by the page
+     (--span-sm, --span-lg) so every row is filled whatever the count. */
+  .dp-bento {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .dp-role {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.75rem;
+    border-radius: 1.5rem;
+  }
+
+  .dp-role-text {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.015em;
+    color: rgb(var(--fg));
+  }
+
+  .dp-role-sub {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: rgb(var(--fg-muted));
+  }
+
+  .dp-task {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 8.5rem;
+    padding: 1.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 1.5rem;
+    background-color: rgb(var(--lisat-cloud));
+    transition:
+      border-color 0.3s ease,
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dp-task:hover {
+    border-color: rgb(var(--lisat-blue-soft) / 0.8);
+  }
+
+  .dp-task--lead {
+    background-color: rgb(var(--lisat-ice));
+    border-color: transparent;
+  }
+
+  .dp-task-num {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: rgb(var(--accent));
+  }
+
+  .dp-task-text {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: rgb(var(--fg));
+  }
+
+  .dp-task--lead .dp-task-text {
+    font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+    font-weight: 600;
+  }
+
+  @media (min-width: 640px) {
+    .dp-bento {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dp-role {
+      grid-column: 1 / -1;
+    }
+
+    .dp-task {
+      grid-column: span var(--span-sm, 1);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    /* Render left, words right: the showcase reads as a spread. */
+    .dp-sys-hero {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      column-gap: 3.5rem;
+      align-items: center;
+    }
+
+    .dp-sys-media {
+      aspect-ratio: 16 / 11;
+      border-radius: 2rem;
+    }
+
+    /* Four columns: the role takes two columns and two rows, the first
+       responsibility two columns, the rest one each, the last whatever
+       its row has left. */
+    .dp-bento {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-flow: dense;
+      gap: 1.25rem;
+      margin-top: 3.5rem;
+    }
+
+    .dp-role {
+      grid-column: span 2;
+      grid-row: span 2;
+      padding: 2rem;
+      border-radius: 2rem;
+    }
+
+    .dp-task {
+      grid-column: span var(--span-lg, 1);
+      min-height: 10rem;
+    }
+
+    .dp-task--lead {
+      grid-column: span 2;
+    }
+  }
+
+  /* ---- Join and next ---- */
+  /* Just the invitation and the button: the details live on Join Us. */
+  .dp-join {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.75rem 2rem;
+    padding: 2rem 1.75rem;
+    border-radius: 2rem;
+    background: linear-gradient(150deg, rgb(var(--lisat-ice)) 0%, rgb(var(--lisat-mist)) 100%);
+  }
+
+  .dp-next {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .dp-next-name {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(1.375rem, 2.6vw, 2rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: rgb(var(--fg));
+    transition: color 0.3s ease;
+  }
+
+  .dp-next:hover .dp-next-name {
+    color: rgb(var(--accent));
+  }
+
+  .dp-next-go {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid rgb(var(--lisat-blue-soft) / 0.8);
+    border-radius: 999px;
+    color: rgb(var(--lisat-blue));
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dp-next:hover .dp-next-go {
+    transform: translateX(4px);
+  }
+
+  @media (min-width: 768px) {
+    .dp-join {
+      padding: 3rem;
+      border-radius: 2.5rem;
+    }
+  }
+
+  /* ======================================================================
    * HOME
    *
    * A photographic hero, then five short chapters on warm white: the
