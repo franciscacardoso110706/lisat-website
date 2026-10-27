@@ -77,6 +77,7 @@ export const partners: Partner[] = [
     name: 'Instituto de Telecomunicações',
     tier: 'gold',
     logo: '/images/partners/instituto-telecomunicacoes.png',
+    logoScale: 1.6,
     url: 'https://www.it.pt',
   },
 
@@ -139,6 +140,7 @@ export const partners: Partner[] = [
     tier: 'bronze',
     logo: '/images/partners/new-space-portugal.png',
     url: 'https://newspaceportugal.org',
+    logoScale: 1.25,
   },
   {
     id: 'xpand-it',
@@ -158,6 +160,7 @@ export const partners: Partner[] = [
     name: 'IST NanoSat Lab',
     tier: 'technical',
     logo: '/images/partners/nanosatlab.png',
+    logoScale: 1.7,
   },
   {
     id: 'ansys',

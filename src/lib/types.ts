@@ -145,6 +145,8 @@ export interface Partner {
   priority?: PartnerPriority
   /** Lower comes first within the same priority and tier. */
   order?: number
+  /** Draws a wide logo larger than its size allows, e.g. 1.2. Size is unchanged. */
+  logoScale?: number
   /** A real photograph of the partnership. Never a stock image. */
   featuredImage?: { src: string; alt: string }
   /** A story about this partnership on the Updates page, e.g. "/updates/thales-portugal-visit". */

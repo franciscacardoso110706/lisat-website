@@ -4525,8 +4525,8 @@
   .nw-logo {
     width: auto;
     height: auto;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: calc(100% * var(--logo-scale, 1));
+    max-height: calc(100% * var(--logo-scale, 1));
     object-fit: contain;
     mix-blend-mode: multiply;
     filter: grayscale(1);

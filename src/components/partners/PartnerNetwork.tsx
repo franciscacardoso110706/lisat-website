@@ -76,7 +76,12 @@ export function PartnerNetwork({ partners }: { partners: Partner[] }) {
             <li
               key={p.id}
               className={clsx('nw-item', sizeClass[partnerPriority(p)])}
-              style={{ '--dy': `${drift[i % drift.length]}px` } as React.CSSProperties}
+              style={
+                {
+                  '--dy': `${drift[i % drift.length]}px`,
+                  '--logo-scale': p.logoScale ?? 1,
+                } as React.CSSProperties
+              }
               data-on={on ? '' : undefined}
             >
               <button
