@@ -17,8 +17,8 @@ import type {
  * `priority` only decides how large a partner is drawn on the Partners page;
  * it follows the tier unless set. Oeiras Valley is set to `featured` so it sits
  * beside MEO, at the team's request — its official tier is unchanged. CEiiA
- * and New Space Portugal are `featured` too, with `order` placing them
- * straight after MEO.
+ * and New Space Portugal (bronze) are `featured` too, so they sit in the same
+ * front row, after MEO and Oeiras Valley.
  *
  * These records are the fallback. A partner published in Sanity Studio with
  * the same key replaces the fields it sets — see `src/lib/partner-source.ts`.
@@ -40,7 +40,7 @@ export const partners: Partner[] = [
   {
     id: 'ceiia',
     name: 'CEiiA',
-    tier: 'gold',
+    tier: 'bronze',
     logo: '/images/partners/ceiia.png',
     url: 'https://www.ceiia.com',
     priority: 'featured',
@@ -49,7 +49,7 @@ export const partners: Partner[] = [
   {
     id: 'new-space-portugal',
     name: 'New Space Portugal',
-    tier: 'gold',
+    tier: 'bronze',
     logo: '/images/partners/new-space-portugal.png',
     url: 'https://newspaceportugal.org',
     priority: 'featured',
