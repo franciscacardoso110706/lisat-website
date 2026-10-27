@@ -17,8 +17,6 @@ import type {
  * `priority` only decides how large a partner is drawn on the Partners page;
  * it follows the tier unless set. Oeiras Valley is set to `featured` so it sits
  * beside MEO, at the team's request — its official tier is unchanged.
- * CEiiA and New Space Portugal (bronze) are `major`, so they close the deck:
- * CEiiA at one edge beside Xpand IT, New Space Portugal at the other beside IPDJ.
  *
  * These records are the fallback. A partner published in Sanity Studio with
  * the same key replaces the fields it sets — see `src/lib/partner-source.ts`.
@@ -36,24 +34,6 @@ export const partners: Partner[] = [
       src: '/images/updates/altice-01.jpg',
       alt: 'The LISAT team at MEO’s Satellite Operations Center, in front of a ground-station antenna',
     },
-  },
-  {
-    id: 'ceiia',
-    name: 'CEiiA',
-    tier: 'bronze',
-    logo: '/images/partners/ceiia.png',
-    url: 'https://www.ceiia.com',
-    priority: 'major',
-    order: 1,
-  },
-  {
-    id: 'new-space-portugal',
-    name: 'New Space Portugal',
-    tier: 'bronze',
-    logo: '/images/partners/new-space-portugal.png',
-    url: 'https://newspaceportugal.org',
-    priority: 'major',
-    order: 2,
   },
 
   {
@@ -145,6 +125,20 @@ export const partners: Partner[] = [
     tier: 'bronze',
     logo: '/images/partners/aubay.png',
     url: 'https://www.aubay.com',
+  },
+  {
+    id: 'ceiia',
+    name: 'CEiiA',
+    tier: 'bronze',
+    logo: '/images/partners/ceiia.png',
+    url: 'https://www.ceiia.com',
+  },
+  {
+    id: 'new-space-portugal',
+    name: 'New Space Portugal',
+    tier: 'bronze',
+    logo: '/images/partners/new-space-portugal.png',
+    url: 'https://newspaceportugal.org',
   },
   {
     id: 'xpand-it',
