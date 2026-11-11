@@ -21,7 +21,6 @@ export type DepartmentSlug =
   | 'structures-thermal'
   | 'hr-logistics'
   | 'marketing-sponsors'
-  | 'research-development'
   | 'board'
 
 /**

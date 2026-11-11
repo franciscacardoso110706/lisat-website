@@ -329,15 +329,12 @@ each, which keeps mobile scrolling cheap.
 
 ## Content notes
 
-Content was migrated from the previous Wix site. Two things are worth knowing:
+Content was migrated from the previous Wix site. One thing is worth knowing:
 
 - **Specifications that were never published** (orbit, mass, design lifetime,
   launch) are marked `provisional: true` in `src/data/mission.ts` and render as
   "TBC". They were deliberately not invented — fill them in when the design is
   frozen.
-- **Research & Development** appears in the roster but had no page on the old
-  site. Its entry in `departments.ts` has a short placeholder description marked
-  with a `TODO`.
 
 ### Redirects
 
