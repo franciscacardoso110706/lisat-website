@@ -223,11 +223,8 @@
 
 @layer components {
   /* The small uppercase mono label used above most section headings. */
-  /* The small uppercase label above most section headings.
-     Deliberately still monospaced: it is an engineering annotation, not a
-     heading, and it is one of the few things carrying the technical character
-     of the site. Montserrat is used for labels that are interface — buttons,
-     navigation, filters — not for these. */
+  /* The small uppercase label above most section headings. Set in Montserrat,
+     the same face as the navigation (`font-mono` now maps to it site-wide). */
   .eyebrow {
     @apply font-mono text-[0.6875rem] uppercase tracking-[0.18em];
   }
@@ -1468,7 +1465,7 @@
   }
 
   .sc-abbr {
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: clamp(0.625rem, 2.2cqh, 0.75rem);
     letter-spacing: 0.08em;
     color: rgb(var(--fg-faint));
@@ -2137,7 +2134,7 @@
   }
 
   .dept-abbr {
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.75rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -2336,7 +2333,7 @@
     padding: 0.5rem 0.95rem;
     border: 1px solid rgb(var(--lisat-white) / 0.22);
     border-radius: 999px;
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.75rem;
     color: rgb(var(--lisat-white) / 0.9);
     transition:
@@ -2359,7 +2356,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.75rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -2494,7 +2491,7 @@
     padding: 0.45rem 0.9rem;
     border: 1px solid var(--rule-strong);
     border-radius: 999px;
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.75rem;
     color: rgb(var(--fg-muted));
   }
@@ -2530,7 +2527,7 @@
   }
 
   .dp-count-label {
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.6875rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -2678,7 +2675,7 @@
   }
 
   .dv-soon p {
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.75rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -2738,7 +2735,7 @@
     bottom: 0;
     padding: 2.5rem 1rem 1rem;
     background: linear-gradient(to top, rgb(var(--lisat-midnight) / 0.85), transparent);
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.6875rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -2859,7 +2856,7 @@
     padding: 0.4rem 0.8rem;
     border-radius: 999px;
     background-color: rgb(var(--lisat-midnight) / 0.7);
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.6875rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -2944,7 +2941,7 @@
   }
 
   .dp-task-num {
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     color: rgb(var(--accent));
@@ -3178,7 +3175,7 @@
     right: max(var(--gutter), calc((100% - 80rem) / 2 + var(--gutter)));
     bottom: 5.5rem;
     display: none;
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.6875rem;
     line-height: 1.7;
     letter-spacing: 0.18em;
@@ -3303,7 +3300,7 @@
     position: relative;
     margin-top: 0.5rem;
     text-align: right;
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.6875rem;
     line-height: 1.7;
     letter-spacing: 0.16em;
@@ -3344,7 +3341,7 @@
   }
 
   .hm-figure-label {
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.6875rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -3421,7 +3418,7 @@
   }
 
   .hm-route-num {
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     color: rgb(var(--lisat-blue-soft));
@@ -3481,7 +3478,7 @@
   .hm-news-date {
     display: block;
     margin-top: 1rem;
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.6875rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -4226,7 +4223,7 @@
     padding: 0.5rem 0.95rem;
     border-radius: 999px;
     background-color: rgb(var(--lisat-blue-deep));
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.6875rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -4244,7 +4241,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.9375rem;
     letter-spacing: 0.06em;
     color: rgb(var(--accent));
@@ -4273,7 +4270,7 @@
   }
 
   .pd-tier {
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.6875rem;
     letter-spacing: 0.18em;
     text-align: center;
@@ -4342,7 +4339,7 @@
   }
 
   .pd-all {
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.75rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -4397,7 +4394,7 @@
   }
 
   .pt-stat-label {
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.6875rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -4818,7 +4815,7 @@
   }
 
   .upd :is(.eyebrow, .font-mono, .ag-count) {
-    font-family: var(--font-sans), system-ui, sans-serif;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.8125rem;
     font-weight: 500;
     letter-spacing: 0;
@@ -5032,7 +5029,7 @@
   }
 
   .ag-count {
-    font-family: var(--font-mono), ui-monospace, monospace;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-size: 0.6875rem;
     letter-spacing: 0.08em;
     color: rgb(var(--accent));

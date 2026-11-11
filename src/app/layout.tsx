@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import {
   Anton,
-  IBM_Plex_Mono,
   Inter,
   Montserrat,
 } from 'next/font/google'
@@ -40,13 +39,6 @@ const poster = Anton({
 const sans = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
-  display: 'swap',
-})
-
-const mono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-mono',
   display: 'swap',
 })
 
@@ -126,7 +118,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${sans.variable} ${poster.variable} ${mono.variable}`}
+      className={`${display.variable} ${sans.variable} ${poster.variable}`}
     >
       <body className="min-h-screen bg-surface">
         <script

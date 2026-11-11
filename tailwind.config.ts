@@ -118,7 +118,7 @@ const config: Config = {
         display: ['var(--font-display)', 'var(--font-sans)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         poster: ['var(--font-poster)', 'var(--font-display)', 'sans-serif'],
-        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+        mono: ['var(--font-display)', 'var(--font-sans)', 'system-ui', 'sans-serif'],
       },
       /**
        * The type scale. Every heading on the site comes from this ladder —
