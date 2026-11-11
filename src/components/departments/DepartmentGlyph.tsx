@@ -92,16 +92,6 @@ const glyphs: Partial<Record<DepartmentSlug, React.ReactNode>> = {
       <path d="M33 51l-12-9M33 69l-12 9" />
     </>
   ),
-  // A trajectory sketched through waypoints.
-  'research-development': (
-    <>
-      <path d="M18 88C34 88 40 34 60 34s26 54 42 54" strokeDasharray="6 7" />
-      <circle cx="60" cy="34" r="4" />
-      <circle cx="18" cy="88" r="4" />
-      <circle cx="102" cy="88" r="4" />
-      <path d="M60 34V16" opacity="0.5" />
-    </>
-  ),
 }
 
 /** Concentric rules, used when a slug has no mark of its own. */

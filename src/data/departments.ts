@@ -1,17 +1,12 @@
 import type { Department, DepartmentKey, DepartmentSlug } from '@/lib/types'
 
 /**
- * The eight engineering and organisational departments that build LISAT-01,
- * plus Research & Development.
+ * The engineering and organisational departments that build LISAT-01.
  *
  * Copy comes from the department pages on lisat.space, lightly edited for
  * consistency. To add a department, append an entry here and drop a photo in
  * /public/images/departments — the listing page, the /departments/[slug] page,
  * the team filters and the recruitment gates all read from this array.
- *
- * Note: "Research & Development" appears in the team roster but did not have a
- * public page on the old site. Its copy below is intentionally short — replace
- * `summary` and `description` when the department writes its own.
  */
 export const departments: Department[] = [
   {
@@ -205,23 +200,6 @@ export const departments: Department[] = [
     roleOnLisat01:
       'Funds the hardware and tells the story of the mission to partners, students and press.',
     disciplines: ['Communication', 'Partnerships', 'Design', 'Photography', 'Events'],
-    segment: 'organisation',
-  },
-  {
-    slug: 'research-development',
-    name: 'Research & Development',
-    abbr: 'R&D',
-    tagline: 'Future missions and applied research',
-    summary:
-      'R&D looks past LISAT-01, exploring the technologies and mission concepts that could follow it.',
-    description: [
-      'Research & Development investigates concepts for future LISAT missions and the technologies that would make them possible.',
-      // TODO: replace with the department's own description once it is written.
-    ],
-    responsibilities: ['Future mission research', 'Technology scouting', 'Concept studies'],
-    roleOnLisat01:
-      'Feeds lessons from LISAT-01 into what the team builds next.',
-    disciplines: ['Mission analysis', 'Research', 'Concept design'],
     segment: 'organisation',
   },
 ]
