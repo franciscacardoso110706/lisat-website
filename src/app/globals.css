@@ -226,7 +226,7 @@
   /* The small uppercase label above most section headings. Set in Montserrat,
      the same face as the navigation (`font-mono` now maps to it site-wide). */
   .eyebrow {
-    @apply font-mono text-[0.6875rem] uppercase tracking-[0.18em];
+    @apply font-display text-[0.75rem] font-semibold uppercase tracking-[0.06em];
   }
 
   /* Header labels: Montserrat, the face of the headings, in ordinary case.

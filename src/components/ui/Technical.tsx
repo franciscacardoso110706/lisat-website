@@ -106,12 +106,11 @@ export function SectionIndex({
   className?: string
 }) {
   return (
-    <p className={clsx('eyebrow flex items-center gap-2 text-accent', className)}>
-      <span className="tabular">{index}</span>
-      <span aria-hidden="true" className="opacity-40">
-        /
-      </span>
-      <span>{label}</span>
+    <p
+      className={clsx('eyebrow text-accent', className)}
+      data-index={index}
+    >
+      {label}
     </p>
   )
 }

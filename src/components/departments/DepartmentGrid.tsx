@@ -100,10 +100,13 @@ export function DepartmentGrid({
             />
           </div>
 
-          {/* A plain grid: nine cards, three by three, every row lined up and
-              the gutters equal on both axes. The cards carry a fixed height,
-              so nothing here depends on their content to stay square. */}
-          <ul className="mt-10 grid gap-10 md:mt-16 md:grid-cols-2 md:gap-12 xl:grid-cols-3 xl:gap-10">
+          {/* Three cards per row, every row lined up and the gutters equal on
+              both axes. The cards carry a fixed height, so nothing here
+              depends on their content to stay square. On wide screens the
+              grid runs on six tracks, two per card, so an incomplete last row
+              can be shifted to sit centred instead of hugging the left edge:
+              two leftovers start on track 2, a single one on track 3. */}
+          <ul className="mt-10 grid gap-10 md:mt-16 md:grid-cols-2 md:gap-12 xl:grid-cols-6 xl:gap-10 xl:[&>*]:col-span-2 xl:[&>*:nth-last-child(2):nth-child(3n+1)]:col-start-2 xl:[&>*:last-child:nth-child(3n+1)]:col-start-3">
             {departments.map((dept, i) => (
               <DepartmentFlipCard
                 key={dept.slug}

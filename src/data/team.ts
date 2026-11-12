@@ -139,7 +139,7 @@ export const team: TeamMember[] = [
     name: 'Aline Degi',
     role: 'Future Missions Research',
     rank: 'member',
-    department: 'research-development',
+    department: 'communications',
     degree: 'LEMec',
     year: 2,
     faculty: 'IST',
